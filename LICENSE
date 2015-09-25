@@ -1,0 +1,30 @@
+
+//////////
+// MDSrv
+
+	GNU GENERAL PUBLIC LICENSE Version 2, Copyright &copy; 2013-2015 Alexander S. Rose
+
+	applies to all files unless otherwise noted
+
+
+////////////////
+// libxdrfile2
+
+	http://www.gromacs.org/
+	http://mdanalysis.googlecode.com
+
+	GNU GENERAL PUBLIC LICENSE Version 2 (lib/xdrfile/COPYING)
+
+	lib/xdrfile/*
+
+
+////////
+// dcd
+
+	http://mdanalysis.googlecode.com
+
+	GNU GENERAL PUBLIC LICENSE Version 2
+
+	lib/setup.py
+	lib/dcd/*
+

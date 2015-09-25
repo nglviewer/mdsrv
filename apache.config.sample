@@ -1,0 +1,15 @@
+<VirtualHost *:80>
+    ServerName localhost
+
+    WSGIDaemonProcess mdsrv user=www-data group=www-data threads=5
+    WSGIScriptAlias /mdsrv /var/www/mdsrv/mdsrv.wsgi
+
+    <Directory /var/www/mdsrv>
+        WSGIProcessGroup mdsrv
+        WSGIApplicationGroup %{GLOBAL}
+        WSGIScriptReloading On
+        WSGIPassAuthorization On
+        Order deny,allow
+        Allow from all
+    </Directory>
+</VirtualHost>

@@ -1,0 +1,11 @@
+
+*.sublime-project
+*.sublime-workspace
+
+*.pyc
+app.cfg
+
+*.offsets
+
+lib/build/*
+*.so
