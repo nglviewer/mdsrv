@@ -1,13 +1,12 @@
 
-MDSrv is a simple server that enables remote access to coordinate trajectories from molecular dynamics simulations.
+MDSrv is a simple server that enables remote access to coordinate trajectories from molecular dynamics simulations. It can be used together with the NGL Viewer (http://github.com/arose/ngl) to interactively view trajectories of molecular complexes in a web-browser, either within a local network or from anywhere over the internet.
 
-Supported formats are:
-
+Formats supported are:
 * xtc/trr
 * nc, netcdf
 * dcd
 
-Thanks to code from MDAnalysis (http://mdanalysis.googlecode.com) there is random access to xtc/trr trajectory files via indexing and seeking capabilities added to the libxdrfile2 library.
+Thanks to code from MDAnalysis (http://www.mdanalysis.org/) there is random access to xtc/trr trajectory files via indexing and seeking capabilities added to the libxdrfile2 library.
 
 
 Installation
