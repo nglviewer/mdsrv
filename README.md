@@ -7,7 +7,7 @@ Supported formats are:
 * nc, netcdf
 * dcd
 
-Thanks to code from MDAnalysis (href="http://mdanalysis.googlecode.com) there is random access to xtc/trr trajectory files via indexing and seeking capabilities added to the libxdrfile2 library.
+Thanks to code from MDAnalysis (http://mdanalysis.googlecode.com) there is random access to xtc/trr trajectory files via indexing and seeking capabilities added to the libxdrfile2 library.
 
 
 Installation
