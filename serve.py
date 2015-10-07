@@ -31,14 +31,7 @@ if len( sys.argv ) > 1:
 app = Flask(__name__)
 app.config.from_pyfile( cfg_file )
 
-os.environ.update( app.config.get( "ENV", {} ) )
-os.environ["PATH"] += ":" + ":".join( app.config.get( "PATH", [] ) )
-if( app.config.get( "PROXY" ) is not None ):
-    os.environ["HTTP_PROXY"] = app.config.get( "PROXY", "" )
-
-APP_PATH = app.config.get( "APP_PATH", "" )
 DATA_DIRS = app.config.get( "DATA_DIRS", {} )
-
 REQUIRE_AUTH = app.config.get( 'REQUIRE_AUTH', False )
 REQUIRE_DATA_AUTH = \
     app.config.get( 'REQUIRE_DATA_AUTH', False ) and not REQUIRE_AUTH
