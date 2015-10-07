@@ -9,6 +9,16 @@ Formats supported are:
 Thanks to code from MDAnalysis (http://www.mdanalysis.org/) there is random access to xtc/trr trajectory files via indexing and seeking capabilities added to the libxdrfile2 library.
 
 
+Table of contents
+=================
+
+* [Installation](#installation)
+* [Running](#running)
+* [API](#api)
+* [Deployment](#deployment)
+* [License](#license)
+
+
 Installation
 ============
 
@@ -17,9 +27,8 @@ Flask
 
 The server is based on *Flask*, which can be installed through *pip*:
 
-```bash
-sudo pip install Flask
-```
+    sudo pip install Flask
+
 
 
 Trajectory reading
@@ -27,42 +36,37 @@ Trajectory reading
 
 For the efficient access of trajectory files some libraries need to be installed. First, make sure you have the python development files installed, e.g.
 
-```bash
-sudo apt-get install python-dev python-numpy
-```
+    sudo apt-get install python-dev python-numpy
+
 
 Then install the NetCDF libraries
 
-```bash
-sudo apt-get install libhdf5-serial-dev libnetcdf-dev
-sudo pip install netCDF4
-```
+    sudo apt-get install libhdf5-serial-dev libnetcdf-dev
+    sudo pip install netCDF4
+
 
 In case you get "ValueError: did not find HDF5 headers" try:
 
-```bash
-sudo su
-find / -name "libhdf5*.so*"
-# use what the above 'find' suggests to set 'HDF5_DIR'
-export HDF5_DIR=/usr/lib/i386-linux-gnu/hdf5/serial/
-pip install netCDF4
-```
+    sudo su
+    find / -name "libhdf5*.so*"
+    # use what the above 'find' suggests to set 'HDF5_DIR'
+    export HDF5_DIR=/usr/lib/i386-linux-gnu/hdf5/serial/
+    pip install netCDF4
+
 
 Libraries for reading xtc/trr and dcd files are included and can be installed with
 
-```bash
-sh install.sh
-```
+    sh install.sh
 
 
-Configuration files
--------------------
+
+Configuration file
+------------------
 
 Copy/rename the sample `app.cfg` file. It allows e.g. setting data directories that will be accessible through the web server and to define access restrictions.
 
-```bash
-cp app.cfg.sample app.cfg
-```
+    cp app.cfg.sample app.cfg
+
 
 
 Running
@@ -70,18 +74,101 @@ Running
 
 A local development server can be started with the python script
 
-```bash
-python serve.py
-```
+    python serve.py
+
 
 which will use the `app.cfg` configuration file or with
 
-```bash
-python serve.py my_conf.cfg
-```
+    python serve.py my_conf.cfg
+
 
 to use the `my_conf.cfg` configuration file.
 
+
+API
+===
+
+File content
+------------
+
+To retrieve a file from `data_dir` `<root>` with file path `<filename>` call:
+
+    /file/<root>/<filename>
+
+
+Directory content description
+-----------------------------
+
+To get a JSON description of available `data_dir` directories call:
+
+    /dir/
+
+
+To get a JSON description of the directory content in `data_dir` `<root>` call:
+
+    /dir/<root>/
+
+
+To get a JSON description of the directory content in `data_dir` `<root>` at path `<path>` call:
+
+    /dir/<root>/<path>
+
+
+The JSON description is a list of file or sub-directory entries:
+
+    [
+        {
+            "name": "name of sub-directory",
+            "path": "path relative to `<root>`",
+            "dir": "`true` if entry is a directory",
+            "restricted": "`true` if access is restricted"
+        },
+        {
+            "name": "name of the file",
+            "path": "path relative to `<root>`",
+            "size": "file size in bytes"
+        },
+        {
+            ...
+        }
+    ]
+
+
+
+Frame count
+-----------
+
+To get the number of frames the trajectory in `data_dir` `<root>` with file path `<filename>` has call:
+
+    /traj/numframes/<root>/<filename>
+
+
+Frame coordinates
+-----------------
+
+To get the coordinates of frame number `<frame>` of the trajectory in `data_dir` `<root>` with file path `<filename>` call:
+
+    /traj/frame/<frame>/<root>/<filename>
+
+The coordinate frame is returned in binary format and also contain the frame number, the simulation time (when available) and the box vectors.
+
+| Offset | Size |  Type | Description                  |
+| -----: | ---: | ----: | :--------------------------- |
+|      0 |    4 |   int | frame number                 |
+|      4 |    4 | float | simulation time              |
+|      8 |    4 | float | X coordinate of box vector A |
+|     12 |    4 | float | Y                            |
+|     16 |    4 | float | Z                            |
+|     20 |    4 | float | X coordinate of box vector B |
+|     24 |    4 | float | Y                            |
+|     28 |    4 | float | Z                            |
+|     32 |    4 | float | X coordinate of box vector C |
+|     36 |    4 | float | Y                            |
+|     40 |    4 | float | Z                            |
+|     44 |    4 | float | X coordinate of first atom   |
+|     48 |    4 | float | Y                            |
+|     52 |    4 | float | Z                            |
+|    ... |  ... |   ... | ...                          |
 
 
 Deployment
@@ -89,17 +176,15 @@ Deployment
 
 The Apache Webserver can used to run the server via `mod_wsgi`. First make sure you have everything required installed:
 
-```bash
-sudo apt-get install git apache2 libapache2-mod-wsgi
-```
+    sudo apt-get install git apache2 libapache2-mod-wsgi
 
-Then you need to create a wsgi configuration file to be referenced in the apache configuration. There is an example named `ngl.wsgi.sample` in the root directory of this package. Also, a snippet showing how the configuration for apache should look like can be found in the `apache.config.sample` file.
+
+Then you need to create a wsgi configuration file to be referenced in the Apache configuration. There is an example named `ngl.wsgi.sample` in the root directory of this package. Also, a snippet showing how the configuration for Apache should look like can be found in the `apache.config.sample` file.
 
 Finally, to restart apache issue
 
-```bash
-sudo /etc/init.d/apache2 restart
-```
+    sudo /etc/init.d/apache2 restart
+
 
 
 License
