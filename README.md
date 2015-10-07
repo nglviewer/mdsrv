@@ -150,7 +150,13 @@ To get the coordinates of frame number `<frame>` of the trajectory in `data_dir`
 
     /traj/frame/<frame>/<root>/<filename>
 
-The coordinate frame is returned in binary format and also contain the frame number, the simulation time (when available) and the box vectors.
+
+The set of atoms for which coordinates should be returned can be restricted by `POST`ing an `atomIndices` parameter with the following format. A list of index ranges is defined by pairs of integers separated by semi-colons (`;`) where the two integers within a pair are separated by a comma (`,`). To select atoms with indices (starting at zero) 5 to 10 and 22 to 30 send:
+
+    5,10;22,30
+
+
+The coordinate frame is returned in binary format and also contains the frame number, the simulation time (when available) and the box vectors.
 
 | Offset | Size |  Type | Description                  |
 | -----: | ---: | ----: | :--------------------------- |
