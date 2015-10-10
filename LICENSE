@@ -11,7 +11,7 @@
 // libxdrfile2
 
 	http://www.gromacs.org/
-	http://mdanalysis.googlecode.com
+	http://www.mdanalysis.org/
 
 	GNU GENERAL PUBLIC LICENSE Version 2 (lib/xdrfile/COPYING)
 
@@ -21,10 +21,14 @@
 ////////
 // dcd
 
-	http://mdanalysis.googlecode.com
+	http://www.mdanalysis.org/
 
 	GNU GENERAL PUBLIC LICENSE Version 2
 
 	lib/setup.py
 	lib/dcd/*
+
+	DCD reading code originally derived from VMD's catdcd
+	http://www.ks.uiuc.edu/Development/MDTools/catdcd/
+	http://www.ks.uiuc.edu/Development/MDTools/catdcd/license.html
 

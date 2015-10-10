@@ -11,7 +11,7 @@ For a basic installation just type the command::
 
 Based on setup.py from MDAnalysis:
 
-    http://code.google.com/p/mdanalysis/
+    http://www.mdanalysis.org/
 """
 
 
