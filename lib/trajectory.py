@@ -96,7 +96,9 @@ class Trajectory( object ):
         pass
 
     def _get_frame( self, index ):
-        # return x, box in angstrom
+        # return box, coords, time
+        # box, coords in angstrom
+        # time in ???
         pass
 
     def get_frame( self, index, atom_indices=None ):
@@ -105,12 +107,11 @@ class Trajectory( object ):
             coords = np.concatenate([
                 coords[ i:j ].ravel() for i, j in atom_indices
             ])
-        box = box.flatten()
         return (
             array.array( "i", [ self.numframes ] ).tostring() +
             array.array( "f", [ time ] ).tostring() +
-            array.array( "f", box ).tostring() +
-            array.array( "f", coords ).tostring()
+            array.array( "f", box.flatten() ).tostring() +
+            array.array( "f", coords.flatten() ).tostring()
         )
 
     def get_path( self, atom_index, frame_indices=None ):
