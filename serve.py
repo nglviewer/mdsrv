@@ -9,10 +9,7 @@ import logging
 import datetime
 import functools
 
-sys.path.append(
-    os.path.split( os.path.abspath( __file__ ) )[0]
-)
-import lib.trajectory as trajectory
+from simpletraj import trajectory
 
 from flask import Flask
 from flask import send_from_directory
@@ -239,7 +236,7 @@ def traj_frame( frame, root, filename ):
             [ int( y ) for y in x.split( "," ) ]
             for x in atom_indices.split( ";" )
         ]
-    return TRAJ_CACHE.get( path ).get_frame(
+    return TRAJ_CACHE.get( path ).get_frame_string(
         frame, atom_indices=atom_indices
     )
 
@@ -268,7 +265,7 @@ def traj_path( index, root, filename ):
     frame_indices = request.form.get( "frameIndices" )
     if frame_indices:
         frame_indices = None
-    return TRAJ_CACHE.get( path ).get_path(
+    return TRAJ_CACHE.get( path ).get_path_string(
         index, frame_indices=frame_indices
     )
 
