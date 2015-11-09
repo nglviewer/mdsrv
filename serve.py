@@ -144,6 +144,7 @@ def crossdomain(
 
 @app.route( '/file/<root>/<path:filename>' )
 @requires_auth
+@crossdomain( origin='*' )
 def file( root, filename ):
     directory = get_directory( root )
     if directory:
@@ -154,6 +155,7 @@ def file( root, filename ):
 @app.route( '/dir/<root>/' )
 @app.route( '/dir/<root>/<path:path>' )
 @requires_auth
+@crossdomain( origin='*' )
 def dir( root="", path="" ):
     root = root.encode( "utf-8" )
     path = path.encode( "utf-8" )
@@ -224,6 +226,7 @@ TRAJ_CACHE = trajectory.TrajectoryCache()
 
 @app.route( '/traj/frame/<int:frame>/<root>/<path:filename>', methods=['POST'] )
 @requires_auth
+@crossdomain( origin='*' )
 def traj_frame( frame, root, filename ):
     directory = get_directory( root )
     if directory:
@@ -243,6 +246,7 @@ def traj_frame( frame, root, filename ):
 
 @app.route( '/traj/numframes/<root>/<path:filename>' )
 @requires_auth
+@crossdomain( origin='*' )
 def traj_numframes( root, filename ):
     directory = get_directory( root )
     if directory:
@@ -254,6 +258,7 @@ def traj_numframes( root, filename ):
 
 @app.route( '/traj/path/<int:index>/<root>/<path:filename>', methods=['POST'] )
 @requires_auth
+@crossdomain( origin='*' )
 def traj_path( index, root, filename ):
     directory = get_directory( root )
     if directory:
