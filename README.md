@@ -94,22 +94,24 @@ To get a JSON description of the directory content in `data_dir` `<root>` at pat
 
 The JSON description is a list of file or sub-directory entries:
 
-    [
-        {
-            "name": "name of sub-directory",
-            "path": "path relative to `<root>`",
-            "dir": "`true` if entry is a directory",
-            "restricted": "`true` if access is restricted"
-        },
-        {
-            "name": "name of the file",
-            "path": "path relative to `<root>`",
-            "size": "file size in bytes"
-        },
-        {
-            ...
-        }
-    ]
+```JSON
+[
+    {
+        "name": "name of sub-directory",
+        "path": "path relative to `<root>`",
+        "dir": "`true` if entry is a directory",
+        "restricted": "`true` if access is restricted"
+    },
+    {
+        "name": "name of the file",
+        "path": "path relative to `<root>`",
+        "size": "file size in bytes"
+    },
+    {
+        ...
+    }
+]
+```
 
 
 
