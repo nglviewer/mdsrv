@@ -274,7 +274,7 @@ def traj_path( index, root, filename ):
 # main
 ############################
 
-if __name__ == '__main__':
+def entry_point():
     app.run(
         debug=app.config.get( 'DEBUG', False ),
         host=app.config.get( 'HOST', '127.0.0.1' ),
@@ -283,3 +283,6 @@ if __name__ == '__main__':
         processes=1,
         extra_files=[ 'app.cfg' ]
     )
+
+if __name__ == '__main__':
+    entry_point()
