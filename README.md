@@ -1,5 +1,5 @@
 
-MDSrv is a simple server that enables remote access to coordinate trajectories from molecular dynamics simulations. It can be used together with the NGL Viewer (http://github.com/arose/ngl) to interactively view trajectories of molecular complexes in a web-browser, either within a local network or from anywhere over the internet.
+MDsrv is a simple server that enables remote access to coordinate trajectories from molecular dynamics simulations. It can be used together with the NGL Viewer (http://github.com/arose/ngl) to interactively view trajectories of molecular complexes in a web-browser, either within a local network or from anywhere over the internet.
 
 Formats supported are:
 * xtc/trr
@@ -14,7 +14,7 @@ Table of contents
 
 * [Installation](#installation)
 * [Running](#running)
-* [API](#api)
+* [RESTful API](#restful api)
 * [Deployment](#deployment)
 * [License](#license)
 
@@ -63,8 +63,8 @@ which will use the `app.cfg` configuration file or with
 to use the `my_conf.cfg` configuration file.
 
 
-API
-===
+RESTful API
+===========
 
 File content
 ------------
