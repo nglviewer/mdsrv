@@ -290,15 +290,46 @@ def traj_path( index, root, filename ):
 # main
 ############################
 
+def open_browser( app, host, port ):
+    if not app.config.get( "BROWSER_OPENED", False ):
+        import webbrowser
+        url = "http://" + host + ":" + str(port) + "/dir"
+        webbrowser.open( url )
+        app.config.BROWSER_OPENED = True
+
+def patch_socket_bind( app ):
+    # from http://stackoverflow.com/a/27598916
+    import socketserver
+    original_socket_bind = socketserver.TCPServer.server_bind
+    def socket_bind_wrapper(self):
+        ret = original_socket_bind(self)
+        host, port = self.socket.getsockname()
+        open_browser( app, host, port )
+        # Recover original implementation
+        socketserver.TCPServer.server_bind = original_socket_bind
+        return ret
+    socketserver.TCPServer.server_bind = socket_bind_wrapper
+
 def entry_point():
+    DATA_DIRS = app.config.get( "DATA_DIRS", {} )
+    module_dir = os.path.split( os.path.abspath( __file__ ) )[0]
+    data_dir = os.path.join( os.path.split( module_dir )[0], "data" )
+    DATA_DIRS.update( {
+        "current_dir": os.path.abspath( os.getcwd() ),
+        "example_data": data_dir,
+    } )
+    app.config[ "DATA_DIRS" ] = DATA_DIRS
+    patch_socket_bind( app )
+    main()
+
+def main():
     app.run(
         debug=app.config.get( 'DEBUG', False ),
         host=app.config.get( 'HOST', '127.0.0.1' ),
         port=app.config.get( 'PORT', 8010 ),
         threaded=True,
-        processes=1,
-        extra_files=[ 'app.cfg' ]
+        processes=1
     )
 
 if __name__ == '__main__':
-    entry_point()
+    main()
