@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 from __future__ import with_statement
+from __future__ import absolute_import
+from __future__ import print_function
 
 import os
 import sys
@@ -31,9 +33,6 @@ LOG = logging.getLogger('ngl')
 LOG.setLevel( logging.DEBUG )
 
 cfg_file = 'app.cfg'
-if len( sys.argv ) > 1:
-    cfg_file = sys.argv[1]
-
 app = Flask(__name__)
 app.config.from_pyfile( cfg_file )
 
@@ -42,6 +41,8 @@ REQUIRE_AUTH = app.config.get( 'REQUIRE_AUTH', False )
 REQUIRE_DATA_AUTH = \
     app.config.get( 'REQUIRE_DATA_AUTH', False ) and not REQUIRE_AUTH
 DATA_AUTH = app.config.get( 'DATA_AUTH', {} )
+
+MODULE_DIR = os.path.split( os.path.abspath( __file__ ) )[0]
 
 
 ############################
@@ -143,6 +144,19 @@ def crossdomain(
         f.provide_automatic_options = False
         return functools.update_wrapper( wrapped_function, f )
     return decorator
+
+
+###############
+# web app
+###############
+
+@app.route( '/webapp/' )
+@app.route( '/webapp/<path:filename>' )
+@requires_auth
+@crossdomain( origin='*' )
+def webapp( filename="index.html" ):
+    directory = os.path.join( MODULE_DIR, "webapp" )
+    return send_from_directory( directory, filename )
 
 
 ###############
@@ -290,36 +304,50 @@ def traj_path( index, root, filename ):
 # main
 ############################
 
-def open_browser( app, host, port ):
+def open_browser( app, host, port, struc=None, traj=None ):
     if not app.config.get( "BROWSER_OPENED", False ):
         import webbrowser
-        url = "http://" + host + ":" + str(port) + "/dir"
-        webbrowser.open( url )
+        url = "http://" + host + ":" + str(port) + "/webapp"
+        if struc:
+            url += "?struc=file://current_dir/" + struc
+            if traj:
+                url += "&traj=file://current_dir/" + traj
+        webbrowser.open( url, new=2, autoraise=True )
         app.config.BROWSER_OPENED = True
 
-def patch_socket_bind( app ):
+def patch_socket_bind( on_bind ):
     # from http://stackoverflow.com/a/27598916
     import socketserver
     original_socket_bind = socketserver.TCPServer.server_bind
     def socket_bind_wrapper(self):
         ret = original_socket_bind(self)
-        host, port = self.socket.getsockname()
-        open_browser( app, host, port )
+        if on_bind:
+            host, port = self.socket.getsockname()
+            on_bind( host, port )
         # Recover original implementation
         socketserver.TCPServer.server_bind = original_socket_bind
         return ret
     socketserver.TCPServer.server_bind = socket_bind_wrapper
 
+def parse_args():
+    from argparse import ArgumentParser
+    parser = ArgumentParser()
+    parser.add_argument( 'struc', type=str, nargs='?', default="" )
+    parser.add_argument( 'traj', type=str, nargs='?', default="" )
+    args = parser.parse_args()
+    return args
+
 def entry_point():
     DATA_DIRS = app.config.get( "DATA_DIRS", {} )
-    module_dir = os.path.split( os.path.abspath( __file__ ) )[0]
-    data_dir = os.path.join( os.path.split( module_dir )[0], "data" )
     DATA_DIRS.update( {
         "current_dir": os.path.abspath( os.getcwd() ),
-        "example_data": data_dir,
+        "example_data": os.path.join( MODULE_DIR, "data" ),
     } )
     app.config[ "DATA_DIRS" ] = DATA_DIRS
-    patch_socket_bind( app )
+    args = parse_args()
+    def on_bind( host, port ):
+        open_browser( app, host, port, args.struc, args.traj )
+    patch_socket_bind( on_bind )
     main()
 
 def main():
