@@ -9,6 +9,15 @@ import logging
 import datetime
 import functools
 
+# python 2 and 3 compatibility
+try:
+    basestring  # attempt to evaluate basestring
+    def isstr(s):
+        return isinstance(s, basestring)
+except NameError:
+    def isstr(s):
+        return isinstance(s, str)
+
 from simpletraj import trajectory
 
 from flask import Flask
@@ -89,10 +98,11 @@ def requires_auth( f ):
 ####################
 
 def get_directory( root ):
-    directory = None
     if root in DATA_DIRS:
         directory = os.path.join( DATA_DIRS[ root ] )
-    return os.path.abspath( directory )
+        return os.path.abspath( directory )
+    else:
+        return ""
 
 
 def crossdomain(
@@ -101,9 +111,9 @@ def crossdomain(
 ):
     if methods is not None:
         methods = ', '.join( sorted( x.upper() for x in methods ) )
-    if headers is not None and not isinstance( headers, basestring ):
+    if headers is not None and not isstr( headers ):
         headers = ', '.join( x.upper() for x in headers )
-    if not isinstance( origin, basestring ):
+    if not isstr( origin ):
         origin = ', '.join(origin)
     if isinstance( max_age, datetime.timedelta ):
         max_age = max_age.total_seconds()
@@ -154,12 +164,14 @@ def file( root, filename ):
 @requires_auth
 @crossdomain( origin='*' )
 def dir( root="", path="" ):
-    root = root.encode( "utf-8" )
-    path = path.encode( "utf-8" )
+    if sys.version_info < (3,):
+        root = root.encode( "utf-8" )
+        path = path.encode( "utf-8" )
     dir_content = []
     if root == "":
         for fname in DATA_DIRS.keys():
-            fname = unicode( fname )
+            if sys.version_info < (3,):
+                fname = unicode( fname )
             if fname.startswith( '_' ):
                 continue
             dir_content.append({
@@ -169,7 +181,9 @@ def dir( root="", path="" ):
                 'restricted': REQUIRE_DATA_AUTH and fname in DATA_AUTH
             })
         return json.dumps( dir_content )
-    directory = get_directory( root ).encode( "utf-8" )
+    directory = get_directory( root )
+    if sys.version_info < (3,):
+        directory = directory.encode( "utf-8" )
     if not directory:
         return json.dumps( dir_content )
     dir_path = os.path.join( directory, path )
@@ -186,7 +200,8 @@ def dir( root="", path="" ):
             'dir': True
         })
     for fname in sorted( os.listdir( dir_path ) ):
-        fname = fname.decode( "utf-8" ).encode( "utf-8" )
+        if sys.version_info < (3,):
+            fname = fname.decode( "utf-8" ).encode( "utf-8" )
         if( not fname.startswith('.') and
                 not ( fname.startswith('#') and fname.endswith('#') ) ):
             fpath = os.path.join( dir_path, fname )
@@ -203,7 +218,8 @@ def dir( root="", path="" ):
                     'dir': True
                 })
     for fname in trajectory.get_split_xtc( dir_path ):
-        fname = fname.decode( "utf-8" ).encode( "utf-8" )
+        if sys.version_info < (3,):
+            fname = fname.decode( "utf-8" ).encode( "utf-8" )
         dir_content.append({
             'name': fname,
             'path': os.path.join( root, path, fname ),
