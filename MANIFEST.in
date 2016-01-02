@@ -1,0 +1,4 @@
+graft webapp
+include LICENSE README.md
+include setup.py
+global-exclude *.pyc
