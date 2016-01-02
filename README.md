@@ -30,15 +30,13 @@ From PyPI:
 Configuration file
 ------------------
 
-Optional. Copy/rename the sample `app.cfg` file. It allows e.g. setting data directories that will be accessible through the web server and to define access restrictions.
-
-    cp app.cfg.sample app.cfg
+Optional. Copy/rename the sample [app.cfg](app.cfg.sample) file. It allows e.g. setting `data_dir` data directories that will be accessible through the web server and to define access restrictions.
 
 
 Running
 =======
 
-The `mdsrv` command strats a local server and opens a browser window with the web application.
+The `mdsrv` command starts a local server and opens a browser window with the web application.
 
 To use a custom configuration file
 
@@ -154,7 +152,7 @@ The Apache Webserver can used to run the server via `mod_wsgi`. First make sure 
     sudo apt-get install git apache2 libapache2-mod-wsgi
 
 
-Then you need to create a wsgi configuration file to be referenced in the Apache configuration. There is an example named `mdsrv.wsgi.sample` in the root directory of this package. Also, a snippet showing how the configuration for Apache should look like can be found in the `apache.config.sample` file.
+Then you need to create a wsgi configuration file to be referenced in the Apache configuration. There is an example named [mdsrv.wsgi.sample](mdsrv.wsgi.sample)  in the root directory of this package. Also, a snippet showing how the configuration for Apache should look like can be found in the [apache.config.sample](apache.config.sample) file.
 
 Finally, to restart apache issue
 
@@ -164,4 +162,4 @@ Finally, to restart apache issue
 License
 =======
 
-Generally MIT, see the LICENSE file for details.
+Generally MIT, see the [LICENSE](LICENSE) file for details.
