@@ -52,6 +52,7 @@ def check_auth( auth ):
 
 
 def check_data_auth( auth, root ):
+    DATA_AUTH = app.config.get( 'DATA_AUTH', {} )
     if root in DATA_AUTH:
         return (
             auth.username == DATA_AUTH[ root ][ 0 ] and
