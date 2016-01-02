@@ -16,6 +16,7 @@ Table of contents
 * [Running](#running)
 * [RESTful API](#restful api)
 * [Deployment](#deployment)
+* [Changelog](#changelog)
 * [License](#license)
 
 
@@ -157,6 +158,21 @@ Then you need to create a wsgi configuration file to be referenced in the Apache
 Finally, to restart apache issue
 
     sudo /etc/init.d/apache2 restart
+
+
+Changelog
+=========
+
+Version 0.2dev
+--------------
+
+* ...
+
+
+Version 0.1.1
+-------------
+
+Initial release
 
 
 License
