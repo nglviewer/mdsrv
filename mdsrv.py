@@ -32,11 +32,9 @@ logging.basicConfig( level=logging.DEBUG )
 LOG = logging.getLogger('ngl')
 LOG.setLevel( logging.DEBUG )
 
-cfg_file = 'app.cfg'
-app = Flask(__name__)
-app.config.from_pyfile( cfg_file )
-
 MODULE_DIR = os.path.split( os.path.abspath( __file__ ) )[0]
+
+app = Flask(__name__)
 
 
 ############################
@@ -337,35 +335,46 @@ def patch_socket_bind( on_bind ):
         return ret
     socketserver.TCPServer.server_bind = socket_bind_wrapper
 
+
 def parse_args():
     from argparse import ArgumentParser
     parser = ArgumentParser()
     parser.add_argument( 'struc', type=str, nargs='?', default="" )
     parser.add_argument( 'traj', type=str, nargs='?', default="" )
+    parser.add_argument( '--cfg', type=str )
     args = parser.parse_args()
     return args
 
+
+def app_config( path ):
+    if path:
+        app.config.from_pyfile( path )
+
+
 def entry_point():
+    main()
+
+
+def main():
+    args = parse_args()
+    app_config( args.cfg )
     DATA_DIRS = app.config.get( "DATA_DIRS", {} )
     DATA_DIRS.update( {
         "current_dir": os.path.abspath( os.getcwd() ),
         "example_data": os.path.join( MODULE_DIR, "data" ),
     } )
     app.config[ "DATA_DIRS" ] = DATA_DIRS
-    args = parse_args()
     def on_bind( host, port ):
         open_browser( app, host, port, args.struc, args.traj )
     patch_socket_bind( on_bind )
-    main()
-
-def main():
     app.run(
         debug=app.config.get( 'DEBUG', False ),
         host=app.config.get( 'HOST', '127.0.0.1' ),
-        port=app.config.get( 'PORT', 8010 ),
+        port=app.config.get( 'PORT', 0 ),
         threaded=True,
         processes=1
     )
+
 
 if __name__ == '__main__':
     main()

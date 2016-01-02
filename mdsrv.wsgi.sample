@@ -1,18 +1,16 @@
 #####
 # configuration for the mdsrv wsgi app
 
-# path to the directory where serve.py is located
-APP_PATH = '/path/to/dir/'
-
 # leave empty if no virtualenv is needed
 APP_ENV = ''
 
-
+# leave empty to use default config
+APP_CFG = ''
 
 
 #####
 # do not change anything below unless you are sure
-# http://flask.pocoo.org/docs/deploying/mod_wsgi/
+# see http://flask.pocoo.org/docs/deploying/mod_wsgi/
 
 
 import os
@@ -21,12 +19,6 @@ if APP_ENV:
     activate_this = os.path.join( APP_ENV, 'activate_this.py' )
     execfile( activate_this, dict( __file__=activate_this ) )
 
-os.chdir( APP_PATH )
-
-import sys
-if APP_PATH not in sys.path:
-    sys.path.insert( 0, APP_PATH )
-sys.stdout = sys.stderr
-
 from mdsrv import app as application
-
+if APP_CFG:
+    application.config.from_pyfile( APP_CFG )
