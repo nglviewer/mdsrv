@@ -349,7 +349,9 @@ def parse_args():
 
 def app_config( path ):
     if path:
-        app.config.from_pyfile( path )
+        if not path.startswith( "/" ):
+            path = os.path.join( os.getcwd(), path )
+        app.config.from_pyfile( os.path.abspath( path ) )
 
 
 def entry_point():
