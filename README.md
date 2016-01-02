@@ -22,49 +22,39 @@ Table of contents
 Installation
 ============
 
-Flask
------
+From PyPI:
 
-The server is based on *Flask*, which can be installed through *pip*:
-
-    sudo pip install Flask
-
-
-
-Trajectory reading
-------------------
-
-For the efficient access of trajectory files the `simpletraj` Python package is required. Its source code is available [here](https://github.com/arose/simpletraj).
-
+    pip install mdsrv
 
 
 Configuration file
 ------------------
 
-Copy/rename the sample `app.cfg` file. It allows e.g. setting data directories that will be accessible through the web server and to define access restrictions.
+Optional. Copy/rename the sample `app.cfg` file. It allows e.g. setting data directories that will be accessible through the web server and to define access restrictions.
 
     cp app.cfg.sample app.cfg
-
 
 
 Running
 =======
 
-A local development server can be started with the python script
+The `mdsrv` command strats a local server and opens a browser window with the web application.
 
-    python serve.py
+To use a custom configuration file
 
-
-which will use the `app.cfg` configuration file or with
-
-    python serve.py my_conf.cfg
+    mdsrv --cfg my_conf.cfg
 
 
-to use the `my_conf.cfg` configuration file.
+Load a topology and trajectory at startup
+
+    mdsrv struc.gro traj.xtc
 
 
 RESTful API
 ===========
+
+The RESTful API is the interface through which the web application gets all data but it may be also used to access the served trajectory data from other applications.
+
 
 File content
 ------------
@@ -112,7 +102,6 @@ The JSON description is a list of file or sub-directory entries:
     }
 ]
 ```
-
 
 
 Frame count
@@ -170,7 +159,6 @@ Then you need to create a wsgi configuration file to be referenced in the Apache
 Finally, to restart apache issue
 
     sudo /etc/init.d/apache2 restart
-
 
 
 License
