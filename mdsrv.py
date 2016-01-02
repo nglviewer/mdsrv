@@ -36,12 +36,6 @@ cfg_file = 'app.cfg'
 app = Flask(__name__)
 app.config.from_pyfile( cfg_file )
 
-DATA_DIRS = app.config.get( "DATA_DIRS", {} )
-REQUIRE_AUTH = app.config.get( 'REQUIRE_AUTH', False )
-REQUIRE_DATA_AUTH = \
-    app.config.get( 'REQUIRE_DATA_AUTH', False ) and not REQUIRE_AUTH
-DATA_AUTH = app.config.get( 'DATA_AUTH', {} )
-
 MODULE_DIR = os.path.split( os.path.abspath( __file__ ) )[0]
 
 
@@ -82,6 +76,10 @@ def authenticate():
 def requires_auth( f ):
     @functools.wraps( f )
     def decorated( *args, **kwargs ):
+        REQUIRE_AUTH = app.config.get( 'REQUIRE_AUTH', False )
+        REQUIRE_DATA_AUTH = \
+            app.config.get( 'REQUIRE_DATA_AUTH', False ) and not REQUIRE_AUTH
+        DATA_AUTH = app.config.get( 'DATA_AUTH', {} )
         auth = request.authorization
         root = kwargs.get( "root", None )
         if REQUIRE_AUTH:
@@ -99,6 +97,7 @@ def requires_auth( f ):
 ####################
 
 def get_directory( root ):
+    DATA_DIRS = app.config.get( "DATA_DIRS", {} )
     if root in DATA_DIRS:
         directory = os.path.join( DATA_DIRS[ root ] )
         return os.path.abspath( directory )
@@ -178,6 +177,11 @@ def file( root, filename ):
 @requires_auth
 @crossdomain( origin='*' )
 def dir( root="", path="" ):
+    DATA_DIRS = app.config.get( "DATA_DIRS", {} )
+    REQUIRE_AUTH = app.config.get( 'REQUIRE_AUTH', False )
+    REQUIRE_DATA_AUTH = \
+        app.config.get( 'REQUIRE_DATA_AUTH', False ) and not REQUIRE_AUTH
+    DATA_AUTH = app.config.get( 'DATA_AUTH', {} )
     if sys.version_info < (3,):
         root = root.encode( "utf-8" )
         path = path.encode( "utf-8" )
