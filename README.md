@@ -154,7 +154,7 @@ The Apache Webserver can used to run the server via `mod_wsgi`. First make sure 
     sudo apt-get install git apache2 libapache2-mod-wsgi
 
 
-Then you need to create a wsgi configuration file to be referenced in the Apache configuration. There is an example named `ngl.wsgi.sample` in the root directory of this package. Also, a snippet showing how the configuration for Apache should look like can be found in the `apache.config.sample` file.
+Then you need to create a wsgi configuration file to be referenced in the Apache configuration. There is an example named `mdsrv.wsgi.sample` in the root directory of this package. Also, a snippet showing how the configuration for Apache should look like can be found in the `apache.config.sample` file.
 
 Finally, to restart apache issue
 
