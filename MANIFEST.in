@@ -1,4 +1,4 @@
-graft webapp
+graft mdsrv/webapp
 include LICENSE README.md
 include setup.py
 global-exclude *.pyc

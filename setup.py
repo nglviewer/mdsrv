@@ -35,7 +35,7 @@ if __name__ == '__main__':
         url = "https://github.com/arose/mdsrv",
         zip_safe = False,
         include_package_data = True,  # use MANIFEST.in during install
-        py_modules = [ "mdsrv" ],
+        packages = [ "mdsrv" ],
         install_requires = [ "Flask", "simpletraj" ],
         entry_points = {
             "console_scripts": [
