@@ -315,9 +315,13 @@ def open_browser( app, host, port, struc=None, traj=None ):
         webbrowser.open( url, new=2, autoraise=True )
         app.config.BROWSER_OPENED = True
 
+
+# based on http://stackoverflow.com/a/27598916
 def patch_socket_bind( on_bind ):
-    # from http://stackoverflow.com/a/27598916
-    import socketserver
+    try:
+        import socketserver
+    except ImportError:
+        import SocketServer as socketserver
     original_socket_bind = socketserver.TCPServer.server_bind
     def socket_bind_wrapper(self):
         ret = original_socket_bind(self)
