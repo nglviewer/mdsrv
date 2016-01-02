@@ -312,9 +312,9 @@ def open_browser( app, host, port, struc=None, traj=None ):
         import webbrowser
         url = "http://" + host + ":" + str(port) + "/webapp"
         if struc:
-            url += "?struc=file://current_dir/" + struc
+            url += "?struc=file://cwd/" + struc
             if traj:
-                url += "&traj=file://current_dir/" + traj
+                url += "&traj=file://cwd/" + traj
         webbrowser.open( url, new=2, autoraise=True )
         app.config.BROWSER_OPENED = True
 
@@ -363,8 +363,7 @@ def main():
     app_config( args.cfg )
     DATA_DIRS = app.config.get( "DATA_DIRS", {} )
     DATA_DIRS.update( {
-        "current_dir": os.path.abspath( os.getcwd() ),
-        "example_data": os.path.join( MODULE_DIR, "data" ),
+        "cwd": os.path.abspath( os.getcwd() )
     } )
     app.config[ "DATA_DIRS" ] = DATA_DIRS
     def on_bind( host, port ):
