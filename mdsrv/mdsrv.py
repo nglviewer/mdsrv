@@ -339,10 +339,10 @@ def patch_socket_bind( on_bind ):
 
 def parse_args():
     from argparse import ArgumentParser
-    parser = ArgumentParser()
-    parser.add_argument( 'struc', type=str, nargs='?', default="" )
-    parser.add_argument( 'traj', type=str, nargs='?', default="" )
-    parser.add_argument( '--cfg', type=str )
+    parser = ArgumentParser( description="" )
+    parser.add_argument( 'struc', type=str, nargs='?', default="", help="Path to a structure/topology file. Supported are pdb, gro and cif files. The file must be included within the current working directory (cwd) or a sub directory." )
+    parser.add_argument( 'traj', type=str, nargs='?', default="", help="Path to a trajectory file. Supported are xtc/trr, nc and dcd files. The file must be included within the current working directory (cwd) or a sub directory." )
+    parser.add_argument( '--cfg', type=str, help="Path to a config file. See https://github.com/arose/mdsrv/blob/master/app.cfg.sample for an example." )
     parser.add_argument( '--host', type=str, default="127.0.0.1", help="Host for the server. The default is 127.0.0.1/localhost. To make the server available to other clients set to your IP address or to 0.0.0.0 for automatic host determination. Is overwritten by the PORT in a config file." )
     parser.add_argument( '--port', type=int, default=0, help="Port to bind the server to. The default is 0 for automatic choosing of a free port. Fails when the given port is already in use on your machine. Is overwritten by the PORT in a config file." )
     args = parser.parse_args()

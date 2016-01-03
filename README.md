@@ -166,6 +166,7 @@ Changelog
 Version 0.2dev
 --------------
 
+* DOC: described arguments of the comand line tool
 * ADD: --host and --port arguments
 
 
