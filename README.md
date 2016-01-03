@@ -166,7 +166,7 @@ Changelog
 Version 0.2dev
 --------------
 
-* ...
+* ADD: --host and --port arguments
 
 
 Version 0.1.1

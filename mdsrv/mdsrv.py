@@ -343,6 +343,8 @@ def parse_args():
     parser.add_argument( 'struc', type=str, nargs='?', default="" )
     parser.add_argument( 'traj', type=str, nargs='?', default="" )
     parser.add_argument( '--cfg', type=str )
+    parser.add_argument( '--host', type=str, default="127.0.0.1", help="Host for the server. The default is 127.0.0.1/localhost. To make the server available to other clients set to your IP address or to 0.0.0.0 for automatic host determination. Is overwritten by the PORT in a config file." )
+    parser.add_argument( '--port', type=int, default=0, help="Port to bind the server to. The default is 0 for automatic choosing of a free port. Fails when the given port is already in use on your machine. Is overwritten by the PORT in a config file." )
     args = parser.parse_args()
     return args
 
@@ -371,8 +373,8 @@ def main():
     patch_socket_bind( on_bind )
     app.run(
         debug=app.config.get( 'DEBUG', False ),
-        host=app.config.get( 'HOST', '127.0.0.1' ),
-        port=app.config.get( 'PORT', 0 ),
+        host=app.config.get( 'HOST', args.host ),
+        port=app.config.get( 'PORT', args.port ),
         threaded=True,
         processes=1
     )
