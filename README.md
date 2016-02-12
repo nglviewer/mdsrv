@@ -163,8 +163,8 @@ Finally, to restart apache issue
 Changelog
 =========
 
-Version 0.2dev
---------------
+Version 0.2
+-----------
 
 * DOC: described arguments of the comand line tool
 * ADD: --host and --port arguments
