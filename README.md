@@ -166,12 +166,16 @@ Changelog
 Version 0.2
 -----------
 
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.45961.svg)](http://dx.doi.org/10.5281/zenodo.45961)
+
 * DOC: described arguments of the comand line tool
 * ADD: --host and --port arguments
 
 
 Version 0.1.1
 -------------
+
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.44286.svg)](http://dx.doi.org/10.5281/zenodo.44286)
 
 Initial release
 
