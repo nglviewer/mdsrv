@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <title>NGL</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+        <link rel="stylesheet" href="mdsrv/webapp/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="mdsrv/webapp/css/main.css" />
+        <link rel="subresource" href="mdsrv/webapp/css/light.css" />
+        <link rel="subresource" href="mdsrv/webapp/css/dark.css" />
+
+    </head>
+
+    <body>
+
+        <script src="mdsrv/webapp/js/ngl.full.min.js"></script>
+        <script src="mdsrv/webapp/js/mdsrv.js"></script>
+
+        <script>
+
+            if( !Detector.webgl ) Detector.addGetWebGLMessage();
+
+            NGL.cssDirectory = "mdsrv/webapp/css/";
+            NGL.mainScriptFilePath = "mdsrv/webapp/js/ngl.full.min.js";
+            NGL.documentationUrl = "http://arose.github.io/ngl/doc/index.html";
+
+            // Datasources
+
+            NGL.DatasourceRegistry.add(
+                "file", new MdsrvDatasource( window.location.origin + "/mdsrv/" )
+            );
+            NGL.DatasourceRegistry.listing = NGL.DatasourceRegistry.get( "file" );
+            NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );
+            //
+	    function onInit(){
+                stage = new NGL.Stage();
+                NGL.StageWidget( stage );
+
+                var load = NGL.GET( "load" );
+                if( load ) stage.loadFile( load, { defaultRepresentation: true } );
+
+                var struc = NGL.GET( "struc" );
+                var traj = NGL.GET( "traj" );
+                if( struc ){
+                    var params = { defaultRepresentation: true };
+                    stage.loadFile( struc, params ).then( function( o ){
+                        if( traj ) o.addTrajectory( traj );
+                    } );
+                }
+            }
+
+            document.addEventListener( "DOMContentLoaded", function(){
+                NGL.init( onInit );
+            } );
+        </script>
+
+    </body>
+
+</html>
