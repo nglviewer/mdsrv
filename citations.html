@@ -12,7 +12,7 @@
   <script type="text/javascript" src="javascripts/script.js"></script>
 
   <title>MDsrv</title>
-  <meta name="description" content="Installation and Deployment">
+  <meta name="description" content="Citations">
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
@@ -25,7 +25,7 @@
       <h1 class="title">MDsrv</h1>
     </header>
     <div id="container">
-      <p class="tagline">Installation and Deployment</p>
+      <p class="tagline">Citations</p>
       <div id="main" role="main">
         <div class="download-bar">
         <div class="inner">
@@ -36,49 +36,27 @@
         <span class="blc"></span><span class="trc"></span>
         </div>
         <article class="markdown-body">
-          <h1>
-<a id="python-package-index" class="anchor" href="#python-package-index" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Python Package Index</h1>
+          <p>When using MDsrv, please cite</p>
 
-<p>To install the latest stable release with
-<a href="http://www.pip-installer.org/en/latest/index.html">pip</a> do:</p>
+<ul>
+<li>
+<a name="RoseHildebrand2015"></a>A. S. Rose, and
+P. W. Hildebrand. NGL Viewer: a web application for molecular
+visualization. <em>Nucleic Acids. Res.</em> <strong>1</strong> (2015), 43(W1):W576-9,
+doi:<a href="http://dx.doi.org/10.1093/nar/gkv402">10.1093/nar/gkv402</a>.
+PMCID:<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4489237/">PMC4489237</a>
+</li>
+</ul>
 
-<pre><code>pip install mdsrv
-</code></pre>
+<p>Thanks!</p>
 
-<h1>
-<a id="deployment" class="anchor" href="#deployment" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Deployment</h1>
+<h2>
+<a id="acknowledgements" class="anchor" href="#acknowledgements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Acknowledgements</h2>
 
-<p>To serve MDsrv as an <a href="http://httpd.apache.org/">Apache</a> Webserver via <a href="https://modwsgi.readthedocs.org">mod_wsgi</a> install first:</p>
+<p>Access function sfor the most common trajectory formats were derived from
+the <a href="http://www.mdanalysis.org/">MDAnalysis</a> software package.</p>
 
-<pre><code>sudo apt-get install git apache2 libapach2-mod-wsgi
-</code></pre>
-
-<p>Add the content of <a href="public/data/apache.config">apache.config</a> to /etc/apache2/sites-available/000-default.conf
-or replace this file.</p>
-
-<p>Copy the <a href="public/data/mdsrv.html">mdsrv.html</a> into the folder /var/www/html/.</p>
-
-<p>Generate a folder mdsrv in /var/www/ and place
-<a href="public/data/mdsrv.wsgi">mdsrv.wsgi</a> into this folder
-/var/www/mdsrv/mdsrv.wsgi.</p>
-
-<p>Download the configuration file <a href="public/data/app.cfg">app.cfg</a> and
-add adjust it. Add the path to the configuration file into the
-mdsrv.wsgi file.</p>
-
-<p>Whenever the app.cfg file is changed, the apache server has to be restarted by </p>
-
-<pre><code>sudo /etc/init.d/apache2 restart
-</code></pre>
-
-<p>The MDsrv with the structures and trajectories within the defined folder
-can be reached at localhost/mdsrv/webapp/.</p>
-
-<h1>
-<a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
-
-<p>If you have questions with the installation, please ask
-<a href="mailto:peter.hildebrand@charite.de">peter.hildebrand@charite.de</a>.</p>
+<p>MDAnalysis has been successfully used on Linux and Mac OS X.</p>
         </article>
       </div>
     </div>
