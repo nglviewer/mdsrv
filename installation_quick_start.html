@@ -29,41 +29,45 @@
       <div id="main" role="main">
         <div class="download-bar">
         <div class="inner">
-          <a href="https://github.com/j0kaso/MDsrv.github.io/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/j0kaso/MDsrv.github.io/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/j0kaso/MDsrv.github.io" class="code">View MDsrv on GitHub</a>
+          <a href="https://github.com/arose/mdsrv/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/arose/mdsrv/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="index.html" class="code">go back</a>
         </div>
         <span class="blc"></span><span class="trc"></span>
         </div>
         <article class="markdown-body">
           <h1>
-<a id="python-package-index" class="anchor" href="#python-package-index" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Python Package Index</h1>
+<a id="installation" class="anchor" target="_blank" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h1>
 
 <p>To install the latest stable release with
-<a href="http://www.pip-installer.org/en/latest/index.html">pip</a> do:</p>
+<a target="_blank" href="http://www.pip-installer.org/en/latest/index.html">pip</a> do:</p>
 
 <pre><code>pip install mdsrv
 </code></pre>
 
+<p>To install the newest versions, download it from
+<a target="_blank" href="https://github.com/arose/mdsrv/releases">github.com/arose/mdsrv/releases</a>.
+</p>
+
 <h1>
 <a id="deployment" class="anchor" href="#deployment" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Deployment</h1>
 
-<p>To serve MDsrv as an <a href="http://httpd.apache.org/">Apache</a> Webserver via <a href="https://modwsgi.readthedocs.org">mod_wsgi</a> install first:</p>
+<p>To serve MDsrv as an <a target="_blank" href="http://httpd.apache.org/">Apache</a> Webserver via <a target="_blank" href="https://modwsgi.readthedocs.org">mod_wsgi</a> install first:</p>
 
 <pre><code>sudo apt-get install git apache2 libapach2-mod-wsgi
 </code></pre>
 
-<p>Add the content of <a href="public/data/apache.config">apache.config</a> to /etc/apache2/sites-available/000-default.conf
+<p>Add the content of <a target="_blank" href="data/apache.config">apache.config</a> to <em>/etc/apache2/sites-available/000-default.conf</em>
 or replace this file.</p>
 
-<p>Copy the <a href="public/data/mdsrv.html">mdsrv.html</a> into the folder /var/www/html/.</p>
+<p>Copy the <a target="_blank" href="data/mdsrv.html">mdsrv.html</a> into the folder <em>/var/www/html/</em>.</p>
 
-<p>Generate a folder mdsrv in /var/www/ and place
-<a href="public/data/mdsrv.wsgi">mdsrv.wsgi</a> into this folder
-/var/www/mdsrv/mdsrv.wsgi.</p>
+<p>Generate a folder mdsrv in <em>/var/www/</em> and place
+<a target="_blank" href="data/mdsrv.wsgi">mdsrv.wsgi</a> into this folder
+<em>/var/www/mdsrv/mdsrv.wsgi</em>.</p>
 
-<p>Download the configuration file <a href="public/data/app.cfg">app.cfg</a> and
-add adjust it. Add the path to the configuration file into the
+<p>Download the configuration file <a target="_blank" href="data/app.cfg">app.cfg</a> and
+add adjust it. Add the path of configuration file into the
 mdsrv.wsgi file.</p>
 
 <p>Whenever the app.cfg file is changed, the apache server has to be restarted by </p>
@@ -72,30 +76,34 @@ mdsrv.wsgi file.</p>
 </code></pre>
 
 <p>The MDsrv with the structures and trajectories within the defined folder
-can be reached at localhost/mdsrv/webapp/.</p>
+can be reached at <em>localhost/mdsrv/webapp/mdsrv.html</em>.</p>
 
 <h1>
 <a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
 
-<p>If you have questions with the installation, please ask
-<a href="mailto:peter.hildebrand@charite.de">peter.hildebrand@charite.de</a>.</p>
+<p>If you have questions concerning the installation, feel free to use the
+<a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a> or write a mail to
+<a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
+<a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
+
+<p>Please give us <strong>feedback</strong>!</p>
         </article>
       </div>
     </div>
     <footer>
       <div class="owner">
-      <p><a href="https://github.com/j0kaso" class="avatar"><img src="https://avatars2.githubusercontent.com/u/11501372?v=3&amp;s=60" width="48" height="48"></a> <a href="https://github.com/j0kaso">j0kaso</a> maintains <a href="https://github.com/j0kaso/MDsrv.github.io">MDsrv</a></p>
+      <p><a target="_blank" href="https://github.com/arose" class="avatar"><img src="https://avatars1.githubusercontent.com/u/272250?v=3&s=400" width="48" height="48"></a> <a target="_blank" href="https://github.com/arose">arose</a> maintains <a target="_blank" href="https://github.com/arose/mdsrv">MDsrv</a></p>
 
 
       </div>
       <div class="creds">
-        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+        <small>This page generated using <a target="_blank" href="https://pages.github.com/">GitHub Pages</a><br>theme by <a target="_blank" href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
       </div>
     </footer>
   </div>
   <div class="current-section">
     <a href="#top">Scroll to top</a>
-    <a href="https://github.com/j0kaso/MDsrv.github.io/tarball/master" class="tar">tar</a><a href="https://github.com/j0kaso/MDsrv.github.io/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <a href="https://github.com/arose/mdsrv/tarball/master" class="tar">tar</a><a href="https://github.com/arose/mdsrv/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
     <p class="name"></p>
   </div>
 

@@ -1,0 +1,75 @@
+panel.setName( "Controls" );
+stage.setParameters( { theme: "light" } );
+
+uiButton(
+    "show/hide all",
+    function(){
+        var hidden;
+        var compX = stage.getComponentsByName("Gs11").list[0];
+        if ( compX.visible === false ){
+            hidden = true
+        }else{
+            hidden = false
+        }
+        stage.eachComponent( function( comp ){
+            if (hidden === true){
+                comp.setVisibility( true );
+            }else{
+                comp.setVisibility( false );
+            }
+        } );
+    }
+);
+
+uiButton(
+    "reverse view",
+    function(){
+        stage.eachComponent( function( comp ){
+            if (comp.visible === true){
+                comp.setVisibility( false );
+            }else{
+                comp.setVisibility( true );
+            }
+        } );
+    }
+);
+
+
+uiButton(
+    "sidechains on/off",
+    function(){
+        stage.getRepresentationsByName( "licorice" ).list.forEach( function( repre ){
+            repre.setVisibility( !repre.visible );
+        } );
+    }
+);
+
+var files = ["Gs11", "Gs11"];
+var promiseList = [];
+
+
+files.forEach( function( name ){
+    promiseList.push( stage.loadFile( "file://MDsrv/" + name + "/equi.part0001.gro", {name: name} ) );
+} );
+
+Promise.all( promiseList ).then( function( objectList ){
+
+    var compX;
+
+    objectList.forEach( function( comp, i ){
+
+        if( i === 0 ){
+            compX = comp;
+        }else{
+            comp.superpose( compX, true );
+
+        };
+
+        comp.addRepresentation( "cartoon" );
+        comp.addRepresentation( "licorice", { visible: false } );
+        comp.centerView();
+        comp.addTrajectory( "MDsrv/" + comp.name + "/@md01.xtc" );
+
+    } );
+
+} );

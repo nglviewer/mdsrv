@@ -12,7 +12,7 @@
   <script type="text/javascript" src="javascripts/script.js"></script>
 
   <title>MDsrv</title>
-  <meta name="description" content="Installation and Deployment">
+  <meta name="description" content="Usage example">
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
@@ -25,77 +25,75 @@
       <h1 class="title">MDsrv</h1>
     </header>
     <div id="container">
-      <p class="tagline">Installation and Deployment</p>
+      <p class="tagline">Usage example</p>
       <div id="main" role="main">
         <div class="download-bar">
         <div class="inner">
-          <a href="https://github.com/j0kaso/MDsrv.github.io/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/j0kaso/MDsrv.github.io/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/j0kaso/MDsrv.github.io" class="code">View MDsrv on GitHub</a>
+          <a href="https://github.com/arose/mdsrv/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/arose/mdsrv/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="index.html" class="code">go back</a>
         </div>
         <span class="blc"></span><span class="trc"></span>
         </div>
         <article class="markdown-body">
           <h1>
-<a id="python-package-index" class="anchor" href="#python-package-index" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Python Package Index</h1>
-
-<p>To install the latest stable release with
-<a href="http://www.pip-installer.org/en/latest/index.html">pip</a> do:</p>
-
-<pre><code>pip install mdsrv
-</code></pre>
 
 <h1>
-<a id="deployment" class="anchor" href="#deployment" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Deployment</h1>
+<a id="local" class="anchor" href="#local" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Local usage</h1>
 
-<p>To serve MDsrv as an <a href="http://httpd.apache.org/">Apache</a> Webserver via <a href="https://modwsgi.readthedocs.org">mod_wsgi</a> install first:</p>
+<p>Within a local environment or for short-time usage and testing, the MDsrv can be run within a directory with access to the child directories with the following commands:</p>
 
-<pre><code>sudo apt-get install git apache2 libapach2-mod-wsgi
-</code></pre>
+<pre><code>mdsrv</code>
+<code>mdsrv struc.gro traj.xtc</code>
+<code>mdsrv --cfg my_conf.cfg</code></pre>
+<p>The configuration file is explained below. To access the simulations within the <a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a>, browse through the folders by clicking <em>File --> Import</em>. If you want to load a trajectory containing already all atomistic informations (as .gro trajectories), select <em>File --> as trajectory</em> before loading the file.</p>
 
-<p>Add the content of <a href="public/data/apache.config">apache.config</a> to /etc/apache2/sites-available/000-default.conf
-or replace this file.</p>
+<h1>
+<a id="global" class="anchor" href="#global" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>System wide/web-server usage</h1>
 
-<p>Copy the <a href="public/data/mdsrv.html">mdsrv.html</a> into the folder /var/www/html/.</p>
+<p>
+To maintain MDsrv as a system wide web-server, follow the <a href="installation_quick_start.html">installation instructions</a>. Besides apace, any webserver with wsgi support can be used.
+</p>
+<p>We provide an  <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example">example</a> of the usage of the MDsrv as a web-server in combination with the <a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a>. By providing a web-server, collaborators can easily inspect the simulations visually on-the-fly.
+</p>
 
-<p>Generate a folder mdsrv in /var/www/ and place
-<a href="public/data/mdsrv.wsgi">mdsrv.wsgi</a> into this folder
-/var/www/mdsrv/mdsrv.wsgi.</p>
+<h1>
+<a id="files" class="anchor" href="#global" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>File description</h1>
 
-<p>Download the configuration file <a href="public/data/app.cfg">app.cfg</a> and
-add adjust it. Add the path to the configuration file into the
-mdsrv.wsgi file.</p>
-
-<p>Whenever the app.cfg file is changed, the apache server has to be restarted by </p>
-
-<pre><code>sudo /etc/init.d/apache2 restart
-</code></pre>
-
-<p>The MDsrv with the structures and trajectories within the defined folder
-can be reached at localhost/mdsrv/webapp/.</p>
-
+<h2>Configuration file</h2>
+<p>
+The configuration file can be (optionally) used to locate the directories that will be accessible though the web server and it defines access restrictions as a user and a password. It is written in Python and a sample <a target="_blank" href="data/app.cfg">.cfg file</a> is provided.
+</p>
+<h2>.ngl file</h2>
+<p>
+The .ngl file is written in JavaScript and contains the commands to execute a session. A sample <a target="_blank" href="data/example.ngl">.ngl file</a> shows additional options like functions and basic loading commands.
+</p>
 <h1>
 <a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
 
-<p>If you have questions with the installation, please ask
-<a href="mailto:peter.hildebrand@charite.de">peter.hildebrand@charite.de</a>.</p>
+<p>If you have questions concerning the usage, feel free to use the
+<a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a> or write a mail to
+<a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
+<a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
+
+<p>Please give us <strong>feedback</strong>!</p>
         </article>
       </div>
     </div>
     <footer>
       <div class="owner">
-      <p><a href="https://github.com/j0kaso" class="avatar"><img src="https://avatars2.githubusercontent.com/u/11501372?v=3&amp;s=60" width="48" height="48"></a> <a href="https://github.com/j0kaso">j0kaso</a> maintains <a href="https://github.com/j0kaso/MDsrv.github.io">MDsrv</a></p>
+      <p><a target="_blank" href="https://github.com/arose" class="avatar"><img src="https://avatars1.githubusercontent.com/u/272250?v=3&s=400" width="48" height="48"></a> <a target="_blank" href="https://github.com/arose">arose</a> maintains <a target="_blank" href="https://github.com/arose/mdsrv">MDsrv</a></p>
 
 
       </div>
       <div class="creds">
-        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+        <small>This page generated using <a target="_blank" href="https://pages.github.com/">GitHub Pages</a><br>theme by <a target="_blank" href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
       </div>
     </footer>
   </div>
   <div class="current-section">
     <a href="#top">Scroll to top</a>
-    <a href="https://github.com/j0kaso/MDsrv.github.io/tarball/master" class="tar">tar</a><a href="https://github.com/j0kaso/MDsrv.github.io/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <a href="https://github.com/arose/mdsrv/tarball/master" class="tar">tar</a><a href="https://github.com/arose/mdsrv/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
     <p class="name"></p>
   </div>
 
