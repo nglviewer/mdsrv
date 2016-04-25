@@ -1,43 +1,42 @@
-<!doctype html>
-<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
-<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on https://github.com/jonrohan -->
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen">
-  <link rel="stylesheet" href="stylesheets/github-dark.css">
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/script.js"></script>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="MDsrv : MD trajectory server">
 
-  <title>MDsrv</title>
-  <meta name="description" content="MD trajectory server">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MDsrv</title>
+  </head>
 
-</head>
+  <body>
 
-<body>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/j0kaso/mdsrv">View on GitHub</a>
 
-  <div class="wrapper">
-    <header>
-      <h1 class="title">MDsrv</h1>
-    </header>
-    <div id="container">
-      <p class="tagline">MD trajectory server</p>
-      <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://github.com/arose/mdsrv/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/arose/mdsrv/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a target="_blank" href="https://github.com/arose/mdsrv" class="code">View MDsrv on GitHub</a>
-        </div>
-        <span class="blc"></span><span class="trc"></span>
-        </div>
-        <article class="markdown-body">
-          <p><strong>MDsrv</strong> is a tool to show molecular dynamics (MD) trajectories on-line
-          using a web
+          <h1 id="project_title">MDsrv</h1>
+          <h2 id="project_tagline">MD trajectory server</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/j0kaso/mdsrv/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/j0kaso/mdsrv/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p><strong>MDsrv</strong> is a tool to stream trajectories of molecular coordinates and
+show them interactively within a web browser. With that, Molecular Dynamics
+(MD) trajectories can be served within a local network to co-workers or
+over the Internet to colleagues all over the world.</p>
+
+<p>MDsrv is a tool to show molecular dynamics trajectories on-line using a web
 server that provides fast access to MD trajectories and a web application
 to view them. To allow meaningful display of raw datasets processing options
 for centering, superposition and handling of periodic boundaries are included.
@@ -47,14 +46,8 @@ web application displays large molecular structures and animates their
 MD trajectories to allow interactive exploration and collaborative visual
 analysis within a local network or over the Internet.</p>
 
-<p>An <strong>example of the usage</strong> of the MDsrv in combination with the
-<a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a> can
-be found <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example">here</a>.
-
-There, two simulations are shown and can be run by pressing the 'play' button. Additionally, the
-<a target="_blank" href="data/session.ngl">.ngl file</a> which is used to generate this session provides access
-to also self-written functions as 'show/hide all'.
-</p>
+<p>An example of the usage of MDsrv in combination with the NGL viewer can
+be found here: <a href="http://proteinformatics.charite.de/MDsrv-example">MDsrv-example</a></p>
 
 <p>Read more:</p>
 
@@ -68,43 +61,35 @@ to also self-written functions as 'show/hide all'.
 <a id="availability" class="anchor" href="#availability" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Availability</h3>
 
 <p>All source code is available under the
-<a target="_blank" href="https://opensource.org/licenses/MIT">MIT License</a> from
-<a target="_blank" href="https://github.com/arose/MDsrv">github.com/arose/mdsrv</a> and the Python
+<a href="https://opensource.org/licenses/MIT">MIT License</a> from
+<a href="https://github.com/arose/mdsrv">github.com/arose/mdsrv</a> and the Python
 Package index
-<a target="_blank" href="http://pypi.python.org/pypi/MDsrv">pypi.python.org/pypi/MDsrv</a>.</p>
+<a href="http://pypi.python.org/pypi/mdsrv">pypi.python.org/pypi/mdsrv</a>.</p>
 
 <h3>
 <a id="participating" class="anchor" href="#participating" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Participating</h3>
 
-<p>If you have any <strong>questions</strong>, found some <strong>bugs</strong>, or want to report 
-<strong>enhancement requests</strong> use the <a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a> or write a mail to
-<a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
-<a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
+<p>Ask your <strong>questions</strong> to <a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
 
-<p>Please give us <strong>feedback</strong>!</p>
+<p>Please report <strong>bugs</strong> or <strong>enhancement requests</strong> through the <a href="%7B%7Bsite.github.issues%7D%7D">Issue
+Tracker</a>. </p>
 
-<p>MDsrv is <strong>open source</strong> and welcomes <em>your</em> contributions. <a target="_blank" href="https://github.com/arose/mdsrv#fork-destination-box">Fork
-the repository on GitHub</a> and submit a pull request.</p>
-        </article>
-      </div>
+<p>MDsrv is <strong>open source</strong> and welcomes <em>your</em> contributions. <a href="https://github.com/arose/mdsrv#fork-destination-box">Fork
+the repository on
+GitHub</a>
+and submit a pull request.</p>
+      </section>
     </div>
-    <footer>
-      <div class="owner">
-      <p><a target="_blank" href="https://github.com/arose" class="avatar"><img src="https://avatars1.githubusercontent.com/u/272250?v=3&s=400" width="48" height="48"></a> <a target="_blank" href="https://github.com/arose">arose</a> maintains <a target="_blank" href="https://github.com/arose/mdsrv">MDsrv</a></p>
 
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">MDsrv maintained by <a href="https://github.com/j0kaso">j0kaso</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
 
-      </div>
-      <div class="creds">
-        <small>This page generated using <a target="_blank" href="https://pages.github.com/">GitHub Pages</a><br>theme by <a target="_blank" href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
-      </div>
-    </footer>
-  </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/arose/mdsrv/tarball/master" class="tar">tar</a><a href="https://github.com/arose/mdsrv/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
+    
 
-  
-</body>
+  </body>
 </html>
