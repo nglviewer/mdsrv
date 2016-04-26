@@ -1,69 +1,73 @@
-<!doctype html>
-<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
-<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on https://github.com/jonrohan -->
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen">
-  <link rel="stylesheet" href="stylesheets/github-dark.css">
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/script.js"></script>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="MDsrv : MD trajectory server">
 
-  <title>MDsrv</title>
-  <meta name="description" content="Installation and Deployment">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MDsrv</title>
+  </head>
 
-</head>
+  <body>
 
-<body>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" target="_blank" href="https://github.com/arose/mdsrv">View on GitHub</a>
 
-  <div class="wrapper">
-    <header>
-      <h1 class="title">MDsrv</h1>
-    </header>
-    <div id="container">
-      <p class="tagline">Installation and Deployment</p>
-      <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://github.com/j0kaso/MDsrv.github.io/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/j0kaso/MDsrv.github.io/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/j0kaso/MDsrv.github.io" class="code">View MDsrv on GitHub</a>
-        </div>
-        <span class="blc"></span><span class="trc"></span>
-        </div>
-        <article class="markdown-body">
+          <h1 id="project_title">MDsrv</h1>
+          <h2 id="project_tagline">Installation and Deployment</h2>
+          
+                  <p><strong><a href="index.html">Home</a></strong></p>
+
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/arose/mdsrv/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/arose/mdsrv/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+
+    <div id="main_content_wrap" class="outer">
+      <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+      <section id="main_content" class="inner">
           <h1>
-<a id="python-package-index" class="anchor" href="#python-package-index" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Python Package Index</h1>
+<a id="installation" class="anchor" target="_blank" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h1>
 
 <p>To install the latest stable release with
-<a href="http://www.pip-installer.org/en/latest/index.html">pip</a> do:</p>
+<a target="_blank" href="http://www.pip-installer.org/en/latest/index.html">pip</a> do:</p>
 
 <pre><code>pip install mdsrv
 </code></pre>
 
+<p>To install the newest versions, download it from
+<a target="_blank" href="https://github.com/arose/mdsrv/releases">github.com/arose/mdsrv/releases</a>.
+</p>
+
 <h1>
 <a id="deployment" class="anchor" href="#deployment" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Deployment</h1>
 
-<p>To serve MDsrv as an <a href="http://httpd.apache.org/">Apache</a> Webserver via <a href="https://modwsgi.readthedocs.org">mod_wsgi</a> install first:</p>
+<p>To serve MDsrv as an <a target="_blank" href="http://httpd.apache.org/">Apache</a> Webserver via <a target="_blank" href="https://modwsgi.readthedocs.org">mod_wsgi</a> install first:</p>
 
 <pre><code>sudo apt-get install git apache2 libapach2-mod-wsgi
 </code></pre>
 
-<p>Add the content of <a href="public/data/apache.config">apache.config</a> to /etc/apache2/sites-available/000-default.conf
+<p>Add the content of <a target="_blank" href="data/apache.config">apache.config</a> to <em>/etc/apache2/sites-available/000-default.conf</em>
 or replace this file.</p>
 
-<p>Copy the <a href="public/data/mdsrv.html">mdsrv.html</a> into the folder /var/www/html/.</p>
+<p>Copy the <a target="_blank" href="data/mdsrv.html">mdsrv.html</a> into the folder <em>/var/www/html/</em>.</p>
 
-<p>Generate a folder mdsrv in /var/www/ and place
-<a href="public/data/mdsrv.wsgi">mdsrv.wsgi</a> into this folder
-/var/www/mdsrv/mdsrv.wsgi.</p>
+<p>Generate a folder mdsrv in <em>/var/www/</em> and place
+<a target="_blank" href="data/mdsrv.wsgi">mdsrv.wsgi</a> into this folder
+<em>/var/www/mdsrv/mdsrv.wsgi</em>.</p>
 
-<p>Download the configuration file <a href="public/data/app.cfg">app.cfg</a> and
-add adjust it. Add the path to the configuration file into the
+<p>Download the configuration file <a target="_blank" href="data/app.cfg">app.cfg</a> and
+add adjust it. Add the path of configuration file into the
 mdsrv.wsgi file.</p>
 
 <p>Whenever the app.cfg file is changed, the apache server has to be restarted by </p>
@@ -72,33 +76,31 @@ mdsrv.wsgi file.</p>
 </code></pre>
 
 <p>The MDsrv with the structures and trajectories within the defined folder
-can be reached at localhost/mdsrv/webapp/.</p>
+can be reached at <em>localhost/mdsrv/webapp/mdsrv.html</em>.</p>
 
 <h1>
 <a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
 
-<p>If you have questions with the installation, please ask
-<a href="mailto:peter.hildebrand@charite.de">peter.hildebrand@charite.de</a>.</p>
-        </article>
-      </div>
+<p>If you have questions concerning the installation, feel free to use the
+<a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a> or write a mail to
+<a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
+<a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
+
+<p>Please give us <strong>feedback</strong>!</p>
+        
+      </section>
     </div>
-    <footer>
-      <div class="owner">
-      <p><a href="https://github.com/j0kaso" class="avatar"><img src="https://avatars2.githubusercontent.com/u/11501372?v=3&amp;s=60" width="48" height="48"></a> <a href="https://github.com/j0kaso">j0kaso</a> maintains <a href="https://github.com/j0kaso/MDsrv.github.io">MDsrv</a></p>
 
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p><strong><a href="index.html">Home</a></strong></p>
+        <p class="copyright">MDsrv maintained by <a target="_blank" href="https://github.com/arose">arose</a></p>
+        <p>Published with <a target="_blank" href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
 
-      </div>
-      <div class="creds">
-        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
-      </div>
-    </footer>
-  </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/j0kaso/MDsrv.github.io/tarball/master" class="tar">tar</a><a href="https://github.com/j0kaso/MDsrv.github.io/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
+    
 
-  
-</body>
+  </body>
 </html>
