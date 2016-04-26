@@ -13,6 +13,36 @@
 
   <body>
 
+    <script src="data/ngl.embedded.min.js"></script>
+    <script>
+        NGL.mainScriptFilePath = "data/ngl.embedded.min.js";
+
+        document.addEventListener( "DOMContentLoaded", function() {
+          function getModelURL( model ){
+              var href = window.location.href;
+              return href.substr( 0, href.lastIndexOf( "/" ) + 1 ) + model;
+          }
+
+          var stage = new NGL.Stage( "viewport" );
+          stage.loadFile( getModelURL("data/md.gro"), { asTrajectory: true, running: true }  ).then( function( o ){
+              o.addRepresentation( "cartoon" );
+              o.centerView();
+          } );
+          stage.setOrientation(
+                [[-17.368877091269418,4.556223891659043,-19.999958948625682],[0.8121475098230106,-0.2950105349323463,-0.5033738238795953],[-28.381417751312256,-13.79699957370758,-0.29250049591064453],[0,0,0]]
+            );
+          var toggleSpin = document.getElementById( "playerButton" );
+            var isSpinning = false;
+            if( !isSpinning ){
+                stage.setSpin( [ 0, 1, 0.5 ], 0.01 );
+                isSpinning = true;
+            }
+            console.log(stage.compList[0])
+        } );
+
+    </script>
+
+
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
@@ -33,6 +63,8 @@
     <div id="main_content_wrap" class="outer">
       <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
       <section id="main_content" class="inner">
+        <div id="viewport" style="width:300px; height:300px; margin:0 auto;">
+        </div>
           <p><strong>MDsrv</strong> is a tool to show molecular dynamics (MD) trajectories on-line
           using a web
 server that provides fast access to MD trajectories and a web application
