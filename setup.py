@@ -36,7 +36,7 @@ if __name__ == '__main__':
         zip_safe = False,
         include_package_data = True,  # use MANIFEST.in during install
         packages = [ "mdsrv" ],
-        install_requires = [ "Flask", "simpletraj" ],
+        install_requires = [ "simpletraj" ],
         entry_points = {
             "console_scripts": [
                 'mdsrv = mdsrv:entry_point'
