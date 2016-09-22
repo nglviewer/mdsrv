@@ -13,11 +13,17 @@ APP_CFG = ''
 # see http://flask.pocoo.org/docs/deploying/mod_wsgi/
 
 
-import os
+import os, sys
 
 if APP_ENV:
-    activate_this = os.path.join( APP_ENV, 'activate_this.py' )
-    execfile( activate_this, dict( __file__=activate_this ) )
+    if sys.version_info[0] > (3,):
+        activate_this = os.path.join( APP_ENV, 'activate_this.py' )
+        with open( activate_this ) as f:
+            code = compile( f.read(), activate_this, 'exec' )
+            exec( code, dict( __file__=activate_this ) )
+    else:
+        activate_this = os.path.join( APP_ENV, 'activate_this.py' )
+        execfile( activate_this, dict( __file__=activate_this ) )
 
 from mdsrv import app as application
 if APP_CFG:
