@@ -25,8 +25,8 @@ Table of contents
 =================
 
 * [Documentation](#documentation)
-* [RESTful API](#restful api)
-* [NGL browser support](#ngl browser support)
+* [RESTful API](#restful-api)
+* [NGL browser support](#ngl browser-support)
 * [Acknowledgments](#acknowledgments)
 * [Cite](#cite)
 
