@@ -20,7 +20,7 @@
 
           <h1 id="project_title">MDsrv</h1>
           <h2 id="project_tagline">Installation and Deployment</h2>
-          
+
                   <p><strong><a href="index.html">Home</a></strong></p>
 
 
@@ -40,43 +40,68 @@
 <a id="installation" class="anchor" target="_blank" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h1>
 
 <p>To install the latest stable release with
-<a target="_blank" href="http://www.pip-installer.org/en/latest/index.html">pip</a> do:</p>
+<a target="_blank" href="http://www.pip-installer.org/en/latest/index.html">pip</a> execute within the bash:</p>
 
 <pre><code>pip install mdsrv
 </code></pre>
 
-<p>To install the newest versions, download it from
-<a target="_blank" href="https://github.com/arose/mdsrv/releases">github.com/arose/mdsrv/releases</a>.
+<p>To install the newest version, download it from
+<a target="_blank" href="https://github.com/arose/mdsrv/releases">github.com/arose/mdsrv/releases</a> and install it manually.
 </p>
 
 <h1>
 <a id="deployment" class="anchor" href="#deployment" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Deployment</h1>
 
-<p>To serve MDsrv as an <a target="_blank" href="http://httpd.apache.org/">Apache</a> Webserver via <a target="_blank" href="https://modwsgi.readthedocs.org">mod_wsgi</a> install first:</p>
+<p>To serve MDsrv as an <a target="_blank" href="http://httpd.apache.org/">Apache</a> Webserver via <a target="_blank" href="https://modwsgi.readthedocs.org">mod_wsgi</a> install apache2 and libapache2-mod-wsgi to your system if not existing.</p>
 
-<pre><code>sudo apt-get install git apache2 libapach2-mod-wsgi
+<pre><code>sudo apt-get install apache2 libapache2-mod-wsgi
 </code></pre>
 
 <p>Add the content of <a target="_blank" href="data/apache.config">apache.config</a> to <em>/etc/apache2/sites-available/000-default.conf</em>
-or replace this file.</p>
+or replace this file. Adjust also the user and group.</p>
 
-<p>Copy the <a target="_blank" href="data/mdsrv.html">mdsrv.html</a> into the folder <em>/var/www/html/</em>.</p>
+<p>Copy the <a target="_blank" href="data/mdsrv.html">mdsrv.html</a> into the folder (<em>/var/www/html/</em>).</p>
+
+<p>Download the configuration file <a target="_blank" href="data/app.cfg">app.cfg</a> and
+adjust it by adding the path to your trajectories. Whenever the app.cfg file is changed, the apache server has to be restarted with </p>
+
+<pre><code>sudo /etc/init.d/apache2 restart
+</code></pre> <p> or </p> <pre><code>sudo service apache2 restart
+</code></pre>
 
 <p>Generate a folder mdsrv in <em>/var/www/</em> and place
 <a target="_blank" href="data/mdsrv.wsgi">mdsrv.wsgi</a> into this folder
-<em>/var/www/mdsrv/mdsrv.wsgi</em>.</p>
+<em>/var/www/mdsrv/mdsrv.wsgi</em>. Add the path of the configuration file (app.cfg) into the
+mdsrv.wsgi file including the name of the file. Restart now the apache server.</p>
 
-<p>Download the configuration file <a target="_blank" href="data/app.cfg">app.cfg</a> and
-add adjust it. Add the path of configuration file into the
-mdsrv.wsgi file.</p>
-
-<p>Whenever the app.cfg file is changed, the apache server has to be restarted by </p>
-
-<pre><code>sudo /etc/init.d/apache2 restart
-</code></pre>
 
 <p>The MDsrv with the structures and trajectories within the defined folder
-can be reached at <em>localhost/mdsrv/webapp/mdsrv.html</em>.</p>
+can be reached at <em>http://localhost/mdsrv.html</em> by loading a structure
+via "File -> Import" and adding afterwards the trajectory within the structure
+menu by selecting "Remote trajectory - import".</p>
+
+
+
+<h1><a id="files" class="anchor" href="#global" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h1>
+
+<p>The general usage is explained <a href="basic_eyample.html">here</a>.</p>
+
+
+
+<h1><a id="files" class="anchor" href="#global" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>File description</h1>
+
+<h2>Configuration file</h2>
+<p>The configuration file can be (optionally) used to locate the directories that will be accessible though the web server and it defines access restrictions as user and password settings. It is written in Python and a sample <a target="_blank" href="data/app.cfg">.cfg file</a> is provided.</p>
+
+
+<h2>apache.config file</h2>
+<p>The <a target="_blank" href="data/apache.config">apache.config file</a> contains the input for the configuration of the apache server. The user and the group should be adjusted according to the settings of the server.</p>
+
+
+<h2>.wsgi file</h2>
+<p>The <a target="_blank" href="data/mdsrv.wsgi">.wsgi file</a> starts the mdsrv application. A virtual environment and a configuration file can be set.</p>
+
+
 
 <h1>
 <a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
@@ -87,7 +112,7 @@ can be reached at <em>localhost/mdsrv/webapp/mdsrv.html</em>.</p>
 <a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
 
 <p>Please give us <strong>feedback</strong>!</p>
-        
+
       </section>
     </div>
 
@@ -100,7 +125,7 @@ can be reached at <em>localhost/mdsrv/webapp/mdsrv.html</em>.</p>
       </footer>
     </div>
 
-    
+
 
   </body>
 </html>
