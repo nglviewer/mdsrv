@@ -1,10 +1,29 @@
 
-//////////
-// MDSrv
+For license texts see at the end of this document.
 
-	The MIT License, Copyright &copy; 2013-2015 Alexander S. Rose
+
+//////////
+// MDsrv
+
+	The MIT License, Copyright &copy; 2013-2016 Alexander S. Rose
 
 	applies to all files unless otherwise noted
+
+
+//////////
+// NGL
+
+	The MIT License, Copyright &copy; 2013-2016 Alexander S. Rose
+
+	applies to all files unless otherwise noted (excluding files in tmp/*).
+
+	For further license information see <https://github.com/arose/ngl/blob/master/LICENSE>
+
+
+
+
+//////////////////
+// License texts
 
 
 The MIT License
@@ -28,3 +47,5 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+
