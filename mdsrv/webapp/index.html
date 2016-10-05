@@ -1,67 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <title>NGL/MDsrv</title>
 
-    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-        <title>NGL/MDsrv</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="subresource" href="css/light.css" />
+    <link rel="subresource" href="css/dark.css" />
+</head>
+<body>
+    <!-- NGL -->
+    <script src="js/ngl.js"></script>
 
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <!-- UI -->
+    <script src="js/lib/signals.min.js"></script>
+    <script src="js/lib/tether.min.js"></script>
+    <script src="js/lib/colorpicker.min.js"></script>
+    <script src="js/ui/ui.js"></script>
+    <script src="js/ui/ui.extra.js"></script>
+    <script src="js/ui/ui.ngl.js"></script>
+    <script src="js/gui.js"></script>
 
-        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
-        <link rel="stylesheet" href="css/font-awesome.min.css" />
-        <link rel="stylesheet" href="css/main.css" />
-        <link rel="subresource" href="css/light.css" />
-        <link rel="subresource" href="css/dark.css" />
+    <!-- MDSRV -->
+    <script src="js/mdsrv.js"></script>
 
-    </head>
+    <script>
+        NGL.cssDirectory = "css/";
+        NGL.documentationUrl = "http://arose.github.io/ngl/api/";
 
-    <body>
+        // Datasources
+        NGL.DatasourceRegistry.add(
+            "file", new MdsrvDatasource( window.location.origin + "/" )
+        );
+        NGL.DatasourceRegistry.listing = NGL.DatasourceRegistry.get( "file" );
+        NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );
 
-        <script src="js/ngl.full.min.js"></script>
-        <script src="js/mdsrv.js"></script>
+        document.addEventListener( "DOMContentLoaded", function(){
+            stage = new NGL.Stage();
+            NGL.StageWidget( stage );
 
-        <script>
+            var load = NGL.getQuery( "load" );
+            if( load ) stage.loadFile( load, { defaultRepresentation: true } );
 
-            if( !Detector.webgl ) Detector.addGetWebGLMessage();
-
-            NGL.cssDirectory = "./css/";
-            NGL.mainScriptFilePath = "./js/ngl.full.min.js";
-            NGL.documentationUrl = "http://arose.github.io/ngl/doc/index.html";
-
-            // Datasources
-
-            NGL.DatasourceRegistry.add(
-                "file", new MdsrvDatasource( window.location.origin + "/" )
-            );
-            NGL.DatasourceRegistry.listing = NGL.DatasourceRegistry.get( "file" );
-            NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );
-
-            //
-
-            function onInit(){
-                stage = new NGL.Stage();
-                NGL.StageWidget( stage );
-
-                var load = NGL.GET( "load" );
-                if( load ) stage.loadFile( load, { defaultRepresentation: true } );
-
-                var struc = NGL.GET( "struc" );
-                var traj = NGL.GET( "traj" );
-                if( struc ){
-                    var params = { defaultRepresentation: true };
-                    stage.loadFile( struc, params ).then( function( o ){
-                        if( traj ) o.addTrajectory( traj );
-                    } );
-                }
+            var struc = NGL.getQuery( "struc" );
+            var traj = NGL.getQuery( "traj" );
+            if( struc ){
+                var params = { defaultRepresentation: true };
+                stage.loadFile( struc, params ).then( function( o ){
+                    if( traj ) o.addTrajectory( traj );
+                } );
             }
-
-            document.addEventListener( "DOMContentLoaded", function(){
-                NGL.init( onInit );
-            } );
-
-        </script>
-
-    </body>
-
+        } );
+    </script>
+</body>
 </html>

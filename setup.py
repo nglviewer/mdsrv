@@ -25,19 +25,19 @@ CLASSIFIERS = [
 
 if __name__ == '__main__':
     setup(
-        name = "MDsrv",
-        author = "Alexander S. Rose",
-        author_email = "alexander.rose@weirdbyte.de",
-        description = "Server for coordinate trajectories from molecular dynamics simulations",
-        version = VERSION,
-        classifiers = CLASSIFIERS,
-        license = "MIT",
-        url = "https://github.com/arose/mdsrv",
-        zip_safe = False,
-        include_package_data = True,  # use MANIFEST.in during install
-        packages = [ "mdsrv" ],
-        install_requires = [ "flask", "simpletraj" ],
-        entry_points = {
+        name="MDsrv",
+        author="Alexander S. Rose",
+        author_email="alexander.rose@weirdbyte.de",
+        description="Server for coordinate trajectories from molecular dynamics simulations",
+        version=VERSION,
+        classifiers=CLASSIFIERS,
+        license="MIT",
+        url="https://github.com/arose/mdsrv",
+        zip_safe=False,
+        include_package_data=True,  # use MANIFEST.in during install
+        packages=["mdsrv"],
+        install_requires=["flask", "simpletraj"],
+        entry_points={
             "console_scripts": [
                 'mdsrv = mdsrv:entry_point'
             ]
