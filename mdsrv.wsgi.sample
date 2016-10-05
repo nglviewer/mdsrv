@@ -16,7 +16,7 @@ APP_CFG = ''
 import os, sys
 
 if APP_ENV:
-    if sys.version_info[0] > (3,):
+    if sys.version_info > (3,):
         activate_this = os.path.join( APP_ENV, 'activate_this.py' )
         with open( activate_this ) as f:
             code = compile( f.read(), activate_this, 'exec' )
