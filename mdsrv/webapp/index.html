@@ -23,6 +23,7 @@
     <script src="js/ui/ui.js"></script>
     <script src="js/ui/ui.extra.js"></script>
     <script src="js/ui/ui.ngl.js"></script>
+    <script src="js/ui/ui.helper.js"></script>
     <script src="js/gui.js"></script>
 
     <!-- MDSRV -->
@@ -38,7 +39,6 @@
         );
         NGL.DatasourceRegistry.listing = NGL.DatasourceRegistry.get( "file" );
         NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );
-
         document.addEventListener( "DOMContentLoaded", function(){
             stage = new NGL.Stage();
             NGL.StageWidget( stage );
