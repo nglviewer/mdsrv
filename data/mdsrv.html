@@ -18,7 +18,15 @@
 
     <body>
 
-        <script src="mdsrv/webapp/js/ngl.full.min.js"></script>
+		<script src="mdsrv/webapp/js/ngl.js"></script>
+		<script src="mdsrv/webapp/js/lib/signals.min.js"></script>
+		<script src="mdsrv/webapp/js/lib/tether.min.js"></script>
+		<script src="mdsrv/webapp/js/lib/colorpicker.min.js"></script>
+		<script src="mdsrv/webapp/js/ui/ui.js"></script>
+		<script src="mdsrv/webapp/js/ui/ui.extra.js"></script>
+		<script src="mdsrv/webapp/js/ui/ui.ngl.js"></script>
+		<script src="mdsrv/webapp/js/ui/ui.helper.js"></script>
+		<script src="mdsrv/webapp/js/gui.js"></script>
         <script src="mdsrv/webapp/js/mdsrv.js"></script>
 
         <script>
@@ -26,7 +34,7 @@
             if( !Detector.webgl ) Detector.addGetWebGLMessage();
 
             NGL.cssDirectory = "mdsrv/webapp/css/";
-            NGL.mainScriptFilePath = "mdsrv/webapp/js/ngl.full.min.js";
+            NGL.mainScriptFilePath = "mdsrv/webapp/js/ngl.js";
             NGL.documentationUrl = "http://arose.github.io/ngl/doc/index.html";
 
             // Datasources

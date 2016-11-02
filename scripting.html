@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="MDsrv : MD trajectory server">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>MDsrv</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" target="_blank" href="https://github.com/arose/mdsrv">View on GitHub</a>
+
+          <h1 id="project_title">MDsrv</h1>
+          <h2 id="project_tagline">Scripting examples</h2>
+
+                  <p><strong><a href="index.html">Home</a>
+<br><a href="installation_deployment.html">Installation & Deployment</a>
+<br><a href="usage.html">Usage</a>
+<br><a href="scripting.html">Scripting</a>
+<br><a href="citations.html">Citation</a></strong></p>
+
+
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/arose/mdsrv/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/arose/mdsrv/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+
+    <div id="main_content_wrap" class="outer">
+      <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+      <section id="main_content" class="inner">
+
+
+
+<h1><a id="html" class="anchor" href="#html" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>html coding</h1>
+
+<h2>Web-application (webapp) example</h2>
+
+<p align=justify>This html example is partly extracted from the sample <a target="_blank" href="data/mdsrv.html">mdsrv.html file</a>.</p>
+
+<pre><code>&lt!DOCTYPE html&gt
+&lthtml lang="en"&gt
+&lthead&gt
+    &lttitle&gtNGL/MDsrv&lt/title&gt
+
+    &ltmeta charset="utf-8"&gt
+    &ltmeta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"&gt
+
+    &ltlink rel="icon" href="favicon.ico" type="image/x-icon"/&gt
+    &ltlink rel="stylesheet" href="css/font-awesome.min.css" /&gt
+    &ltlink rel="stylesheet" href="css/main.css" /&gt
+    &ltlink rel="subresource" href="css/light.css" /&gt
+    &ltlink rel="subresource" href="css/dark.css" /&gt
+&lt/head&gt
+&ltbody&gt
+    &lt!-- NGL --&gt
+    &ltscript src="js/ngl.js"&gt&lt/script&gt
+
+    &lt!-- UI --&gt
+    &ltscript src="js/lib/signals.min.js"&gt&lt/script&gt
+    &ltscript src="js/lib/tether.min.js"&gt&lt/script&gt
+    &ltscript src="js/lib/colorpicker.min.js"&gt&lt/script&gt
+    &ltscript src="js/ui/ui.js"&gt&lt/script&gt
+    &ltscript src="js/ui/ui.extra.js"&gt&lt/script&gt
+    &ltscript src="js/ui/ui.ngl.js"&gt&lt/script&gt
+    &ltscript src="js/ui/ui.helper.js"&gt&lt/script&gt
+    &ltscript src="js/gui.js"&gt&lt/script&gt
+
+    &lt!-- MDSRV --&gt
+    &ltscript src="js/mdsrv.js"&gt&lt/script&gt
+
+    &ltscript&gt
+        NGL.cssDirectory = "css/";
+        NGL.documentationUrl = "http://arose.github.io/ngl/api/";
+
+        // Datasources
+        NGL.DatasourceRegistry.add(
+            "file", new MdsrvDatasource( window.location.origin + "/" )
+        );
+        NGL.DatasourceRegistry.listing = NGL.DatasourceRegistry.get( "file" );
+        NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );
+        document.addEventListener( "DOMContentLoaded", function(){
+            stage = new NGL.Stage();
+            NGL.StageWidget( stage );
+
+            var load = NGL.getQuery( "load" );
+            if( load ) stage.loadFile( load, { defaultRepresentation: true } );
+
+            var struc = NGL.getQuery( "struc" );
+            var traj = NGL.getQuery( "traj" );
+            if( struc ){
+                var params = { defaultRepresentation: true };
+                stage.loadFile( struc, params ).then( function( o ){
+                    if( traj ) o.addTrajectory( traj );
+                } );
+            }
+        } );
+    &lt/script&gt
+&lt/body&gt
+&lt/html&gt</code></pre>
+
+
+<h2>embedded example</h2>
+
+<p align=justify>The example for an embedded html provided below loads a .gro trajectory with cartoon representation as trajectory into the embedded NGL viewer and generates a button below to run the simulation.</p>
+
+
+<pre><code>&lt!DOCTYPE html&gt
+&lthtml lang="en"&gt
+&lthead&gt
+    &lttitle&gtNGL & MDsrv - embedded&lt/title&gt
+    &ltmeta charset="utf-8"&gt
+    &ltmeta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"&gt
+&lt/head&gt
+&ltbody&gt
+    &ltscript src="data/js/ngl.js"&gt&lt/script&gt
+    &ltscript src="data/js/lib/signals.min.js"&gt&lt/script&gt
+    &ltscript src="data/js/lib/tether.min.js"&gt&lt/script&gt
+    &ltscript src="data/js/lib/colorpicker.min.js"&gt&lt/script&gt
+    &ltscript src="data/js/ui/ui.js"&gt&lt/script&gt
+    &ltscript src="data/js/ui/ui.extra.js"&gt&lt/script&gt
+    &ltscript src="data/js/ui/ui.ngl.js"&gt&lt/script&gt
+    &ltscript src="data/js/ui/ui.helper.js"&gt&lt/script&gt
+    &ltscript src="data/js/gui.js"&gt&lt/script&gt
+    &ltscript src="data/js/mdsrv.js"&gt&lt/script&gt
+    &ltscript&gt
+	NGL.DatasourceRegistry.add(
+            "file", new MdsrvDatasource( window.location.origin + "/" )
+        );
+        document.addEventListener( "DOMContentLoaded", function(){
+            stage = new NGL.Stage( "viewport" );
+            stage.loadFile( "data/md.gro", { asTrajectory: true } )
+	    .then(function( o){
+		o.addRepresentation( "cartoon", { sele: "protein" } );
+		o.addTrajectory();
+		o.centerView();
+	    } );
+	    var togglePlayer = document.getElementById( "playerButton" );
+	    var playing = false;
+	    togglePlayer.addEventListener( "click", function(){
+		var trajComp = stage.getComponentsByName("md.gro").list[0].trajList[0];
+		var player = new NGL.TrajectoryPlayer(trajComp.trajectory, 1, 200);
+		if( !playing ){
+		    player.play();
+		    playing = true;
+		}else{
+		    player.play();
+		    player.pause();
+		    playing = false;
+		}
+	    } );
+        } );
+    &lt/script&gt
+    &ltdiv id="viewport" style="width:800px; height:800px;"&gt&lt/div&gt
+    &ltdiv style="width:500px;"&gt
+	&ltbutton id="playerButton"&gtplay/pause&lt/button&gt
+    &lt/div&gt
+&lt/body&gt
+&lt/html&gt</code></pre>
+
+
+
+<h2></h2>
+
+<h1><a id="nglscripting" class="anchor" href="#nglscripting" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Scripting functions</h1>
+
+<h2>script.ngl example</h2>
+
+<p align=justify>This .ngl example is partly extracted from the sample <a target="_blank" href="data/script.ngl">.ngl file</a>. It defines some settings (panel name and stage theme), two functions ("reverse view" & "sidechains on/off") executable as click-button within the panel and two different ways to load structures and trajectories.</p>
+
+
+<pre><code>panel.setName( "A simple example" );
+stage.setParameters( { theme: "light" } );
+var h = makeScriptHelper(stage, panel)
+h.uiButton(
+    "reverse view",
+    function(){
+        stage.eachComponent( function( comp ){
+            if (comp.visible === true){
+		h.visible( false, comp );
+            }else{
+                h.visible( true, comp );
+            }
+        } );
+    }
+);
+h.uiButton(
+    "sidechains on/off",
+    function(){
+        h.representations( "licorice" ).list.forEach( function( repre ){
+            h.visible(!repre.visible, repre);
+        } );
+    }
+);
+
+//Function to load several structures & trajectories named in <em>files</em> 
+//with the same settings and superpose them. 
+var files = [ "md" ];
+var promiseList = [];
+files.forEach( function( name ){
+    promiseList.push( stage.loadFile( 
+	"file://cwd/data/" + name + ".gro", {name: name} ) 
+    );
+} );
+Promise.all( promiseList ).then( function( objectList ){
+    var compX;
+    objectList.forEach( function( comp, i ){
+	//superposition has to be done before the trajectories are added
+        if( i === 0 ){
+            compX = comp;
+        }else{
+            comp.superpose( compX, true );
+        };
+        comp.addRepresentation( "cartoon" );
+        comp.addTrajectory( "cwd/data/" + comp.name + ".xtc" );
+    } );
+
+} );
+
+//Function to load a structure & two trajectories individually
+var trajSele = "backbone and not #h";
+var basePath = "cwd/data/";
+var newname = "md_1u19";
+var sysPath = "file://" + basePath + newname + ".gro";
+stage.loadFile( sysPath ).then( function( comp ){
+    comp.addRepresentation( "cartoon" );
+    comp.addTrajectory( basePath  + newname + ".xtc", trajSele );
+    comp.addTrajectory( basePath  + "/@md_1u19.xtc", trajSele );
+    comp.centerView();
+} );</code></pre>
+
+
+<p align=justify>Below is a summary of scripting example codes, functions and definitions. This is a selection and incomplete. All functions can be extracted from the source code</p>
+
+<pre><code>//This code lets the structure spin.
+var isSpinning = false;
+var toggleSpinning = document.getElementById( "toggleSpinning" );
+toggleSpinning.addEventListener( "click", function(){
+	if( !isSpinning ){
+    	stage.setSpin( [ 0, 1, 0.5 ], 0.01 );
+    	isSpinning = true;
+	}else if(isSpinning){
+		stage.setSpin( null, null);
+		isSpinning = false;
+	}
+} );
+<br>
+//This function hides and shows all structures.
+//makeScriptHelper is a helper function to facilitate the scripting
+var h = makeScriptHelper(stage, panel)
+var hidden = false;
+h.uiButton(
+    "show/hide all",
+    function(){
+        stage.eachComponent( function( comp ){
+            if (hidden === true){
+                h.visible(true, comp);
+            }else{
+                h.visible(false, comp);
+            }
+        } );
+        if (hidden === true){
+            hidden = false;
+        }else{
+            hidden = true;
+        }
+    }
+);
+<br>
+//This functions generates a button (e.g. for an embedded html file) 
+//with a download function.
+var toggleDownload = document.getElementById( "toggleDownload" );
+toggleDownload.addEventListener( "click", function(){
+    var newStructure = stage.getComponentsByName("3SN6.pdb").list[0].structure;
+    var remarks = ["my new structure selection"];
+    var pdbWriter = new NGL.PdbWriter( newStructure, {
+        remarks: remarks
+    } );
+    pdbWriter.download( "TMH" );
+} );</code></pre>
+
+
+
+<br>
+
+<pre><code>//panel settings:
+panel.setName( "Controls" );
+<br>
+//stage settings:
+stage.setParameters( { theme: "light" } ); //options: "light", "dark"
+stage.setParameters( { cameraType: "perspective" } ); //options: "perspective", 
+								"orthographic"
+stage.centerView();
+stage.viewer.container.addEventListener( "dblclick", function(){
+    stage.toggleFullscreen();
+} );
+stage.setSpin( [ 0, 1, 0 ], 0.005 );
+stage.setSpin( null, null );
+console.log(stage.getOrientation())
+stage.setOrientation([
+    [28.074999809265137,28.16999912261963,27.22000026702881],
+    [38.041256212103626,4.000447687884037,-11.16747719008557],
+    [-29.3665595756232,2.0906799525729096,11.365819960687398],
+    [0,0,0]
+]);
+<br>
+//component settings:
+stage.loadFile( sysPath ).then( function( comp ){
+    comp.setName();
+    comp.setSelection();
+    comp.addRepresentation();	//options: axes, ball+stick, backbone, base, 
+			       // cartoon, contact, distance, helixorient, 
+			       // licorice, hyperball, label, line surface, 
+			       // point, ribbon, rocket, rope, spacefill,
+			       // trace, tube, unitcell
+    comp.addTrajectory();
+    comp.centerView();
+    ...
+} );
+<br>
+//selection language:
+"*"		//=all
+"not #h"	//= no hydrogens
+"protein"	//= protein (no ions, lipids, water)
+"hetero"	//= hetero atoms/HETATM
+":B"		//= chain
+".CA"		//= atom
+"/0"		//= model number
+<br>
+//options for adding representations:
+    comp.addRepresentation( "cartoon", { * } );
+    * = color: "#55eb86", sele: "*", visible: false, colorScheme: "element", 
+		colorValue: "blue", opacity: 0.5, wireframe: true, ... 
+    //for more see the representation choice within the viewer
+    //use either color or colorScheme + colorValue
+<br>
+//options for adding trajectories:
+	comp.addTrajectory( * );
+	* = basePath  + "/@md_1u19.xtc", "protein"
+	"@md.xtc" //= concatenates all md.part001.xtc + md.part002.xtc + ...
+<br>
+//options for file loading:
+stage.loadFile( "rcsb://1crn.mmtf", { * } );
+* = defaultRepresentation: true, asTrajectory: true, firstModelOnly: true, 
+    cAlphaOnly: true, ...
+<br>
+//helper functions:
+var h = makeScriptHelper(stage, panel)
+h.components( "3SN6" ) //= stage.getComponentsByName
+h.representations( "licorice" ) //=stage.getRepresentationsByName
+h.visible( false, comp );
+h.hide( comp )
+h.show( comp )
+h.superpose( comp1, comp2, * ) //* = additional options: align, sele1, sele2
+h.uiText	//=add text to panel
+h.uiBreak	//=add newline to panel
+h.uiButton	//=add button with click option to panel</code></pre>
+
+<h1><a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
+
+<p>If you have questions concerning the usage, feel free to use the
+<a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a> or write a mail to
+<a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
+<a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
+
+<p>Please give us <strong>feedback</strong>!</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p><strong><a href="index.html">Home</a></strong></p>
+        <p class="copyright">MDsrv maintained by <a target="_blank" href="https://github.com/arose">arose</a></p>
+        <p>Published with <a target="_blank" href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+
+
+  </body>
+</html>
