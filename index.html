@@ -21,10 +21,9 @@
 		        var href = window.location.href;
 		        return href.substr( 0, href.lastIndexOf( "/" ) + 1 ) + model;
 			}
-
             var stage = new NGL.Stage( "viewport" );
           	stage.loadFile( getModelURL("data/md.gro"), { asTrajectory: true }  ).then( function( o ){
-                o.addRepresentation( "cartoon");//, {color: "blue"} );
+                o.addRepresentation( "cartoon");
                 o.centerView();
 	      		var trajComp = o.addTrajectory();
 	      		var player = new NGL.TrajectoryPlayer(trajComp.trajectory, 1, 200);
@@ -33,15 +32,6 @@
             stage.setOrientation(
                 [[28.074999809265137,28.16999912261963,27.22000026702881],[38.041256212103626,4.000447687884037,-11.16747719008557],[-29.3665595756232,2.0906799525729096,11.365819960687398],[0,0,0]]
             );
-
-
-          	var toggleSpin = document.getElementById( "toggleButton" );
-            var isSpinning = true;
-            if( !isSpinning ){
-                stage.setSpin( [ 0, 1, 0.5 ], 0.01 );
-                isSpinning = true;
-            }
-
         } );
 
     </script>
@@ -80,7 +70,7 @@ web application displays large molecular structures and animates their
 MD trajectories to allow interactive exploration and collaborative visual
 analysis within a local network or over the Internet.</p>
 
-<p align=justify>A small <strong>example of the usage</strong> of the MDsrv in combination with the <a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a> is embedded on this page (above). Is can be interactively moved, scaled and rotated. 
+<p align=justify>A small <strong>example of the usage</strong> of the MDsrv in combination with the <a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a> is embedded on this page (above). It can be interactively moved, scaled and rotated. 
 A more capable example can be found <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example">here</a>. There, two simulations are shown and can be run by pressing the 'play' button. Additionally, the <a target="_blank" href="data/script.ngl">.ngl script file</a> which is used to generate the example gives the possibility to add specific self-written functions as 'show/hide all'.
 </p>
 

@@ -48,7 +48,7 @@
 
 <p align=justify>Within a local environment, for short-time usage or testing, the MDsrv can be started from a directory providing access to files within this and underlying directories by the following command:</p>
 
-<pre><code>mdsrv [structure] [trajectory] [--schript SCRIPT] [--cfg CFG] [--host HOST] [--port PORT]</code></pre>
+<pre><code>mdsrv [structure] [trajectory] [--script SCRIPT] [--cfg CFG] [--host HOST] [--port PORT]</code></pre>
 <p align=justify>The command <em>"mdsrv"</em> itself starts the MDsrv including the NGL viewer with access to files within the starting directory and underneath, exclusively. By executing the MDsrv with a structure (e.g. a .gro or .pdb file) and trajectory (e.g. a .gro, .xtc or .dcd file) including their path which must be within the current working directory or a sub directory, both will be loaded into the MD viewer (e.g. <em>mdsrv 3DQB.gro 3DQB.xtc</em>). A structure file is mandatory for loading a trajectory. Trajectories and structures within the current working directory can still be loaded afterwards. 
 <br>
 MDsrv uses <a target="_blank" href="data/script.ngl">.ngl</a> script files to load structures and trajectories with specific settings (e.g representations, colors, selections or background scheme), orientations or self-coded functions. The file is further explained below and example code can be found in the <a href="scripting.html">scripting</a> section.
@@ -67,7 +67,7 @@ To include other directories and security settings, the configuration file (<a t
 
 <p align=justify>To load simulations into the <a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a>, a structure file has to be provided first. Structure and .ngl scripting files can be loaded by drag&drop into the viewer or by browsing through the folders by clicking <em>File --> Import</em>. Within the structure menu, several trajectories can be imported via <em>Remote trajectory import</em>. The content of the simulation can be specified through the <em>filter selection</em> (e.g. <em>"protein and not #h"</em>) and within the trajectory menu, the simulation can be further adjusted (e.g. centering, superposing, removing PBC, step sizes or play options).</p>
 
-<p align=justify>If you want to load a trajectory containing already all atomistic informations (e.g. .gro trajectories), select <em>File --> as trajectory</em> before loading the file. This flag is set untill it is removed. Then load the file as previously described via drag&drop or through the folders.</p>
+<p align=justify>If you want to load a trajectory containing already all atomistic information (e.g. .gro trajectories), select <em>File --> as trajectory</em> before loading the file. This flag is set until it is removed. Then load the file as previously described via drag&drop or through the folders.</p>
 
 
 <h1><a id="files" class="anchor" href="#global" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>File description</h1>

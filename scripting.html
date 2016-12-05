@@ -48,7 +48,7 @@
 
 <h2>Web-application (webapp) example</h2>
 
-<p align=justify>This html example is partly extracted from the sample <a target="_blank" href="data/mdsrv.html">mdsrv.html file</a>.</p>
+<p align=justify>This html example is partly extracted from the sample <a target="_blank" href="data/mdsrv.html">mdsrv.html</a> file.</p>
 
 <pre><code>&lt!DOCTYPE html&gt
 &lthtml lang="en"&gt
@@ -59,35 +59,35 @@
     &ltmeta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"&gt
 
     &ltlink rel="icon" href="favicon.ico" type="image/x-icon"/&gt
-    &ltlink rel="stylesheet" href="css/font-awesome.min.css" /&gt
-    &ltlink rel="stylesheet" href="css/main.css" /&gt
-    &ltlink rel="subresource" href="css/light.css" /&gt
-    &ltlink rel="subresource" href="css/dark.css" /&gt
+    &ltlink rel="stylesheet" href="mdsrv/webapp/css/font-awesome.min.css" /&gt
+    &ltlink rel="stylesheet" href="mdsrv/webapp/css/main.css" /&gt
+    &ltlink rel="subresource" href="mdsrv/webapp/css/light.css" /&gt
+    &ltlink rel="subresource" href="mdsrv/webapp/css/dark.css" /&gt
 &lt/head&gt
 &ltbody&gt
     &lt!-- NGL --&gt
-    &ltscript src="js/ngl.js"&gt&lt/script&gt
+    &ltscript src="mdsrv/webapp/js/ngl.js"&gt&lt/script&gt
 
     &lt!-- UI --&gt
-    &ltscript src="js/lib/signals.min.js"&gt&lt/script&gt
-    &ltscript src="js/lib/tether.min.js"&gt&lt/script&gt
-    &ltscript src="js/lib/colorpicker.min.js"&gt&lt/script&gt
-    &ltscript src="js/ui/ui.js"&gt&lt/script&gt
-    &ltscript src="js/ui/ui.extra.js"&gt&lt/script&gt
-    &ltscript src="js/ui/ui.ngl.js"&gt&lt/script&gt
-    &ltscript src="js/ui/ui.helper.js"&gt&lt/script&gt
-    &ltscript src="js/gui.js"&gt&lt/script&gt
+    &ltscript src="mdsrv/webapp/js/lib/signals.min.js"&gt&lt/script&gt
+    &ltscript src="mdsrv/webapp/js/lib/tether.min.js"&gt&lt/script&gt
+    &ltscript src="mdsrv/webapp/js/lib/colorpicker.min.js"&gt&lt/script&gt
+    &ltscript src="mdsrv/webapp/js/ui/ui.js"&gt&lt/script&gt
+    &ltscript src="mdsrv/webapp/js/ui/ui.extra.js"&gt&lt/script&gt
+    &ltscript src="mdsrv/webapp/js/ui/ui.ngl.js"&gt&lt/script&gt
+    &ltscript src="mdsrv/webapp/js/ui/ui.helper.js"&gt&lt/script&gt
+    &ltscript src="mdsrv/webapp/js/gui.js"&gt&lt/script&gt
 
     &lt!-- MDSRV --&gt
-    &ltscript src="js/mdsrv.js"&gt&lt/script&gt
+    &ltscript src="mdsrv/webapp/js/mdsrv.js"&gt&lt/script&gt
 
     &ltscript&gt
-        NGL.cssDirectory = "css/";
+        NGL.cssDirectory = "mdsrv/webapp/css/";
         NGL.documentationUrl = "http://arose.github.io/ngl/api/";
 
         // Datasources
         NGL.DatasourceRegistry.add(
-            "file", new MdsrvDatasource( window.location.origin + "/" )
+            "file", new MdsrvDatasource( window.location.origin + "/mdsrv/" )
         );
         NGL.DatasourceRegistry.listing = NGL.DatasourceRegistry.get( "file" );
         NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );
@@ -114,58 +114,77 @@
 
 <h2>embedded example</h2>
 
-<p align=justify>The example for an embedded html provided below loads a .gro trajectory with cartoon representation as trajectory into the embedded NGL viewer and generates a button below to run the simulation.</p>
+<p align=justify>The example for an embedded html provided below loads a .gro trajectory with cartoon representation as trajectory into the embedded NGL viewer and generates a button below to play/pause the simulation.</p>
 
 
 <pre><code>&lt!DOCTYPE html&gt
 &lthtml lang="en"&gt
 &lthead&gt
-    &lttitle&gtNGL & MDsrv - embedded&lt/title&gt
+    &lttitle&gtMDsrv/NGL - embedded&lt/title&gt
+
     &ltmeta charset="utf-8"&gt
     &ltmeta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"&gt
+
+    &ltlink rel="icon" href="favicon.ico" type="image/x-icon"/&gt
+    &ltlink rel="stylesheet" href="mdsrv/webapp/css/font-awesome.min.css" /&gt
+    &ltlink rel="stylesheet" href="mdsrv/webapp/css/main.css" /&gt
+    &ltlink rel="subresource" href="mdsrv/webapp/css/light.css" /&gt
+    &ltlink rel="subresource" href="mdsrv/webapp/css/dark.css" /&gt
 &lt/head&gt
 &ltbody&gt
-    &ltscript src="data/js/ngl.js"&gt&lt/script&gt
-    &ltscript src="data/js/lib/signals.min.js"&gt&lt/script&gt
-    &ltscript src="data/js/lib/tether.min.js"&gt&lt/script&gt
-    &ltscript src="data/js/lib/colorpicker.min.js"&gt&lt/script&gt
-    &ltscript src="data/js/ui/ui.js"&gt&lt/script&gt
-    &ltscript src="data/js/ui/ui.extra.js"&gt&lt/script&gt
-    &ltscript src="data/js/ui/ui.ngl.js"&gt&lt/script&gt
-    &ltscript src="data/js/ui/ui.helper.js"&gt&lt/script&gt
-    &ltscript src="data/js/gui.js"&gt&lt/script&gt
-    &ltscript src="data/js/mdsrv.js"&gt&lt/script&gt
+    &lt!-- NGL --&gt
+    &ltscript src="mdsrv/webapp/js/ngl.js"&gt&lt/script&gt
+
+    &lt!-- UI --&gt
+    &ltscript src="mdsrv/webapp/js/lib/signals.min.js"&gt&lt/script&gt
+    &ltscript src="mdsrv/webapp/js/lib/tether.min.js"&gt&lt/script&gt
+    &ltscript src="mdsrv/webapp/js/lib/colorpicker.min.js"&gt&lt/script&gt
+    &ltscript src="mdsrv/webapp/js/ui/ui.js"&gt&lt/script&gt
+    &ltscript src="mdsrv/webapp/js/ui/ui.extra.js"&gt&lt/script&gt
+    &ltscript src="mdsrv/webapp/js/ui/ui.ngl.js"&gt&lt/script&gt
+    &ltscript src="mdsrv/webapp/js/ui/ui.helper.js"&gt&lt/script&gt
+    &ltscript src="mdsrv/webapp/js/gui.js"&gt&lt/script&gt
+
+    &lt!-- MDSRV --&gt
+    &ltscript src="mdsrv/webapp/js/mdsrv.js"&gt&lt/script&gt
+
     &ltscript&gt
-	NGL.DatasourceRegistry.add(
-            "file", new MdsrvDatasource( window.location.origin + "/" )
+        NGL.cssDirectory = "mdsrv/webapp/css/";
+        NGL.documentationUrl = "http://arose.github.io/ngl/api/";
+
+        // Datasources
+        NGL.DatasourceRegistry.add(
+            "file", new MdsrvDatasource( window.location.origin + "/mdsrv/" )
         );
+        NGL.DatasourceRegistry.listing = NGL.DatasourceRegistry.get( "file" );
+        NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );
         document.addEventListener( "DOMContentLoaded", function(){
             stage = new NGL.Stage( "viewport" );
-            stage.loadFile( "data/md.gro", { asTrajectory: true } )
-	    .then(function( o){
-		o.addRepresentation( "cartoon", { sele: "protein" } );
-		o.addTrajectory();
-		o.centerView();
-	    } );
-	    var togglePlayer = document.getElementById( "playerButton" );
-	    var playing = false;
-	    togglePlayer.addEventListener( "click", function(){
-		var trajComp = stage.getComponentsByName("md.gro").list[0].trajList[0];
-		var player = new NGL.TrajectoryPlayer(trajComp.trajectory, 1, 200);
-		if( !playing ){
-		    player.play();
-		    playing = true;
-		}else{
-		    player.play();
-		    player.pause();
-		    playing = false;
-		}
-	    } );
+            stage.loadFile( "/mdsrv/file/data/md.gro", { asTrajectory: true } )
+            .then(function( o){
+                o.addRepresentation( "cartoon", { sele: "protein" } );
+                o.addTrajectory();
+                o.centerView();
+            } );
+            var togglePlayer = document.getElementById( "playerButton" );
+            var playing = false;
+            togglePlayer.addEventListener( "click", function(){
+                var trajComp = stage.getComponentsByName("md.gro").list[0].trajList[0];
+                var player = new NGL.TrajectoryPlayer(trajComp.trajectory, 1, 200);
+                if( !playing ){
+                    player.play();
+                    playing = true;
+                }else{
+                    player.play();
+                    player.pause();
+                    playing = false;
+                }
+            } );
         } );
     &lt/script&gt
     &ltdiv id="viewport" style="width:800px; height:800px;"&gt&lt/div&gt
     &ltdiv style="width:500px;"&gt
-	&ltbutton id="playerButton"&gtplay/pause&lt/button&gt
+        &ltbutton id="playerButton"&gtplay/pause&lt/button&gt
     &lt/div&gt
 &lt/body&gt
 &lt/html&gt</code></pre>
@@ -189,7 +208,7 @@ h.uiButton(
     function(){
         stage.eachComponent( function( comp ){
             if (comp.visible === true){
-		h.visible( false, comp );
+                h.visible( false, comp );
             }else{
                 h.visible( true, comp );
             }
@@ -205,13 +224,13 @@ h.uiButton(
     }
 );
 
-//Function to load several structures & trajectories named in <em>files</em> 
-//with the same settings and superpose them. 
+//Function to load several structures & trajectories named in <em>files</em>
+//with the same settings and superpose them.
 var files = [ "md" ];
 var promiseList = [];
 files.forEach( function( name ){
-    promiseList.push( stage.loadFile( 
-	"file://cwd/data/" + name + ".gro", {name: name} ) 
+    promiseList.push( stage.loadFile(
+        "file://cwd/data/" + name + ".gro", {name: name} )
     );
 } );
 Promise.all( promiseList ).then( function( objectList ){
@@ -230,7 +249,10 @@ Promise.all( promiseList ).then( function( objectList ){
 } );
 
 //Function to load a structure & two trajectories individually
-var trajSele = "backbone and not #h";
+var trajSele = {
+    sele: "backbone and not #h", initialFrame: 1, centerPdb: false,
+    removePbc: false, superpose: true; defaultTimeout: 20, defaultStep: 3
+    };
 var basePath = "cwd/data/";
 var newname = "md_1u19";
 var sysPath = "file://" + basePath + newname + ".gro";
@@ -242,21 +264,24 @@ stage.loadFile( sysPath ).then( function( comp ){
 } );</code></pre>
 
 
-<p align=justify>Below is a summary of scripting example codes, functions and definitions. This is a selection and incomplete. All functions can be extracted from the source code</p>
+<p align=justify>Below is a summary of scripting example codes, functions and definitions. This is only a selection and incomplete. All functions can be extracted from the source code.</p>
 
 <pre><code>//This code lets the structure spin.
 var isSpinning = false;
 var toggleSpinning = document.getElementById( "toggleSpinning" );
 toggleSpinning.addEventListener( "click", function(){
-	if( !isSpinning ){
-    	stage.setSpin( [ 0, 1, 0.5 ], 0.01 );
-    	isSpinning = true;
-	}else if(isSpinning){
-		stage.setSpin( null, null);
-		isSpinning = false;
-	}
+    if( !isSpinning ){
+        stage.setSpin( [ 0, 1, 0.5 ], 0.01 );
+        isSpinning = true;
+    }else if(isSpinning){
+        stage.setSpin( null, null);
+        isSpinning = false;
+    }
 } );
-<br>
+<br>var trajSele = {
+    sele: "backbone and not #h", initialFrame: 1, centerPdb: false,
+    removePbc: false, superpose: true; defaultTimeout: 20, defaultStep: 3
+    };
 //This function hides and shows all structures.
 //makeScriptHelper is a helper function to facilitate the scripting
 var h = makeScriptHelper(stage, panel)
@@ -279,7 +304,7 @@ h.uiButton(
     }
 );
 <br>
-//This functions generates a button (e.g. for an embedded html file) 
+//This functions generates a button (e.g. for an embedded html file)
 //with a download function.
 var toggleDownload = document.getElementById( "toggleDownload" );
 toggleDownload.addEventListener( "click", function(){
@@ -300,8 +325,8 @@ panel.setName( "Controls" );
 <br>
 //stage settings:
 stage.setParameters( { theme: "light" } ); //options: "light", "dark"
-stage.setParameters( { cameraType: "perspective" } ); //options: "perspective", 
-								"orthographic"
+stage.setParameters() { backgroundColor: "white" } ; //options: "white", "black"
+stage.setParameters( { cameraType: "perspective" } ); //options: "perspective", "orthographic"
 stage.centerView();
 stage.viewer.container.addEventListener( "dblclick", function(){
     stage.toggleFullscreen();
@@ -320,40 +345,43 @@ stage.setOrientation([
 stage.loadFile( sysPath ).then( function( comp ){
     comp.setName();
     comp.setSelection();
-    comp.addRepresentation();	//options: axes, ball+stick, backbone, base, 
-			       // cartoon, contact, distance, helixorient, 
-			       // licorice, hyperball, label, line surface, 
-			       // point, ribbon, rocket, rope, spacefill,
-			       // trace, tube, unitcell
+    comp.addRepresentation();    //options: axes, ball+stick, backbone, base,
+                                // cartoon, contact, distance, helixorient,
+                                // licorice, hyperball, label, line surface,
+                                // point, ribbon, rocket, rope, spacefill,
+                                // trace, tube, unitcell
     comp.addTrajectory();
     comp.centerView();
     ...
 } );
 <br>
 //selection language:
-"*"		//=all
-"not #h"	//= no hydrogens
-"protein"	//= protein (no ions, lipids, water)
-"hetero"	//= hetero atoms/HETATM
-":B"		//= chain
-".CA"		//= atom
-"/0"		//= model number
+"*"         //=all
+"not #h"    //= no hydrogens
+"protein"   //= protein (no ions, lipids, water)
+"hetero"    //= hetero atoms/HETATM
+":B"        //= chain
+".CA"       //= atom
+"/0"        //= model number
 <br>
 //options for adding representations:
-    comp.addRepresentation( "cartoon", { * } );
-    * = color: "#55eb86", sele: "*", visible: false, colorScheme: "element", 
-		colorValue: "blue", opacity: 0.5, wireframe: true, ... 
-    //for more see the representation choice within the viewer
-    //use either color or colorScheme + colorValue
+comp.addRepresentation( "cartoon", { * } );
+* = color: "#55eb86", sele: "*", visible: false, colorScheme: "element",
+    colorValue: "blue", opacity: 0.5, wireframe: true, ...
+//for more see the representation choice within the viewer
+//use either color or colorScheme + colorValue
 <br>
 //options for adding trajectories:
-	comp.addTrajectory( * );
-	* = basePath  + "/@md_1u19.xtc", "protein"
-	"@md.xtc" //= concatenates all md.part001.xtc + md.part002.xtc + ...
+comp.addTrajectory( * );
+* = basePath  + "/@md_1u19.xtc", { sele: "protein", ... }
+    "@md.xtc" //= concatenates all md.part001.xtc + md.part002.xtc + ...
+Trajectory Options:
+    sele: "backbone and not #h", initialFrame: 1, centerPdb: false,
+    removePbc: false, superpose: true; defaultTimeout: 20, defaultStep: 3
 <br>
 //options for file loading:
 stage.loadFile( "rcsb://1crn.mmtf", { * } );
-* = defaultRepresentation: true, asTrajectory: true, firstModelOnly: true, 
+* = defaultRepresentation: true, asTrajectory: true, firstModelOnly: true,
     cAlphaOnly: true, ...
 <br>
 //helper functions:
@@ -364,13 +392,13 @@ h.visible( false, comp );
 h.hide( comp )
 h.show( comp )
 h.superpose( comp1, comp2, * ) //* = additional options: align, sele1, sele2
-h.uiText	//=add text to panel
-h.uiBreak	//=add newline to panel
-h.uiButton	//=add button with click option to panel</code></pre>
+h.uiText      //=add text to panel
+h.uiBreak     //=add newline to panel
+h.uiButton    //=add button with click option to panel</code></pre>
 
 <h1><a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
 
-<p>If you have questions concerning the usage, feel free to use the
+<p>If you have questions concerning the scripting, feel free to use the
 <a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a> or write a mail to
 <a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
 <a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
