@@ -30,7 +30,7 @@ var unicodeHelper = function(){
 }();
 
 
-function makeScriptHelper( stage, panel ){
+function scriptHelperFunctions( stage, panel ){
 
     var U = unicodeHelper;
 

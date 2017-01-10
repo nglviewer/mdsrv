@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file, following t
 
 
 
+## [v0.2] - 2016-01-10
+### Added
+- --script arguments
+- DOC: installation & deployment, usage, scripting
+
+### Changed
+- major ngl update to version 0.10.0-dev5
 
 
 ## [v0.2] - 2016-02-12

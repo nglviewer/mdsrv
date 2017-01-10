@@ -34,7 +34,7 @@ Table of contents
 Documentation
 ============
 
-Detailed information concerning the installation, deployment and usage can be found at the [documentation](http://arose.github.io/mdsrv/).
+Detailed information concerning the installation, deployment, usage and scripting examples can be found at the [documentation](http://arose.github.io/mdsrv/).
 
 
 Installation
@@ -71,7 +71,7 @@ Deployment
 
 The Apache Webserver can used to run the server via `mod_wsgi`. First make sure you have everything required installed:
 
-    sudo apt-get install git apache2 libapache2-mod-wsgi
+    sudo apt-get install apache2 libapache2-mod-wsgi
 
 
 Then you need to create a wsgi configuration file to be referenced in the Apache configuration. There is an example named [mdsrv.wsgi.sample](mdsrv.wsgi.sample) in the root directory of this package. Also, a snippet showing how the configuration for Apache should look like can be found in the [apache.config.sample](apache.config.sample) file.
@@ -80,104 +80,16 @@ Finally, to restart apache issue
 
     sudo /etc/init.d/apache2 restart
 
-
+More information can be found at the [documentation](http://arose.github.io/mdsrv/).
 
 RESTful API
 ===========
 
 The RESTful API is the interface through which the web application gets all data but it may be also used to access the served trajectory data from other applications.
 
+You can retrieve information about directory content (e.g. name of sub-directory, file name, file size), number of frames and frame coordinates.
 
-File content
-------------
-
-To retrieve a file from `data_dir` `<root>` with file path `<filename>` call:
-
-    /file/<root>/<filename>
-
-
-Directory content description
------------------------------
-
-To get a JSON description of available `data_dir` directories call:
-
-    /dir/
-
-
-To get a JSON description of the directory content in `data_dir` `<root>` call:
-
-    /dir/<root>/
-
-
-To get a JSON description of the directory content in `data_dir` `<root>` at path `<path>` call:
-
-    /dir/<root>/<path>
-
-
-The JSON description is a list of file or sub-directory entries:
-
-```JSON
-[
-    {
-        "name": "name of sub-directory",
-        "path": "path relative to `<root>`",
-        "dir": "`true` if entry is a directory",
-        "restricted": "`true` if access is restricted"
-    },
-    {
-        "name": "name of the file",
-        "path": "path relative to `<root>`",
-        "size": "file size in bytes"
-    },
-    {
-        ...
-    }
-]
-```
-
-
-Frame count
------------
-
-To get the number of frames the trajectory in `data_dir` `<root>` with file path `<filename>` has call:
-
-    /traj/numframes/<root>/<filename>
-
-
-Frame coordinates
------------------
-
-To get the coordinates of frame number `<frame>` of the trajectory in `data_dir` `<root>` with file path `<filename>` call:
-
-    /traj/frame/<frame>/<root>/<filename>
-
-
-The set of atoms for which coordinates should be returned can be restricted by `POST`ing an `atomIndices` parameter with the following format. A list of index ranges is defined by pairs of integers separated by semi-colons (`;`) where the two integers within a pair are separated by a comma (`,`). To select atoms with indices (starting at zero) 5 to 10 and 22 to 30 send:
-
-    5,10;22,30
-
-
-The coordinate frame is returned in binary format and also contains the frame number, the simulation time (when available) and the box vectors.
-
-| Offset | Size |  Type | Description                  |
-| -----: | ---: | ----: | :--------------------------- |
-|      0 |    4 |   int | frame number                 |
-|      4 |    4 | float | simulation time              |
-|      8 |    4 | float | X coordinate of box vector A |
-|     12 |    4 | float | Y                            |
-|     16 |    4 | float | Z                            |
-|     20 |    4 | float | X coordinate of box vector B |
-|     24 |    4 | float | Y                            |
-|     28 |    4 | float | Z                            |
-|     32 |    4 | float | X coordinate of box vector C |
-|     36 |    4 | float | Y                            |
-|     40 |    4 | float | Z                            |
-|     44 |    4 | float | X coordinate of first atom   |
-|     48 |    4 | float | Y                            |
-|     52 |    4 | float | Z                            |
-|    ... |  ... |   ... | ...                          |
-
-
+For more information, please visit the [documentation](http://arose.github.io/mdsrv/).
 
 NGL browser support
 ===============
@@ -207,7 +119,8 @@ Thanks to code from MDAnalysis (http://www.mdanalysis.org/) there is random acce
 Funding sources:
 
 * NCI/NIH award number U01 CA198942
-* DFG Projekt HI 1502
+* DFG project HI 1502
+* HLRN project bec00085
 
 
 Cite
@@ -216,4 +129,5 @@ Cite
 When using MGsrv please cite:
 
 * A. S. Rose, and MDsrv Contributors. MDsrv v0.2 Zenodo (2016), doi:10.5281/zenodo.45961.  [doi:10.5281/zenodo.45961](http://dx.doi.org/10.5281/zenodo.45961)
+* AS Rose, AR Bradley, Y Valasatava, JM Duarte, A Prlić and PW Rose. _Web-based molecular graphics for large complexes._ ACM Proceedings of the 21st International Conference on Web3D Technology (Web3D '16): 185-186, 2016. [doi:10.1145/2945292.2945324](http://dx.doi.org/10.1145/2945292.2945324)
 * AS Rose and PW Hildebrand. _NGL Viewer: a web application for molecular visualization._ Nucl Acids Res (1 July 2015) 43 (W1): W576-W579 first published online April 29, 2015. [doi:10.1093/nar/gkv402](https://doi.org/10.1093/nar/gkv402)

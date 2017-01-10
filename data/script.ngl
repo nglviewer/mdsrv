@@ -1,7 +1,7 @@
 panel.setName( "Controls" );
 stage.setParameters( { theme: "light" } );
 
-var h = makeScriptHelper(stage, panel)
+var h = scriptHelperFunctions(stage, panel)
 
 h.uiButton(
     "show/hide all",
