@@ -24,7 +24,9 @@
                   <p><strong><a href="index.html">Home</a>
 <br><a href="installation_deployment.html">Installation & Deployment</a>
 <br><a href="usage.html">Usage</a>
+<br><a href="restful_api.html">RESTful API</a>
 <br><a href="scripting.html">Scripting</a>
+<br><a href="browser_support.html">NGL browser support</a>
 <br><a href="citations.html">Citation</a></strong></p>
 
 
@@ -114,7 +116,7 @@
 
 <h2>embedded example</h2>
 
-<p align=justify>The example for an embedded html provided below loads a .gro trajectory with cartoon representation as trajectory into the embedded NGL viewer and generates a button below to play/pause the simulation.</p>
+<p align=justify>The example for an embedded html provided below loads a .gro trajectory with cartoon representation as trajectory into the embedded NGL viewer and generates a button below to play/pause the simulation. The parameters set within the component.trajectory representation are overwritten (or set back to default) by the trajectory player.</p>
 
 
 <pre><code>&lt!DOCTYPE html&gt
@@ -170,7 +172,7 @@
             var playing = false;
             togglePlayer.addEventListener( "click", function(){
                 var trajComp = stage.getComponentsByName("md.gro").list[0].trajList[0];
-                var player = new NGL.TrajectoryPlayer(trajComp.trajectory, 1, 200);
+                var player = new NGL.TrajectoryPlayer(trajComp.trajectory, {step: 1, timeout: 200});
                 if( !playing ){
                     player.play();
                     playing = true;
@@ -201,8 +203,8 @@
 
 
 <pre><code>panel.setName( "A simple example" );
-stage.setParameters( { theme: "light" } );
-var h = makeScriptHelper(stage, panel)
+stage.setParameters( { backgroundColor: "white", hoverTimeout: -1 } );
+var h = scriptHelperFunctions(stage, panel)
 h.uiButton(
     "reverse view",
     function(){
@@ -283,8 +285,8 @@ toggleSpinning.addEventListener( "click", function(){
     removePbc: false, superpose: true; defaultTimeout: 20, defaultStep: 3
     };
 //This function hides and shows all structures.
-//makeScriptHelper is a helper function to facilitate the scripting
-var h = makeScriptHelper(stage, panel)
+//scriptHelperFunctions is a helper function to facilitate the scripting
+var h = scriptHelperFunctions(stage, panel)
 var hidden = false;
 h.uiButton(
     "show/hide all",
@@ -314,6 +316,34 @@ toggleDownload.addEventListener( "click", function(){
         remarks: remarks
     } );
     pdbWriter.download( "TMH" );
+} );
+<br>
+//To make selections or update e.g. text when a frame changed
+trajComp.signals.frameChanged.add(function(){ /* manually set selection */ })
+<br>
+//With this workaround, the orientation is set after a certain time to assure 
+//that all representations are loaded.
+setTimeout(myfunc2, 10000);
+function myfunc2(){
+	stage.setOrientation([[26.626668106519364,43.03096570969528,19.286422037346785],
+						  [23.941559483086454,23.435509540438492,32.25882758784041],
+						  [0.4788234882332539,0.43805461490045916,0.7608128688980521]])
+}
+<br>
+//This code selects all atoms within a certain radius and represents not only 
+//this atoms but its corresponding residue.
+stage.loadFile( "rcsb://3pqr" ).then( function( o ){
+    // get all atoms within 5 Angstrom of retinal
+    var selection = new NGL.Selection( "RET" );
+    var radius = 5;
+    var atomSet = o.structure.getAtomSetWithinSelection( selection,
+    radius );
+    // expand selection to complete groups
+    var atomSet2 = o.structure.getAtomSetWithinGroup( atomSet );
+    o.addRepresentation( "licorice", { sele: atomSet2.toSeleString() }
+    );
+    o.addRepresentation( "cartoon" );
+    o.centerView();
 } );</code></pre>
 
 
@@ -327,6 +357,7 @@ panel.setName( "Controls" );
 stage.setParameters( { theme: "light" } ); //options: "light", "dark"
 stage.setParameters() { backgroundColor: "white" } ; //options: "white", "black"
 stage.setParameters( { cameraType: "perspective" } ); //options: "perspective", "orthographic"
+stage.setParameters( { lighthoverTimeout: -1 } ); //-1 sets of the popup labeling of atoms
 stage.centerView();
 stage.viewer.container.addEventListener( "dblclick", function(){
     stage.toggleFullscreen();
@@ -362,6 +393,7 @@ stage.loadFile( sysPath ).then( function( comp ){
 "hetero"    //= hetero atoms/HETATM
 ":B"        //= chain
 ".CA"       //= atom
+"@703"      //= atomindex
 "/0"        //= model number
 <br>
 //options for adding representations:
@@ -371,13 +403,25 @@ comp.addRepresentation( "cartoon", { * } );
 //for more see the representation choice within the viewer
 //use either color or colorScheme + colorValue
 <br>
-//options for adding trajectories:
+//options for adding trajectory components:
 comp.addTrajectory( * );
 * = basePath  + "/@md_1u19.xtc", { sele: "protein", ... }
     "@md.xtc" //= concatenates all md.part001.xtc + md.part002.xtc + ...
 Trajectory Options:
     sele: "backbone and not #h", initialFrame: 1, centerPdb: false,
-    removePbc: false, superpose: true; defaultTimeout: 20, defaultStep: 3
+    removePbc: false, superpose: true, defaultTimeout: 20, defaultStep: 3, defaultMode: "loop", defaultDirection: "forward", defaultInterpolateStep: 2, defaultInterpolateType: "none"
+
+//options for trajectoryPlayer:
+trajectoryPlayer( * );
+* = basePath  + "/@md_1u19.xtc", { ... }
+    "@md.xtc" //= concatenates all md.part001.xtc + md.part002.xtc + ...
+Trajectory Options:
+    start: 1, end: 200, step: 3, timeout: 20, mode: loop, interpolateType: "", direction: forward, interpolateStep: 2
+<br>
+//representation examples
+com.addRepresentation("label", {labelType: "text", labelText:  { 65: "atom index 65", 158: "ccc" }})
+
+
 <br>
 //options for file loading:
 stage.loadFile( "rcsb://1crn.mmtf", { * } );
@@ -385,7 +429,7 @@ stage.loadFile( "rcsb://1crn.mmtf", { * } );
     cAlphaOnly: true, ...
 <br>
 //helper functions:
-var h = makeScriptHelper(stage, panel)
+var h = scriptHelperFunctions(stage, panel)
 h.components( "3SN6" ) //= stage.getComponentsByName
 h.representations( "licorice" ) //=stage.getRepresentationsByName
 h.visible( false, comp );
@@ -395,6 +439,17 @@ h.superpose( comp1, comp2, * ) //* = additional options: align, sele1, sele2
 h.uiText      //=add text to panel
 h.uiBreak     //=add newline to panel
 h.uiButton    //=add button with click option to panel</code></pre>
+
+
+<h2>Hints</h2>
+
+<p align=justify>Below find some hints to get a smooth running simulation.</p>
+<br>
+<p align=justify>If you're running a simulation with an expensive representation (e.g. surface), the update might not be in time (improvements in development) - therefore set off the worker: </p>
+<pre><code>comp.addRepresentation( "surface", { sele: "protein", useWorker: false } );</code></pre>
+<br>
+<p align=justify>If you run into problems or have some specific questions, check out the <a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a> - MDsrv&NGL are in active development and improvement!</p>
+
 
 <h1><a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
 
