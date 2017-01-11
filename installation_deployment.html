@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="MDsrv : MD trajectory server">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>MDsrv</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" target="_blank" href="https://github.com/arose/mdsrv">View on GitHub</a>
+
+          <h1 id="project_title">MDsrv</h1>
+          <h2 id="project_tagline">Installation and Deployment</h2>
+
+                  <p><strong><a href="index.html">Home</a>
+<br><a href="installation_deployment.html">Installation & Deployment</a>
+<br><a href="usage.html">Usage</a>
+<br><a href="restful_api.html">RESTful API</a>
+<br><a href="scripting.html">Scripting</a>
+<br><a href="browser_support.html">NGL browser support</a>
+<br><a href="citations.html">Citation</a></strong></p>
+
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/arose/mdsrv/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/arose/mdsrv/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+
+    <div id="main_content_wrap" class="outer">
+      <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+      <section id="main_content" class="inner">
+          <h1>
+<a id="installation" class="anchor" target="_blank" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h1>
+
+<p align=justify>To install the latest stable release with
+<a target="_blank" href="https://pip.pypa.io/en/stable/">pip</a> execute within the bash:</p>
+
+<pre><code>pip install mdsrv
+</code></pre>
+
+<p align=justify>To install the newest version, download it from
+<a target="_blank" href="https://github.com/arose/mdsrv/releases">github.com/arose/mdsrv/releases</a> and install it manually (via <em>setup.py</em>). Pip needs to be installed in advance otherwise an installation error ("import setuptools not found") will rise.
+</p>
+
+<h1>
+<a id="deployment" class="anchor" href="#deployment" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Deployment</h1>
+
+<p align=justify><strong> * </strong> To serve MDsrv as an <a target="_blank" href="http://httpd.apache.org/">Apache</a> Webserver via <a target="_blank" href="https://modwsgi.readthedocs.org">mod_wsgi</a> install apache2 and libapache2-mod-wsgi to your system if not existing.</p>
+
+<pre><code>sudo apt-get install apache2 libapache2-mod-wsgi
+</code></pre>
+
+<p align=justify><strong> * </strong> Add the content of <a target="_blank" href="data/apache.config">apache.config</a> into <em>/etc/apache2/sites-available/000-default.conf</em> or replace this file. <strong>Important:</strong> Adjust the <em>user</em> and <em>group</em> according to your environment settings (e.g. local installation on a pc (nickname@pc) with <em>user=nickname</em> and <em>group=nickname</em>) so that the wsgi process can run with the specified <em>user</em> & <em>group</em>. Make also sure that the files and directories you want to serve are accessible with that user & group combination.</p>
+
+<p><strong> * </strong> Copy the <a target="_blank" href="data/mdsrv.html">mdsrv.html</a> into the folder (<em>/var/www/html/</em>).</p>
+
+<p align=justify> <strong> * </strong> Download the configuration file <a target="_blank" href="data/app.cfg">app.cfg</a> and save it within a secure directory (e.g. not within <em>/var/www/hmtl/</em>). Here, you can change the host and port, the list of directories where you store your structure and trajectory files (<em>DATA_DIRS</em>) and the security settings. 
+<br>
+Directories can be hidden with an underscore (e.g. <em>"_secrets": os.path.abspath("/mnt/disk1/projects")</em>) and only accessed via the url with the directory name (e.g. <em>_secrets</em>). DATA_DIRS contains only directories. There is no limit to reuse directories or division into several subdirectories.
+<br>
+MDsrv provides two possible ways (<em>REQUIRE_AUTH</em> and <em>REQUIRE_DATA_AUTH</em>) to secure the data. <em>REQUIRE_AUTH</em> protects the directories defined in <em>DATA_DIRS</em> with a user and a passphrase. <em>REQUIRE_DATA_AUTH</em> secures the single directories individually with an username and a password (e.g. <em>"_secrets": ["scientist", "asecurepassword123!"]</em>). 
+Note that only one of <em>REQUIRE_AUTH</em> and <em>REQUIRE_DATA_AUTH</em> can be true with the former taken precedence.
+
+<br>
+<strong> * </strong> Whenever the <a target="_blank" href="data/app.cfg">app.cfg</a> file is changed, the apache server has to be restarted. If content within the directories is changed, a restart is not necessary. To restart execute </p>
+
+<pre><code>sudo /etc/init.d/apache2 restart
+</code></pre> <p> or </p> <pre><code>sudo service apache2 restart
+</code></pre>
+
+<p align=justify><strong> * </strong> Generate a folder mdsrv in <em>/var/www/</em> and place <a target="_blank" href="data/mdsrv.wsgi">mdsrv.wsgi</a> into this folder (<em>/var/www/mdsrv/mdsrv.wsgi</em>). Add the path of the configuration file (<a target="_blank" href="data/app.cfg">app.cfg</a>) into the <a target="_blank" href="data/mdsrv.wsgi">mdsrv.wsgi</a> file including the name of the file (<em>APP_CFG = '/home/nickname/important/app.cfg'</em>). Restart now the apache server.</p>
+
+
+<p align=justify> <strong> * </strong> The MDsrv with the structures and trajectories within the defined folder can be reached at <em>http://localhost/mdsrv.html</em> by loading a structure via "File -> Import" and adding afterwards the trajectory within the structure menu by selecting "Remote trajectory - import".</p>
+
+
+<h1><a id="files" class="anchor" href="#global" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>File description</h1>
+
+<h2>Configuration file</h2>
+<p align=justify>The configuration file can be (optionally) used to locate the directories that will be accessible though the web server and it defines access restrictions as user and password settings. It is written in Python and a sample <a target="_blank" href="data/app.cfg">.cfg file</a> is provided.</p>
+
+
+<h2>apache.config file</h2>
+<p align=justify>The <a target="_blank" href="data/apache.config">apache.config file</a> contains the input for the configuration of the apache server. The user and the group should be adjusted according to the settings of the server.</p>
+
+
+<h2>.wsgi file</h2>
+<p align=justify>The <a target="_blank" href="data/mdsrv.wsgi">.wsgi file</a> serves the mdsrv application. A virtual environment and a configuration file can be set.</p>
+
+
+
+<h1>
+<a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
+
+<p>If you have questions concerning the installation, feel free to use the
+<a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a> or write a mail to
+<a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
+<a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
+
+<p>Please give us <strong>feedback</strong>!</p>
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p><strong><a href="index.html">Home</a></strong></p>
+        <p class="copyright">MDsrv maintained by <a target="_blank" href="https://github.com/arose">arose</a></p>
+        <p>Published with <a target="_blank" href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+
+
+  </body>
+</html>

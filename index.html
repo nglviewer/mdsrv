@@ -13,31 +13,25 @@
 
   <body>
 
-    <script src="data/ngl.embedded.min.js"></script>
+    <script src="data/ngl.js"></script>
+
     <script>
-        NGL.mainScriptFilePath = "data/ngl.embedded.min.js";
-
         document.addEventListener( "DOMContentLoaded", function() {
-          function getModelURL( model ){
-              var href = window.location.href;
-              return href.substr( 0, href.lastIndexOf( "/" ) + 1 ) + model;
-          }
-
-          var stage = new NGL.Stage( "viewport" );
-          stage.loadFile( getModelURL("data/md.gro"), { asTrajectory: true, running: true }  ).then( function( o ){
-              o.addRepresentation( "cartoon" );
-              o.centerView();
-          } );
-          stage.setOrientation(
-                [[-17.368877091269418,4.556223891659043,-19.999958948625682],[0.8121475098230106,-0.2950105349323463,-0.5033738238795953],[-28.381417751312256,-13.79699957370758,-0.29250049591064453],[0,0,0]]
+			function getModelURL( model ){
+		        var href = window.location.href;
+		        return href.substr( 0, href.lastIndexOf( "/" ) + 1 ) + model;
+			}
+            var stage = new NGL.Stage( "viewport" );
+          	stage.loadFile( getModelURL("data/md.gro"), { asTrajectory: true }  ).then( function( o ){
+                o.addRepresentation( "cartoon");
+                o.centerView();
+	      		var trajComp = o.addTrajectory();
+	      		var player = new NGL.TrajectoryPlayer(trajComp.trajectory, {start: 1, timeout: 200} );
+	      		player.play();
+            } );
+            stage.setOrientation(
+                [[28.074999809265137,28.16999912261963,27.22000026702881],[38.041256212103626,4.000447687884037,-11.16747719008557],[-29.3665595756232,2.0906799525729096,11.365819960687398],[0,0,0]]
             );
-          var toggleSpin = document.getElementById( "playerButton" );
-            var isSpinning = false;
-            if( !isSpinning ){
-                stage.setSpin( [ 0, 1, 0.5 ], 0.01 );
-                isSpinning = true;
-            }
-            console.log(stage.compList[0])
         } );
 
     </script>
@@ -65,9 +59,9 @@
       <section id="main_content" class="inner">
         <div id="viewport" style="width:300px; height:300px; margin:0 auto;">
         </div>
-          <p><strong>MDsrv</strong> is a tool to show molecular dynamics (MD) trajectories on-line
+          <p align=justify ><strong>MDsrv</strong> is a tool to show molecular dynamics (MD) trajectories on-line
           using a web
-server that provides fast access to MD trajectories and a web application
+server that provides fast access to MD trajectories and a web application (<a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a>)
 to view them. To allow meaningful display of raw datasets processing options
 for centering, superposition and handling of periodic boundaries are included.
 Further, the MD trajectories can be filtered on-the-fly to sub-sets of
@@ -76,27 +70,26 @@ web application displays large molecular structures and animates their
 MD trajectories to allow interactive exploration and collaborative visual
 analysis within a local network or over the Internet.</p>
 
-<p>An <strong>example of the usage</strong> of the MDsrv in combination with the
-<a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a> can
-be found <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example">here</a>.
-
-There, two simulations are shown and can be run by pressing the 'play' button. Additionally, the
-<a target="_blank" href="data/session.ngl">.ngl file</a> which is used to generate the example session provides access
-to also self-written functions as 'show/hide all'.
+<p align=justify>A small <strong>example of the usage</strong> of the MDsrv in combination with the <a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a> is embedded on this page (above). It can be interactively moved, scaled and rotated. 
+A more capable example can be found <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example">here</a>. There, two simulations are shown and can be run by pressing the 'play' button. Additionally, the <a target="_blank" href="data/script.ngl">.ngl script file</a> which is used to generate the example gives the possibility to add specific self-written functions as 'show/hide all'.
 </p>
 
-<p>Read more:</p>
+<h3>
+<a id="availability" class="anchor" href="#availability" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Read more:</h3>
 
 <ul>
-<li><a href="installation_quick_start.html">installation and deployment</a></li>
-<li><a href="basic_example.html">usage</a></li>
-<li><a href="citations.html">citations</a></li>
+<li><a href="installation_deployment.html">installation and deployment</a></li>
+<li><a href="usage.html">usage</a></li>
+<li><a href="restful_api.html">RESTful API</a></li>
+<li><a href="scripting.html">scripting</a></li>
+<li><a href="browser_support.html">NGL browser support</a></li>
+<li><a href="citations.html">citation</a></li>
 </ul>
 
 <h3>
 <a id="availability" class="anchor" href="#availability" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Availability</h3>
 
-<p>All source code is available under the
+<p>The source code is available under the
 <a target="_blank" href="https://opensource.org/licenses/MIT">MIT License</a> from
 <a target="_blank" href="https://github.com/arose/MDsrv">github.com/arose/mdsrv</a> and the Python
 Package index
@@ -105,14 +98,14 @@ Package index
 <h3>
 <a id="participating" class="anchor" href="#participating" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Participating</h3>
 
-<p>If you have any <strong>questions</strong>, found some <strong>bugs</strong>, or want to report
+<p align=justify>If you have any <strong>questions</strong>, found some <strong>bugs</strong>, or want to report
 <strong>enhancement requests</strong> use the <a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a> or write a mail to
 <a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
 <a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
 
 <p>Please give us <strong>feedback</strong>!</p>
 
-<p>MDsrv is <strong>open source</strong> and welcomes <em>your</em> contributions. <a target="_blank" href="https://github.com/arose/mdsrv#fork-destination-box">Fork
+<p align=justify>MDsrv is <strong>open source</strong> and welcomes <em>your</em> contributions. <a target="_blank" href="https://github.com/arose/mdsrv#fork-destination-box">Fork
 the repository on GitHub</a> and submit a pull request.</p>
 
       </section>
