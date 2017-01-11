@@ -3,9 +3,10 @@ All notable changes to this project will be documented in this file, following t
 
 
 
-## [v0.2] - 2016-01-10
+## [v0.3] - 2016-01-11
 ### Added
 - --script arguments
+- versioneer
 - DOC: installation & deployment, usage, scripting
 
 ### Changed
