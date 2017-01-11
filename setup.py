@@ -2,6 +2,8 @@
 
 from setuptools import setup, find_packages
 
+import os
+
 import versioneer
 from versioneer import get_cmdclass
 sdist = get_cmdclass()['sdist']
@@ -59,7 +61,7 @@ setup_args = {
     'author_email': 'alexander.rose@weirdbyte.de',
     'url': 'https://github.com/arose/mdsrv',
     'classifiers': CLASSIFIERS,
+}
 
 
-if __name__ == '__main__':
-    setup(**setup_args)
+setup(**setup_args)
