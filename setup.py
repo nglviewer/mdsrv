@@ -1,9 +1,19 @@
 #!/usr/bin/env python
 
-from setuptools import setup
+from setuptools import setup, find_packages
+
+import versioneer
+from versioneer import get_cmdclass
+sdist = get_cmdclass()['sdist']
+build_py = get_cmdclass()['build_py']
+
+here = os.path.dirname(os.path.abspath(__file__))
+node_root = os.path.join(here, 'js')
+is_repo = os.path.exists(os.path.join(here, '.git'))
 
 
-VERSION = "0.2"
+
+
 CLASSIFIERS = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
@@ -23,23 +33,33 @@ CLASSIFIERS = [
 ]
 
 
+
+setup_args = {
+    'name': 'MDsrv',
+    'version': versioneer.get_version(),
+    'description': 'Server for coordinate trajectories from molecular dynamics simulations.',
+    'include_package_data': True,
+    'license': "MIT",
+    'entry_points': {'console_scripts':
+          ['mdsrv = mdsrv:entry_point',]
+    },
+    'extras_require': {
+        "flask": ["flask"],
+        "simpletraj": ["simpletraj"],
+    },
+    'install_requires': {
+        "flask": ["flask"],
+        "simpletraj": ["simpletraj"],
+    },
+    'packages': set(find_packages() + 
+                ['mdsrv']),
+    'zip_safe': False,
+    'cmdclass': versioneer.get_cmdclass(),
+    'author': 'Alexander S. Rose',
+    'author_email': 'alexander.rose@weirdbyte.de',
+    'url': 'https://github.com/arose/mdsrv',
+    'classifiers': CLASSIFIERS,
+
+
 if __name__ == '__main__':
-    setup(
-        name="MDsrv",
-        author="Alexander S. Rose",
-        author_email="alexander.rose@weirdbyte.de",
-        description="Server for coordinate trajectories from molecular dynamics simulations",
-        version=VERSION,
-        classifiers=CLASSIFIERS,
-        license="MIT",
-        url="https://github.com/arose/mdsrv",
-        zip_safe=False,
-        include_package_data=True,  # use MANIFEST.in during install
-        packages=["mdsrv"],
-        install_requires=["flask", "simpletraj"],
-        entry_points={
-            "console_scripts": [
-                'mdsrv = mdsrv:entry_point'
-            ]
-        }
-    )
+    setup(**setup_args)
