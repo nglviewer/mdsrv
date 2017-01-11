@@ -41,13 +41,12 @@ setup_args = {
     'version': versioneer.get_version(),
     'description': 'Server for coordinate trajectories from molecular dynamics simulations.',
     'include_package_data': True,
+    'package_data': {
+         "mdsrv.data": ["*"]
+     },
     'license': "MIT",
     'entry_points': {'console_scripts':
           ['mdsrv = mdsrv:entry_point',]
-    },
-    'extras_require': {
-        "flask": ["flask"],
-        "simpletraj": ["simpletraj"],
     },
     'install_requires': {
         "flask": ["flask"],
@@ -60,6 +59,9 @@ setup_args = {
     'author': 'Alexander S. Rose',
     'author_email': 'alexander.rose@weirdbyte.de',
     'url': 'https://github.com/arose/mdsrv',
+    'keywords': [
+        'Molecular Dynamics simulation',
+    ],
     'classifiers': CLASSIFIERS,
 }
 
