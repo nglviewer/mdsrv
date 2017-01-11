@@ -1,0 +1,96 @@
+panel.setName( "Controls" );
+stage.setParameters( { theme: "light" } );
+
+var h = scriptHelperFunctions(stage, panel)
+
+h.uiButton(
+    "show/hide all",
+    function(){
+        var hidden;
+        var compX = h.components("md_1u19").list[0];
+        if (compX.visible === false){
+            hidden = true
+        }else{
+            hidden = false
+        }
+        stage.eachComponent( function( comp ){
+            if (hidden === true){
+                h.visible(true, comp);
+            }else{
+                h.visible(false, comp);
+            }
+        } );
+    }
+);
+
+h.uiButton(
+    "reverse view",
+    function(){
+        stage.eachComponent( function( comp ){
+            if (comp.visible === true){
+		h.visible( false, comp );
+            }else{
+                h.visible( true, comp );
+            }
+        } );
+    }
+);
+
+h.uiButton(
+    "sidechains on/off",
+    function(){
+        h.representations( "licorice" ).list.forEach( function( repre ){
+            h.visible(!repre.visible, repre);
+        } );
+    }
+);
+
+var files = [ "md" ];
+var promiseList = [];
+
+
+files.forEach( function( name ){
+    promiseList.push( stage.loadFile( "file://cwd/data/" + name + ".gro", {name: name} ) );
+} );
+
+Promise.all( promiseList ).then( function( objectList ){
+
+    var compX;
+
+    objectList.forEach( function( comp, i ){
+
+        if( i === 0 ){
+            compX = comp;
+        }else{
+            comp.superpose( compX, true );
+
+        };
+
+        comp.addRepresentation( "cartoon" );
+        comp.addRepresentation( "licorice", { visible: false } );
+        comp.centerView();
+        comp.addTrajectory( "cwd/data/" + comp.name + ".xtc" );
+
+    } );
+
+} );
+
+
+
+var trajSele = "backbone and not #h";
+
+var basePath = "cwd/data/";
+var name = "md_1u19";
+var sysPath = "file://" + basePath + name + ".gro";
+stage.loadFile( sysPath ).then( function( comp ){
+
+        comp.setName( name );
+        comp.setSelection( "protein and not #h" );
+
+        comp.addRepresentation( "cartoon", { color: "#55eb86", sele: "*" } );
+        comp.addRepresentation( "licorice", { colorScheme: "element", colorValue: "#55eb86", visible: false, sele: "protein" } );
+	comp.addTrajectory( basePath  + name + ".xtc", { sele: trajSele } );
+	comp.addTrajectory( basePath  + "/@md_1u19.xtc", { sele: trajSele } );
+        comp.centerView();
+} );
+

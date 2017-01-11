@@ -1,4 +1,5 @@
 graft mdsrv/webapp
-include LICENSE README.md
+include LICENSE README.md DEVELOPMENT.md CHANGELOG.md
 include setup.py
+include mdsrv/_version.py versioneer.py
 global-exclude *.pyc
