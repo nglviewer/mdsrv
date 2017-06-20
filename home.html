@@ -36,7 +36,6 @@
 
     </script>
 
-
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
@@ -45,6 +44,8 @@
           <h1 id="project_title">MDsrv</h1>
           <h2 id="project_tagline">MD trajectory server</h2>
 
+
+
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/arose/mdsrv/zipball/master">Download this project as a .zip file</a>
               <a class="tar_download_link" href="https://github.com/arose/mdsrv/tarball/master">Download this project as a tar.gz file</a>
@@ -52,48 +53,67 @@
         </header>
     </div>
 
-    <!-- MAIN CONTENT -->
-
     <div id="main_content_wrap" class="outer">
-      <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
-      <section id="main_content" class="inner">
+<div class="nav">
+<ul>
+<li><a href="home.html">Home</a></li>
+<li><a href="installation.html">Installation guide</a></li>
+<li><a href="deployment.html">Deployment</a></li>
+<ul>
+<li><a href="deployment.html#deployment">Deployment</a></li>
+<li><a href="deployment.html#server">Webserver setup</a></li>
+</ul>
+<li><a href="configuration.html">MDsrv configuration</a></li>
+<li><a href="usage.html">User guide</a></li>
+<ul>
+<li><a href="usage.html#local">Local usage</a></li>
+<li><a href="usage.html#gui">NGL GUI guide</a></li>
+<li><a href="connecting.html">Cluster connection</a></li>
+<li><a href="restful_api.html">Utilization</a></li>
+</ul>
+<li><a href="scripting.html">Scripting</a></li>
+<ul>
+<li><a href="webapp.html">Web-application</a></li>
+<li><a href="embedded.html">Embedded scripting</a></li>
+<li><a href="selection.html">NGL language & settings</a></li>
+<li><a href="basicscripting.html">Basic scripting</a></li>
+<li><a href="advanced.html">Advanced scripting</a></li>
+</ul>
+<li><a href="examples.html">Examples</a></li>
+<li><a href="faq.html">FAQ</a></li>
+<li><a href="reference.html">Reference</a></li>
+</ul>
+</div>
+				<div class="content">
+					<br>
         <div id="viewport" style="width:300px; height:300px; margin:0 auto;">
         </div>
           <p align=justify ><strong>MDsrv</strong> is a tool to show molecular dynamics (MD) trajectories on-line
           using a web
 server that provides fast access to MD trajectories and a web application (<a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a>)
 to view them. To allow meaningful display of raw datasets processing options
-for centering, superposition and handling of periodic boundaries are included.
+for centering, superposition and handling of periodic boundaries are included and automatically utilized.
 Further, the MD trajectories can be filtered on-the-fly to sub-sets of
-atoms and coarse time-resolutions. The resulting molecular-visualization
+atoms and coarse time-resolutions. <a target="_blank" href="data/script.ngl">script files</a> are used to prepair shareable sessions and give the possibility to add specific self-written functions as 'show/hide ligand'. The resulting molecular-visualization
 web application displays large molecular structures and animates their
 MD trajectories to allow interactive exploration and collaborative visual
 analysis within a local network or over the Internet.</p>
 
+
+<p align=justify><strong>To share simulations with your collaborators, students or others, they do not need to install anything, just need a modern web-browser.</strong></p>
+
 <p align=justify>A small <strong>example of the usage</strong> of the MDsrv in combination with the <a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a> is embedded on this page (above). It can be interactively moved, scaled and rotated. 
-A more capable example can be found <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example">here</a>. There, two simulations are shown and can be run by pressing the 'play' button. Additionally, the <a target="_blank" href="data/script.ngl">.ngl script file</a> which is used to generate the example gives the possibility to add specific self-written functions as 'show/hide all'.
-</p>
+More capable example can be found <a href="examples.html">here</a>.</p>
 
-<h3>
-<a id="availability" class="anchor" href="#availability" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Read more:</h3>
-
-<ul>
-<li><a href="installation_deployment.html">installation and deployment</a></li>
-<li><a href="usage.html">usage</a></li>
-<li><a href="restful_api.html">RESTful API</a></li>
-<li><a href="scripting.html">scripting</a></li>
-<li><a href="browser_support.html">NGL browser support</a></li>
-<li><a href="citations.html">citation</a></li>
-</ul>
 
 <h3>
 <a id="availability" class="anchor" href="#availability" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Availability</h3>
 
-<p>The source code is available under the
+<p align=justify>The source code is available under the
 <a target="_blank" href="https://opensource.org/licenses/MIT">MIT License</a> from
 <a target="_blank" href="https://github.com/arose/MDsrv">github.com/arose/mdsrv</a> and the Python
 Package index
-<a target="_blank" href="http://pypi.python.org/pypi/MDsrv">pypi.python.org/pypi/MDsrv</a>.</p>
+<a target="_blank" href="http://pypi.python.org/pypi/MDsrv">pypi.python.org/pypi/MDsrv</a>. The MDsrv is currently tested for Linux and Mac OS operating systems. The visualization within the browser (e.g. for collaborators) is independent of an operating system.</p>
 
 <h3>
 <a id="participating" class="anchor" href="#participating" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Participating</h3>
@@ -108,14 +128,14 @@ Package index
 <p align=justify>MDsrv is <strong>open source</strong> and welcomes <em>your</em> contributions. <a target="_blank" href="https://github.com/arose/mdsrv#fork-destination-box">Fork
 the repository on GitHub</a> and submit a pull request.</p>
 
-      </section>
-    </div>
 
+    </div>
+    </div>
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">MDsrv maintained by <a target="_blank" href="https://github.com/arose">arose</a></p>
-        <p>Published with <a target="_blank" href="https://pages.github.com">GitHub Pages</a></p>
+        <p class="copyright">MDsrv maintained by <a target="_blank" href="https://github.com/arose">arose</a> & <a target="_blank" href="https://github.com/j0kaso">j0kaso</a>
+        - Generated by <a target="_blank" href="https://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
 

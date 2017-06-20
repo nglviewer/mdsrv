@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="MDsrv : MD trajectory server">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+		<style>
+      table, td, th { border: 0 solid black; }
+    </style>
+    <title>MDsrv</title>
+  </head>
+
+  <body>
+
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" target="_blank" href="https://github.com/arose/mdsrv">View on GitHub</a>
+
+          <h1 id="project_title">MDsrv</h1>
+          <h2 id="project_tagline">First scripts</h2>
+
+
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/arose/mdsrv/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/arose/mdsrv/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+<div class="nav">
+<ul>
+<li><a href="home.html">Home</a></li>
+<li><a href="installation.html">Installation guide</a></li>
+<li><a href="deployment.html">Deployment</a></li>
+<ul>
+<li><a href="deployment.html#deployment">Deployment</a></li>
+<li><a href="deployment.html#server">Webserver setup</a></li>
+</ul>
+<li><a href="configuration.html">MDsrv configuration</a></li>
+<li><a href="usage.html">User guide</a></li>
+<ul>
+<li><a href="usage.html#local">Local usage</a></li>
+<li><a href="usage.html#gui">NGL GUI guide</a></li>
+<li><a href="connecting.html">Cluster connection</a></li>
+<li><a href="restful_api.html">Utilization</a></li>
+</ul>
+<li><a href="scripting.html">Scripting</a></li>
+<ul>
+<li><a href="webapp.html">Web-application</a></li>
+<li><a href="embedded.html">Embedded scripting</a></li>
+<li><a href="selection.html">NGL language & settings</a></li>
+<li><a href="basicscripting.html">Basic scripting</a></li>
+<li><a href="advanced.html">Advanced scripting</a></li>
+</ul>
+<li><a href="examples.html">Examples</a></li>
+<li><a href="faq.html">FAQ</a></li>
+<li><a href="reference.html">Reference</a></li>
+</ul>
+</div>
+				<div class="content">
+
+
+
+<h2>Simple script example</h2>
+
+<pre><code>var basePath = "cwd/data/";
+var sysPath = "file://" + basePath + "md_1u19.gro";
+stage.loadFile( sysPath ).then( function( comp ){
+    comp.addRepresentation( "cartoon" );
+    comp.addTrajectory( basePath  + "md_1u19.xtc" );
+} );</code></pre>
+
+<p align=justify>This script example is partly extracted from the sample <a target="_blank" href="data/script.ngl">.ngl file</a>. It loades a structure (<em>structure.gro</em>) file with the <em>cartoon</em> representation and a simulation (<em>sim.xtc</em>) into the NGL Viewer.</p>
+<br>
+
+<pre><code>var trajSele = {
+	sele: "backbone and not #h", initialFrame: -1,
+	centerPdb: true, removePbc: true, superpose: true;
+	defaultTimeout: 20, defaultStep: 3
+};
+comp.addRepresentation( "licorice", { visible: false } );
+comp.addTrajectory( basePath  + "@md_1u19.xtc", trajSele );</code></pre>
+
+<p align=justify>Trajectories can have different configurations. Some default values are displayed above, others are changed accordingly to the simulation. -1 for the initial frame referes to the conformation of the structure file. To load several parts of a continuous simulation (<em>md_1u19.part0001.xtc, md_1u19.part0002, ... </em>), add the <em>@ symbol</em> before the name of the trajectory. This is especially usefull if you inspect unprocessed trajectories.</p>
+<br>
+<pre><code>panel.setName( "A simple example" );
+stage.setParameters( { backgroundColor: "white", hoverTimeout: -1 } );</code></pre>
+
+<p align=justify>The panel (see also the <a href="usage.html#gui">NGL GUI guide</a>) can be named and several stage options are available. Here we present how to change the background colour and how to disable the mouse visualization option - for more please consult the <a href="http://arose.github.io/ngl/api/index.html">NGL documentation</a>.</p>
+<br>
+
+<h2>Basic functions</h2>
+
+
+<pre><code>var h = scriptHelperFunctions(stage, panel)
+h.uiButton(
+    "reverse view",
+    function(){
+        stage.eachComponent( function( comp ){
+            if (comp.visible === true){
+                h.visible( false, comp );
+            }else{
+                h.visible( true, comp );
+            }
+        } );
+    }
+);
+h.uiButton(
+    "sidechains on/off",
+    function(){
+        h.representations( "licorice" ).list.forEach( function( repre ){
+            h.visible(!repre.visible, repre);
+        } );
+    }
+);</code></pre>
+
+<p align=justify>In order to generate clickable functions for session-like behaviour, a class (<em>scriptHelperFunctions</em>) has to be included. The first function "reverse view" changes for each component within the session the visibility, the second function "sidechains on/off" changes for each licorice representation of every component within the session the visibility. With these two functions, you can change component and representation features.</p>
+
+
+<h2>Complete script</h2>
+<p align=justify>All functions and script snipplets explained above are collected within a script, presented below and downloadable <a target="_blank" href="data/script.ngl">here</a>. The ending of the file can be ".ngl" or ".js".</p>
+
+<pre><code>panel.setName( "A simple example" );
+stage.setParameters( { backgroundColor: "white", hoverTimeout: -1 } );
+var h = scriptHelperFunctions(stage, panel)
+h.uiButton(
+    "reverse view",
+    function(){
+        stage.eachComponent( function( comp ){
+            if (comp.visible === true){
+                h.visible( false, comp );
+            }else{
+                h.visible( true, comp );
+            }
+        } );
+    }
+);
+h.uiButton(
+    "sidechains on/off",
+    function(){
+        h.representations( "licorice" ).list.forEach( function( repre ){
+            h.visible(!repre.visible, repre);
+        } );
+    }
+);
+
+//Function to load a structure & two trajectories individually
+var trajSele = {
+    sele: "backbone and not #h", initialFrame: -1, centerPdb: true,
+    removePbc: ture, superpose: true; defaultTimeout: 20, defaultStep: 3
+    };
+var basePath = "cwd/data/";
+var sysPath = "file://" + basePath + "md_1u19.gro";
+stage.loadFile( sysPath ).then( function( comp ){
+    comp.addRepresentation( "cartoon" );
+		comp.addRepresentation( "licorice", {visible: false} );
+    comp.addTrajectory( basePath  + "md_1u19.xtc", trajSele );
+    comp.addTrajectory( basePath  + "/@md_1u19.xtc", trajSele );
+    comp.centerView();
+} );</code></pre>
+
+<h1>
+<a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
+
+<p>If you have question, feel free to use the
+<a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a> or write a mail to
+<a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
+<a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
+
+<p>Please give us <strong>feedback</strong>!</p>
+
+    </div>
+    </div>
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">MDsrv maintained by <a target="_blank" href="https://github.com/arose">arose</a> & <a target="_blank" href="https://github.com/j0kaso">j0kaso</a>
+        - Generated by <a target="_blank" href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+
+
+  </body>
+</html>

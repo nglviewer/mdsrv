@@ -29,6 +29,28 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 160px;
+  box-sizing: border-box;
+  width: 250px;
+  height: 60%;
+  padding-top: 20px;
+  padding-left: 15px;
+  margin-top: 160px;
+  overflow-x: auto;
+  box-shadow: rgba(255, 255, 255, 1) -1px 0 0 inset;
+  border-right: 1px solid #ddd;
+}
+.content {
+  margin-top: 150px;
+  margin-left: 270px;
+  margin-bottom: 100px;
+  padding: 10px 50px 10px 20px;
+}
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -197,7 +219,6 @@ blockquote {
 
 
 ul, ol, dl {
-  margin-bottom: 15px
 }
 
 ul {
@@ -266,7 +287,7 @@ Full-Width Styles
 
 .inner {
   position: relative;
-  max-width: 640px;
+  max-width: 500px;
   padding: 20px 10px;
   margin: 0 auto;
 }
@@ -293,10 +314,12 @@ Full-Width Styles
   background: -ms-linear-gradient(top, #373737, #212121);
   background: -o-linear-gradient(top, #373737, #212121);
   background: linear-gradient(top, #373737, #212121);
+  position: fixed;
+  padding-left: 100px;
 }
 
 #header_wrap .inner {
-  padding: 50px 10px 30px 10px;
+  padding: 20px 10px 10px 10px;
 }
 
 #project_title {
@@ -319,7 +342,7 @@ Full-Width Styles
   position: absolute;
   width: 210px;
   z-index: 10;
-  bottom: -40px;
+  bottom: 10px;
   right: 0;
   height: 70px;
   background: url('../images/icon_download.png') no-repeat 0% 90%;
@@ -366,6 +389,10 @@ Full-Width Styles
 
 #footer_wrap {
   background: #212121;
+  padding-left: 100px;
+  position: fixed;
+  bottom: 0;
+  height: 60px;
 }
 
 
