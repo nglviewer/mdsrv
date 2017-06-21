@@ -1,5 +1,6 @@
 /**
  * @author mrdoob / http://mrdoob.com/
+ * The MIT License, Copyright &copy; 2010-2016 three.js authors
  */
 
 
@@ -100,7 +101,7 @@ var properties = [
     'fontWeight', 'fontStyle', 'fontFamily', 'textTransform', 'cursor',
     'verticalAlign', 'clear', 'float', 'zIndex', 'minHeight', 'maxHeight',
     'minWidth', 'maxWidth', 'wordBreak', 'wordWrap', 'spellcheck',
-    'lineHeight', 'whiteSpace', 'textOverflow', 'textAlign'
+    'lineHeight', 'whiteSpace', 'textOverflow', 'textAlign', 'pointerEvents'
 ];
 
 properties.forEach( function ( property ) {
