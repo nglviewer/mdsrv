@@ -1,0 +1,56 @@
+    <header>
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="index.html">MD<span class="logo_colour">srv</span></a></h1>
+          <h2>Simple. Fast. Sharing. Collaboration. Worldwide. </h2>
+        </div>
+      </div>
+      <nav>
+        <div id="menu_container">
+          <ul class="sf-menu" id="nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="examples.html">Examples</a></li>
+            <li><a href="usage.html">Usage</a></li>
+            <li><a href="setup.html">Setup</a>
+              <ul>
+                <li><a href="installation.html">Installation guide</a></li>
+                <li><a href="cusage.html">Command line usage</a></li>
+                <li><a href="deployment.html">Depolyment</a>
+                  <ul>
+                    <li><a href="deployment.html#deployment">Depolyment</a></li>
+                    <li><a href="deployment.html#server">Webserver setup</a></li>
+                  </ul>
+                </li>
+                <li><a href="configuration.html">MDsrv configuration</a></li>
+                <li><a href="connecting.html">Cluster connection</a></li>
+                <li><a href="restful_api.html">Utilization</a></li>
+                <li><a href="scripting.html">Scripting</a>
+                  <ul>
+                    <li><a href="webapp.html">Web-application</a></li>
+                    <li><a href="embedded.html">Embedded scripting</a></li>
+                    <li><a href="selection.html">NGL language & settings</a></li>
+                    <li><a href="basicscripting.html">Basic scripting</a></li>
+                    <li><a href="advanced.html">Advanced scripting</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="reference.html">Acknowledgement</a></li>
+            <li><a href="contact.php">Contact Us</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+  <!-- javascript at the bottom for fast page loading -->
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/jquery.easing-sooper.js"></script>
+  <script type="text/javascript" src="js/jquery.sooperfish.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('ul.sf-menu').sooperfish();
+      $('.top').click(function() {$('html, body').animate({scrollTop:0}, 'fast'); return false;});
+    });
+  </script>

@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>CSS3_contrast</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <!-- modernizr enables HTML5 elements and feature detects -->
+  <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script> 
+  $(function(){
+    $("#header").load("header.html");
+    $("#side").load("side.html"); 
+    $("#footer").load("footer.html"); 
+  });
+  </script> 
+</head>
+
+<body>
+      <script src="data/ngl.js"></script>
+
+    <script>
+        document.addEventListener( "DOMContentLoaded", function() {
+			function getModelURL( model ){
+		        var href = window.location.href;
+		        return href.substr( 0, href.lastIndexOf( "/" ) + 1 ) + model;
+			}
+            var stage = new NGL.Stage( "viewport" );
+                stage.setParameters( { backgroundColor: "white" } );
+          	stage.loadFile( getModelURL("data/md.gro"), { asTrajectory: true }  ).then( function( o ){
+                o.addRepresentation( "cartoon", {color: "#c40000"});
+                
+                o.centerView();
+	      		var trajComp = o.addTrajectory();
+	      		var player = new NGL.TrajectoryPlayer(trajComp.trajectory, {start: 1, timeout: 200} );
+	      		player.play();
+            } );
+            stage.setOrientation(
+                [[28.074999809265137,28.16999912261963,27.22000026702881],[38.041256212103626,4.000447687884037,-11.16747719008557],[-29.3665595756232,2.0906799525729096,11.365819960687398],[0,0,0]]
+            );
+        } );
+
+    </script>
+  <div id="main">
+    <div id="header"></div>
+    <div id="site_content">
+      <div id="side"></div>
+      <div class="content">
+        <h1>Welcome to the MD trajectory server</h1>
+        <div id="viewport" style="width:300px; height:300px; margin:0 auto;"></div>
+<p align=justify ><strong>MDsrv</strong> is a web-based tool developed to enhance collaborative research by providing non-experts with easy and quick online access to molecular dynamics (MD) simulations. MDsrv channels MD trajectories through a web server using a powerful web application (<a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a>) to visualize them.  
+
+<p align=justify><strong>Highlights:</strong></p>
+
+<ul>
+  <li> <strong> Non-expert end users (e.g. research collaborators, students, etc.) only require a modern web browser to visualize MD simulations through MDsrv.</strong></li>
+  <li> Direct meaningful display of raw simulation data by automatically handling periodic boundary conditions, centering and superposition.</li>
+  <li> Further on-the-fly MD trajectory processing (e.g. by filtering out frames and/or atoms) allows generating customized sessions that can be easily shared.</li>
+  <li> <a target="_blank" href="data/script.ngl">Script files</a> can be used to add specific self-written functions such as 'show/hide ligand' to customized sessions. </li>
+  <li> MDsrv can display large molecular structures and animate MD trajectories to allow interactive exploration and collaborative visual analysis within a local network or over the Internet. </li>
+</ul>  
+
+<p align=justify><strong>Supported file formats:</strong> .pdb, .xtc, .trr, .gro, .psf, .dcd, .nc</p>
+
+<p align=justify>A small <strong>example of the usage</strong> of the MDsrv in combination with the <a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a> is embedded on this page (above). It can be interactively moved, scaled and rotated. 
+More capable examples can be found <a href="examples.html">here</a>.</p>
+
+
+<h2>
+<a id="availability" class="anchor" href="#availability" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Availability</h2>
+
+<p align=justify>The source code is available under the
+<a target="_blank" href="https://opensource.org/licenses/MIT">MIT License</a> from
+<a target="_blank" href="https://github.com/arose/MDsrv">github.com/arose/mdsrv</a> and the Python
+Package index
+<a target="_blank" href="http://pypi.python.org/pypi/MDsrv">pypi.python.org/pypi/MDsrv</a>. The visualization capabilities of MDsrv require no previous installation other than a modern web browser. The streaming capabilities (i.e. from a local or a dedicated web-server) do require <a href="installation.html">installation</a> and have been fully tested for Linux and Mac OS operating systems. </p>
+
+      </div>
+    </div>
+    <div id="scroll">
+      <a title="Scroll to the top" class="top" href="#"><img src="images/top.png" alt="top" /></a>
+    </div>
+  <div id="footer"></div>
+  </div>
+</body>
+</html>

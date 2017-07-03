@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>CSS3_contrast</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <!-- modernizr enables HTML5 elements and feature detects -->
+  <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script> 
+  $(function(){
+    $("#header").load("header.html");
+    $("#side").load("side.html"); 
+    $("#footer").load("footer.html"); 
+  });
+  </script> 
+</head>
+
+<body>
+  <div id="main">
+    <div id="header"></div>
+    <div id="site_content">
+      <div id="side"></div>
+      <div class="content">
+				<h1>User guide</h1>
+				
+<h2><a id="local" class="anchor" href="#local" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Local usage</h2>
+
+<p align=justify>Within a local environment, for short-time usage or testing, the MDsrv can be started from a directory providing access to files within this and underlying directories by the following command:</p>
+
+<pre><code>> mdsrv</code></pre>
+
+<pre><code>positional options: [structure] [trajectory]
+additional options: [--script SCRIPT] [--cfg CFG]
+                    [--host HOST] [--port PORT]</code></pre>
+
+<p align=justify>The command <em>"mdsrv"</em> itself starts the MDsrv including the NGL viewer with access to files within the starting directory and underneath, exclusively. By executing the MDsrv with a structure (e.g. a .gro or .pdb file) and trajectory (e.g. a .gro, .xtc or .dcd file) including their path which must be within the current working directory or a sub directory, both will be loaded into the MD viewer.</p>
+<pre><code>> mdsrv 3DQB.gro sims/3DQB.xtc       <-- working
+> mdsrv 3DQB.gro ../../3DQB.xtc      <-- not working (parent directory not accessible)
+</code></pre>
+<p align=justify>A structure file is mandatory for loading a trajectory. Trajectories and structures within the current working directory can still be loaded afterwards via the GUI.</p> 
+<p align=justify>
+MDsrv uses <a target="_blank" href="data/script.ngl">.ngl/.js</a> script files to load structures and trajectories with specific settings (e.g representations, colors, selections or background scheme), orientations or self-coded functions. The file is further explained below and example code can be found in the <a href="scripting.html">scripting section</a>.
+</p>
+<pre><code>mdsrv --script session.ngl
+mdsrv --script session.js
+</code></pre>
+<p align=justify>The .ngl file is written in JavaScript and contains commands to execute predefined settings and functions. A sample <a target="_blank" href="data/script.ngl">.ngl file</a> shows additional options like functions and basic loading commands. This is recommended if simulation sessions should be shared. The location of this file should be within an accessible directory and can then be loaded via the URL (e.g. <em>http://localhost/mdsrv.html?load=file://MDsrv/example.ngl</em>, where MDsrv is the directory defined within the <a target="_blank" href="data/app.cfg">.cfg file</a>). Further information and example code can be found in the <a href="scripting.html">scripting</a> section.</p>
+
+
+<p align=justify>
+To include other directories and security settings, the configuration file (<a target="_blank" href="data/app.cfg">.cfg</a>, explained in the <a href="configuration.html">configuration section</a>) can be loaded accordingly:
+<pre><code>mdsrv --cfg my.cfg
+mdsrv --configure my.cfg
+</code></pre>
+</p>
+<br>
+
+<h2>System wide/web-server usage</h2>
+
+<p align=justify>To maintain MDsrv as a system wide web-server, follow the <a href="deployment.html">deployment instructions</a>. Besides apache, any webserver with wsgi support can be used (not tested).</p>
+<p align=justify>We provide an  <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example">example</a> of the usage of the MDsrv as a web-server in combination with the <a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a>. An embedded example is used in this <a href="index.html">documentation</a>. By utilizing a web-server, collaborators, reviewers or students can easily inspect simulations visually on-the-fly.
+</p>
+<br>
+
+<h1>
+<a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
+
+<p>If you have questions, feel free to use the
+<a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a> or write a mail to
+<a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
+<a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
+
+<p>Please give us <strong>feedback</strong>!</p>
+
+
+      </div>
+    </div>
+    <div id="scroll">
+      <a title="Scroll to the top" class="top" href="#"><img src="images/top.png" alt="top" /></a>
+    </div>
+  <div id="footer"></div>
+  </div>
+</body>
+</html>
