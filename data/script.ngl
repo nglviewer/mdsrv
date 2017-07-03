@@ -68,7 +68,7 @@ Promise.all( promiseList ).then( function( objectList ){
 
         comp.addRepresentation( "cartoon" );
         comp.addRepresentation( "licorice", { visible: false } );
-        comp.centerView();
+        comp.autoView();
         comp.addTrajectory( "cwd/data/" + comp.name + ".xtc" );
 
     } );
@@ -77,7 +77,7 @@ Promise.all( promiseList ).then( function( objectList ){
 
 
 
-var trajSele = "backbone and not #h";
+var trajSele = "backbone and not _h";
 
 var basePath = "cwd/data/";
 var name = "md_1u19";
@@ -85,12 +85,12 @@ var sysPath = "file://" + basePath + name + ".gro";
 stage.loadFile( sysPath ).then( function( comp ){
 
         comp.setName( name );
-        comp.setSelection( "protein and not #h" );
+        comp.setSelection( "protein and not _h" );
 
         comp.addRepresentation( "cartoon", { color: "#55eb86", sele: "*" } );
         comp.addRepresentation( "licorice", { colorScheme: "element", colorValue: "#55eb86", visible: false, sele: "protein" } );
 	comp.addTrajectory( basePath  + name + ".xtc", { sele: trajSele } );
-	comp.addTrajectory( basePath  + "/@md_1u19.xtc", { sele: trajSele } );
-        comp.centerView();
+	comp.addTrajectory( basePath  + "/@md_1u19.xtc", { sele: trajSele, deltaTime: 0.5, timeOffset: 0.5 } );
+        comp.autoView();
 } );
 

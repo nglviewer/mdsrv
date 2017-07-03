@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file, following the suggestions of [Keep a CHANGELOG](http://keepachangelog.com/). This project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [v0.3.2] - 2017-07-03
+### Changed
+- ngl update to version 0.10.5-2 incl. prmtop parser, traj time (delta time) settings, debug
+
+
 ## [v0.3.1] - 2017-07-02
 ### Changed
 - major ngl update to version 0.10.5-1 incl. psf, netcdf, xtc (speedup), movable gui, ...
