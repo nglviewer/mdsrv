@@ -9,18 +9,35 @@
   <link rel="stylesheet" type="text/css" href="css/style.css" />
   <!-- modernizr enables HTML5 elements and feature detects -->
   <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="js/jquery.js"></script>
   <script> 
   $(function(){
-    $("#header").load("header.html");
-    $("#side").load("side.html"); 
-    $("#footer").load("footer.html"); 
+    $("#header").load("include/header.html");
+    $("#side").load("include/side.html"); 
+    $("#footer").load("include/footer.html"); 
   });
   </script> 
 </head>
 
 <body>
-	
+      <script src="data/ngl.js"></script>
+    <script>
+      document.addEventListener( "DOMContentLoaded", function() {
+			function getModelURL( model ){
+		        var href = window.location.href;
+		        return href.substr( 0, href.lastIndexOf( "/" ) + 1 ) + model;
+			}
+            var stage = new NGL.Stage( "viewport1" );
+                stage.setParameters( { backgroundColor: "white" } );
+          	stage.loadFile( getModelURL("data/md.gro"), { asTrajectory: true }  ).then( function( o ){
+                o.addRepresentation( "cartoon", {color: "#c40000"});
+                o.autoView();
+	      		var trajComp = o.addTrajectory();
+	      		var player = new NGL.TrajectoryPlayer(trajComp.trajectory, {start: 1, timeout: 200} );
+	      		player.play();
+            } );
+        } );
+    </script>
     <!-- NGL -->
     <script src="data/mdsrv/webapp/js/ngl.js"></script>
 
@@ -51,7 +68,7 @@
             stage = new NGL.Stage( "viewport" );
             stage.loadFile( "data/md.gro", { defaultRepresentation: true, asTrajectory: true } ).then( function( comp ){
         	    comp.setName( "simulation-name" );
-	            comp.setSelection( "protein and not #h" );
+	            comp.setSelection( "protein and not _h" );
 							comp.addRepresentation( "licorice", {visible: false} );
 							comp.addTrajectory( );
 
@@ -105,36 +122,52 @@
   <div id="main">
     <div id="header"></div>
     <div id="site_content">
-      <div id="side"></div>
+			<div id="sidebar_container">
+				<div class="sidebar">
+					<h3>Content:</h3>
+					<ul>
+						<li>Embedded examples</li>
+						<li>Link to NGL GUI sessions</li>
+						<li><a href="http://www.gpcrmd.org/">GPCRmd</a></li>
+					</ul>
+				</div>
+      </div>
       <div class="content">
 				<h1>Examples</h1>
 				
 
 <h3><a id="example_embedded" class="anchor" href="#example_embedded" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples: MDsrv embedded</h3>
-<p align=justify><strong>Interactive picture:</strong><br>As already shown on the <a href="home.html">home</a> page, simulations can be embedded and automatically played within a web site. It can be interactively moved, scaled, centered and rotated.</p>
-<strong>Simple functions:</strong>
-<table><tr><td>
-    <div style="width:300px;">
+<div id="viewport1" style="width:200px; height:200px;"></div>
+<p align=justify><strong>Interactive picture:</strong><br>As already shown on the <a href="index.html">home</a> pageand above , simulations can be embedded and automatically played within a web site. It can be interactively moved, scaled, centered and rotated.</p>
+<p align=justify><strong>Simple functions:</strong><br>Further more functions can be added to the html file. Below, an embedded example with function button is shown. A html file with those functions can be <a target="_blank" href="data/mdsrv-embedded.html">downloaded</a> and is further explained within the <a href="scripting.html#embedded">scripting section</a>. There you can even find further functions or have a look at the <a target="_blank" href="http://arose.github.io/ngl/gallery/index.html">NGL gallery</a>.</p>
+		<div id="viewport" style="width:300px; height:300px;"></div>
+			<div style="width:300px;">
         <button id="toggleSpin">spin on/off</button>
         <button id="toggleTheme">light/dark background</button>
         <button id="toggleLicorice">sidechains on/off</button>
         <button id="toggleRunMDs">run/pause MD</button>
     </div>
-		<div id="viewport" style="width:300px; height:300px; margin:0 auto;"></div>
-
-</td><td>
-<div style="width:auto;"><p align=justify>Another embedded example with function button is shown on the left. A html file with those functions can be <a target="_blank" href="data/mdsrv-embedded.html">downloaded</a> and is further explained within the <a href="scripting.html#embedded">scripting section</a>.
-</p></div>
-</td></tr></table>
+<br>
 
 <h3><a id="example_1" class="anchor" href="#example_1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples: MDsrv with NGL gui </h3>
-<p align=justify><strong>Simulation of Rhodopsin with Gt peptide (3PQR):</strong><br>By providing a simulation session within the NGL GUI, a greater flexibility and more features are provided. As explained within the <a target="_blank" href="usage.html#gui">NGL GUI guide</a>, additional simulations, representations and playing settings can be changed. An example can be found <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example1">here</a>. There, the simulation can be run by pressing the 'play' button. Additionally, the <a target="_blank" href="data/script.ngl">.ngl script file</a> which is used to generate the example (more information <a target="_blank" href="scripting.html">here</a>) gives the possibility to add specific self-written functions as 'show/hide all' or 'sidechains on/off'.</p>
+<p align=justify>By providing a simulation session within the NGL GUI, a greater flexibility and more features are provided. As explained within the <a target="_blank" href="viewing.html">viewing chapter: an NGL GUI guide</a>, additional simulations, representations and playing settings can be changed. There, the simulation can be run by pressing the 'play' button. Additionally, the <a target="_blank" href="data/script.ngl">.ngl script file</a> which is used to generate the example (more information <a target="_blank" href="scripting.html">here</a>) gives the possibility to add specific self-written functions as 'show/hide all' or 'sidechains on/off'.</p>
 
-<p align=justify><strong>Spontaneous binding of cholesterol into A<sub>2A</sub> receptor:</strong><br>Guixà-González et al. (Nat Commun 2017) observed spontaneous binding of membrane cholesterol into A<sub>2A</sub> receptor. The simulation is deposed by using the MDsrv <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example2">here</a>.</p>
+<p align=justify><strong>Simulation of Rhodopsin with Gt peptide (3PQR): <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example1">link #1</a></strong><br>200ns simulation of G-protein alpha-5 subunit peptide of transducin bound to active Opsin.</p>
 
-<p align=justify><strong>Simulation of a GPCR in complex with its G protein:</strong><br>500ns of &beta;2AR in complex with GTP-Gs protein <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example3">(classical MDs)</a>.</p>
+<p align=justify><strong>Spontaneous binding of cholesterol into A<sub>2A</sub> receptor: <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example2">link #2</a></strong><br>Guixà-González et al. (Nat Commun 2017) observed spontaneous binding of membrane cholesterol into A<sub>2A</sub> receptor. The simulation is deposed at the Hildebrand lab by using the MDsrv <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example2">(link)</a>.</p>
 
+<p align=justify><strong>Coarse-Grained simulation of Bace1 helices: <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example3">link #3</a></strong><br>Self-assembly of three Bace1 transmembrane helices a a DPPC lipid bilayer.</p>
 
+<p align=justify><strong>Simulation of a GPCR in complex with its G protein: <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example4">link #4</a></strong><br>500ns of &beta;2AR in complex with GDP-Gs protein.</p>
+
+<h1><a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
+
+<p align=justify>If you have any <strong>questions</strong>, found some <strong>bugs</strong>, or want to report
+<strong>enhancement requests</strong> use the <a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a>, use the <a href="contact.html">contact formular</a> or write a mail to
+<a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
+<a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
+
+<p>Please give us <strong>feedback</strong>!</p>
       </div>
     </div>
     <div id="scroll">

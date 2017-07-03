@@ -9,12 +9,12 @@
   <link rel="stylesheet" type="text/css" href="css/style.css" />
   <!-- modernizr enables HTML5 elements and feature detects -->
   <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="js/jquery.js"></script>
   <script> 
   $(function(){
-    $("#header").load("header.html");
-    $("#side").load("side.html"); 
-    $("#footer").load("footer.html"); 
+    $("#header").load("include/header.html");
+    $("#side").load("include/side.html"); 
+    $("#footer").load("include/footer.html"); 
   });
   </script> 
 </head>
@@ -23,7 +23,6 @@
   <div id="main">
     <div id="header"></div>
     <div id="site_content">
-      <div id="side"></div>
       <div class="content">
 				
 				
@@ -105,17 +104,14 @@ com.addRepresentation("label", {labelType: "text", labelText:  {65: "atom index 
 
 
 
-<h1>
-<a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
+<h1><a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
 
-<p>If you have question, feel free to use the
-<a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a> or write a mail to
+<p align=justify>If you have any <strong>questions</strong>, found some <strong>bugs</strong>, or want to report
+<strong>enhancement requests</strong> use the <a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a>, use the <a href="contact.html">contact formular</a> or write a mail to
 <a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
 <a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
 
 <p>Please give us <strong>feedback</strong>!</p>
-
-
       </div>
     </div>
     <div id="scroll">

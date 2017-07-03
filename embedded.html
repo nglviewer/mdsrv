@@ -9,103 +9,23 @@
   <link rel="stylesheet" type="text/css" href="css/style.css" />
   <!-- modernizr enables HTML5 elements and feature detects -->
   <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="js/jquery.js"></script>
   <script> 
   $(function(){
-    $("#header").load("header.html");
-    $("#side").load("side.html"); 
-    $("#footer").load("footer.html"); 
+    $("#header").load("include/header.html");
+    $("#side").load("include/side.html");
+		$("#side-usage").load("include/side-usage.html");
+    $("#footer").load("include/footer.html"); 
   });
   </script> 
 </head>
 
 <body>
-	
-    <!-- NGL -->
-    <script src="data/mdsrv/webapp/js/ngl.js"></script>
-
-    <!-- UI -->
-    <script src="data/mdsrv/webapp/js/lib/signals.min.js"></script>
-    <script src="data/mdsrv/webapp/js/lib/tether.min.js"></script>
-    <script src="data/mdsrv/webapp/js/lib/colorpicker.min.js"></script>
-    <script src="data/mdsrv/webapp/js/ui/ui.js"></script>
-    <script src="data/mdsrv/webapp/js/ui/ui.extra.js"></script>
-    <script src="data/mdsrv/webapp/js/ui/ui.ngl.js"></script>
-    <script src="data/mdsrv/webapp/js/ui/ui.helper.js"></script>
-    <script src="data/mdsrv/webapp/js/gui.js"></script>
-
-    <!-- MDSRV -->
-    <script src="data/mdsrv/webapp/js/mdsrv.js"></script>
-
-    <script>
-        NGL.cssDirectory = "data/mdsrv/webapp/css/";
-        NGL.documentationUrl = "http://arose.github.io/ngl/api/";
-
-        // Datasources
-        NGL.DatasourceRegistry.add(
-            "file", new MdsrvDatasource( window.location.origin + "/mdsrv/" )
-        );
-        NGL.DatasourceRegistry.listing = NGL.DatasourceRegistry.get( "file" );
-        NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );
-        document.addEventListener( "DOMContentLoaded", function(){
-            stage = new NGL.Stage( "viewport" );
-            stage.loadFile( "data/md.gro", { defaultRepresentation: true, asTrajectory: true } ).then( function( comp ){
-        	    comp.setName( "simulation-name" );
-	            comp.setSelection( "protein and not #h" );
-							comp.addRepresentation( "licorice", {visible: false} );
-							comp.addTrajectory( );
-
-	        } );
-            var toggleTheme = document.getElementById( "toggleTheme" );
-            var isLight = false;
-            toggleTheme.addEventListener( "click", function(){
-		        if( !isLight ){
-                    stage.setParameters( { backgroundColor: "white" } );
-                    isLight = true;
-                }else{
-                    stage.setParameters( { backgroundColor: "black" } );
-                    isLight = false;
-                }
-            } );
-            var toggleSpin = document.getElementById( "toggleSpin" );
-            var isSpinning = false;
-            toggleSpin.addEventListener( "click", function(){
-                if( !isSpinning ){
-                    stage.setSpin( [ 0, 1, 0 ], 0.01 );
-                    isSpinning = true;
-                }else{
-                    stage.setSpin( null, null );
-                    isSpinning = false;
-                }
-            } );
-            var toggleLicorice = document.getElementById( "toggleLicorice" );
-            toggleLicorice.addEventListener( "click", function(){
-							stage.getRepresentationsByName( "licorice" ).list.forEach( function( repre ){
-									repre.setVisibility( !repre.visible );
-							} );
-            } );
-            var toggleRunMDs = document.getElementById( "toggleRunMDs" );
-            var isRunning = false;
-            toggleRunMDs.addEventListener( "click", function(){
-				var trajComp = stage.getComponentsByName("simulation-name").list[0].trajList[0];
-				var player = new NGL.TrajectoryPlayer(trajComp.trajectory, {timeout: 200});
-				if( !isRunning ){
-					player.play();
-					isRunning = true;
-				}else{
-			   	 player.play();
-					player.pause();
-					isRunning = false;
-				}
-            } );
-
-        } );
-    </script>
 
   <div id="main">
     <div id="header"></div>
     <div id="site_content">
-      <div id="side"></div>
+			<div id="side-usage"></div>
       <div class="content">
 				<h1>Embedded scripting</h1>
 				
@@ -233,16 +153,14 @@ document.addEventListener( "DOMContentLoaded", function(){
 &lt/html&gt</code></pre>
 
 
-<h1>
-<a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
+<h1><a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
 
-<p>If you have question, feel free to use the
-<a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a> or write a mail to
+<p align=justify>If you have any <strong>questions</strong>, found some <strong>bugs</strong>, or want to report
+<strong>enhancement requests</strong> use the <a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a>, use the <a href="contact.html">contact formular</a> or write a mail to
 <a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
 <a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
 
 <p>Please give us <strong>feedback</strong>!</p>
-
 
       </div>
     </div>

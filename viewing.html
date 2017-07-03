@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>CSS3_contrast</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <!-- modernizr enables HTML5 elements and feature detects -->
+  <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
+  <script src="js/jquery.js"></script>
+  <script> 
+  $(function(){
+    $("#header").load("include/header.html");
+    $("#side").load("include/side.html"); 
+    $("#footer").load("include/footer.html"); 
+  });
+  </script> 
+</head>
+
+<body>
+  <div id="main">
+    <div id="header"></div>
+    <div id="site_content">
+			<div id="sidebar_container">
+				<div class="sidebar">
+					<h3>See more:</h3>
+					<ul>
+            <li><a href="http://arose.github.io/ngl/">NGL gui example</a></li>
+            <li><a href="http://arose.github.io/ngl/api/index.html">NGL documentation</a></li>
+            <li><a href="http://arose.github.io/ngl/gallery/index.html">NGL gallery</a></li>
+					</ul>
+				</div>
+			</div>
+      <div class="content">
+				<h1>Viewing simulations</h1>
+				<p align=justify>To view simulations provided by the MDsrv, only a link to the session (e.g. provided by a collaborator) and on demand a user and a password is needed. The NGL Viewer requires your browser to support WebGL which is standard in almost all modern web browser. Therefore, there is no need to install anything. If you run into problems, please consult the <a href="faq.html">FAQ</a>.</p>
+				
+				<h1>NGL GUI guide</h1>
+ <img src="data/gui.png" width=100% alt="NGL GUI">
+ 
+ <h4>Loading simulations</h4>
+<p align=justify>Simulations can be loaded in several different ways into the NGL GUI. To load simulations into the <a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a>, a structure file has to be provided first. Structure and .ngl scripting files can be loaded by drag&drop into the viewer or by browsing through the folders by clicking <em>File --> Import</em> <strong>(A, B, C)</strong>.</p>
+
+<p align=justify>
+Within the structure menu, several trajectories can be imported via <em>Trajectory import</em> for autoloadable trajectories (currently dcd files supported, xtc under development) or <em>Remote trajectory --> Import</em> for deposed trajectories <strong>(D, E)</strong>.</p>
+
+<p align=justify>If you want to load a trajectory containing already all atomistic information (e.g. .gro trajectories), select <em>File --> as trajectory</em> <strong>(A, B)</strong> before loading the file. This flag is set until it is removed. Then load the file as previously described via drag&drop or through the folders.</p>
+
+<h4>Simulation settings</h4>
+<p align=justify>The content of the simulation can be specified through the <em>filter selection</em> (e.g. <em>"protein and not #h"</em>). Within the trajectory menu <strong>(F)</strong>, the simulation can be further adjusted (e.g. centering, superposing, removing PBC, step sizes or play options).</p>
+
+<br>
+<h1>
+<a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
+
+<p align=justify>If you have any <strong>questions</strong>, found some <strong>bugs</strong>, or want to report
+<strong>enhancement requests</strong> use the <a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a>, use the <a href="contact.html">contact formular</a> or write a mail to
+<a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
+<a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
+
+<p>Please give us <strong>feedback</strong>!</p>
+
+      </div>
+    </div>
+    <div id="scroll">
+      <a title="Scroll to the top" class="top" href="#"><img src="images/top.png" alt="top" /></a>
+    </div>
+  <div id="footer"></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>CSS3_contrast</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <!-- modernizr enables HTML5 elements and feature detects -->
+  <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
+  <script src="js/jquery.js"></script>
+  <script> 
+  $(function(){
+    $("#header").load("include/header.html");
+    $("#side").load("include/side.html");
+		$("#side-install").load("include/side-install.html");
+    $("#footer").load("include/footer.html"); 
+  });
+  </script> 
+</head>
+
+<body>
+  <div id="main">
+    <div id="header"></div>
+    <div id="site_content">
+			<div id="side-install"></div>
+      <div class="content">
+
+<h1><a id="server" class="anchor" href="#server" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Webserver setup</h1>
+
+<p align=justify>Setting up a computer as a webserver can be done easily. In the following, we will explain how to do this on a Linux OS and within <em>amazon web services</em>.</p>
+
+<h2><a id="LinuxServer" class="anchor" href="#LinuxServer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Linux web-service setup</h2>
+
+<h4><a id="server_requirements" class="anchor" href="#server_requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h4>
+<ul><li>
+	<p align=justify><strong>Domain:</strong> In order to make your webside accessible via the world wide web, you need to own a domain name. Paid and non-paid web hosting services are available with different limits on usage. Your domain hosting service will connect your domain name with your local webserver by redirecting the domain name to your web page.</p>
+</li>
+<li>
+	<p align=justify><strong>Webserver system requirements: </strong>To run MDsrv, you do not need a high-end computer, standard hardware works. Note that the computer will run continuosly, so you might consider to get a hard drive for server usage. Your hard drive space should be huge enough for your simulations.</p>
+</li></ul>
+
+<h4><a id="server_linux" class="anchor" href="#server_linux" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Linux web-service setup</h4>
+<p align=justify>Here we describe a minimal way to set up a Linux web-service. We do not provide a guide to set up your own server with several functions but will help you to make your simulations accessible with MDsrv. For more details, optimization and different functions, please consult a documentation as <em>"The Accidental Administrator: Linux server Step-by-Step configuration Guide"</em> by <em>Don R. Crawley</em>. </p>
+<ol><li>
+	<p align=justify><strong>Install a Linux OS on your machine</strong></p>
+</li><li>
+	<p align=justify><strong>Install Apache</strong></p>
+	<pre><code>sudo apt-get update</code><code>sudo apt-get install apache2</code></pre>
+</li><li>
+	<p align=justify><strong>MDsrv setup: </strong> Deploy the MDsrv as described above.</p>
+</li><li>
+	<p align=justify><strong>Get your IP address</strong></p>
+	<pre><code>hostname -I</code></pre>
+</li><li>
+	<p align=justify><strong>Set up your local hosts file:</strong> Edit your local host file located at <em>/etc/hosts</em> by adding the following lines, where the first part is your IP address (e.g. <em>144.42.XXX.44</em>) and the second your host adress (e.g. <em>example-page.com</em>):</p>
+	<pre><code>144.42.XXX.44   example-page.com</code></pre>
+</li><li>
+	<p align=justify><strong>Restart the Apache Server</strong></p>
+	<pre><code>sudo service apache2 restart</code></pre>
+</li><li>
+	<p align=justify><strong>Host redirection:</strong> Add a redirection to your IP adress at the host service.</p>
+</li></ol>
+
+
+<h2><a id="AmazonServer" class="anchor" href="#AmazonServer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Amazon Web Server setup</h2>
+
+<p align=justify><strong>Under development: </strong>We are currently creating a script for a semi-automated setup of MDsrv on an <em>Amazon Web Server</em>. Content will follow soon!</p>
+
+
+<h1><a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
+
+<p align=justify>If you have any <strong>questions</strong>, found some <strong>bugs</strong>, or want to report
+<strong>enhancement requests</strong> use the <a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a>, use the <a href="contact.html">contact formular</a> or write a mail to
+<a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
+<a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
+
+<p>Please give us <strong>feedback</strong>!</p>
+
+      </div>
+    </div>
+    <div id="scroll">
+      <a title="Scroll to the top" class="top" href="#"><img src="images/top.png" alt="top" /></a>
+    </div>
+  <div id="footer"></div>
+  </div>
+</body>
+</html>
