@@ -51,6 +51,8 @@ setup_args = {
     'setup_requires': {
         "cython": ["cython"],
         "numpy": ["numpy"],
+        "scipy": ["scipy"],
+        "setuptools": ["setuptools"],
     },
     'install_requires': {
         "flask": ["flask"],
