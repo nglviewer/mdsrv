@@ -6,6 +6,6 @@ del get_versions
 
 
 from .mdsrv import *
-
+from .trajectory import *
 
 

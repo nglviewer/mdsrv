@@ -48,9 +48,14 @@ setup_args = {
     'entry_points': {'console_scripts':
           ['mdsrv = mdsrv:entry_point',]
     },
+    'setup_requires': {
+        "cython": ["cython"],
+        "numpy": ["numpy"],
+    },
     'install_requires': {
         "flask": ["flask"],
         "simpletraj": ["simpletraj"],
+        "mdtraj": ["mdtraj"],
     },
     'packages': set(find_packages() + 
                 ['mdsrv']),
