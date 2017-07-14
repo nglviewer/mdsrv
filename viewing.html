@@ -2,9 +2,9 @@
 <html>
 
 <head>
-  <title>CSS3_contrast</title>
-  <meta name="description" content="website description" />
-  <meta name="keywords" content="website keywords, website keywords" />
+  <title>MDsrv</title>
+  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick online access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
+  <meta name="keywords" content="MDsrv, MD simulation, visualization, web server, NGL" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="css/style.css" />
   <!-- modernizr enables HTML5 elements and feature detects -->
@@ -27,7 +27,7 @@
 				<div class="sidebar">
 					<h3>See more:</h3>
 					<ul>
-            <li><a href="http://arose.github.io/ngl/">NGL gui example</a></li>
+            <li><a href="http://arose.github.io/ngl/">NGL GUI example</a></li>
             <li><a href="http://arose.github.io/ngl/api/index.html">NGL documentation</a></li>
             <li><a href="http://arose.github.io/ngl/gallery/index.html">NGL gallery</a></li>
 					</ul>
@@ -38,17 +38,55 @@
 				<p align=justify>To view simulations provided by the MDsrv, only a link to the session (e.g. provided by a collaborator) and on demand a user and a password is needed. The NGL Viewer requires your browser to support WebGL which is standard in almost all modern web browser. Therefore, there is no need to install anything. If you run into problems, please consult the <a href="faq.html">FAQ</a>.</p>
 				
 				<h1>NGL GUI guide</h1>
+				<h3>Basic NGL functions and selection language</h3>
+				<p align=justify>
+					<ul>
+						<li>To load a new structure use the <i>File</i> menu in the top left via drag'n'drop.</li>
+						<li>A number of clickable icons provide common actions. Most icons can be clicked on, just try it or hover the mouse pointer over it to see a tooltip.</li>
+						<li>Symbols:
+						<ul>
+							<li><strong>eye:</strong> Controls the visibility of a component.</li>
+							<li><strong>trash:</strong> Deletes a component. Note that a second click is required to confirm the action.</li>
+							<li><strong>bullseye:</strong> Centers a component.</li>
+							<li><strong>bars:</strong> Opens a menu with further options.</li>
+							<li><strong>square:</strong> Opens a menu with e.g. coloring options.</li>
+							<li><strong>filter:</strong>Indicates atom-selection input fields.</li>
+						</ul></li>
+						<li>Mouse controls:
+						<ul>
+					<li>Left button hold and move to rotate camera around center.</li>
+          <li>Left button click to pick atom.</li>
+          <li>Middle button hold and move to zoom camera in and out.</li>
+          <li>Middle button click to center camera on atom.</li>
+          <li>Right button hold and move to translate camera in the screen plane.</li>
+						</ul></li>
+						<li>Selection language:
+						<ul>
+							<li><strong>* </strong> everythin/all.</li>
+							<li><strong>not _h </strong> no hydrogens</li>
+							<li><strong>protein </strong> protein (no ions, lipids, water, HETATMs)</li>
+							<li><strong>hetero </strong> hetero atoms / HETATM</li>
+							<li><strong>:B </strong> chain</li>
+							<li><strong>.CA </strong> atom</li>
+							<li><strong>@703 </strong> atomindex</li>
+							<li><strong>10-15 </strong> range of residues</li>
+						</ul></li>
+					</ul>
+					
+				</p>
+				
+				
+				<h3>Loading simulations</h3>
  <img src="data/gui.png" width=100% alt="NGL GUI">
  
- <h4>Loading simulations</h4>
 <p align=justify>Simulations can be loaded in several different ways into the NGL GUI. To load simulations into the <a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a>, a structure file has to be provided first. Structure and .ngl scripting files can be loaded by drag&drop into the viewer or by browsing through the folders by clicking <em>File --> Import</em> <strong>(A, B, C)</strong>.</p>
 
 <p align=justify>
-Within the structure menu, several trajectories can be imported via <em>Trajectory import</em> for autoloadable trajectories (currently dcd files supported, xtc under development) or <em>Remote trajectory --> Import</em> for deposed trajectories <strong>(D, E)</strong>.</p>
+Within the structure menu, several trajectories can be imported via <em>Trajectory import</em> for autoloadable trajectories (currently supported for dcd and xtc files supported) or <em>Remote trajectory --> Import</em> for deposed trajectories <strong>(D, E)</strong>.</p>
 
 <p align=justify>If you want to load a trajectory containing already all atomistic information (e.g. .gro trajectories), select <em>File --> as trajectory</em> <strong>(A, B)</strong> before loading the file. This flag is set until it is removed. Then load the file as previously described via drag&drop or through the folders.</p>
 
-<h4>Simulation settings</h4>
+<h3>Simulation settings</h3>
 <p align=justify>The content of the simulation can be specified through the <em>filter selection</em> (e.g. <em>"protein and not #h"</em>). Within the trajectory menu <strong>(F)</strong>, the simulation can be further adjusted (e.g. centering, superposing, removing PBC, step sizes or play options).</p>
 
 <br>
