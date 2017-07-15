@@ -10,10 +10,10 @@ import collections
 import numpy as np
 import warnings
 
-from simpletraj import trajectory as simpletraj_trajectory
 from mdtraj.formats.netcdf import NetCDFTrajectoryFile
 from mdtraj.formats.dcd import DCDTrajectoryFile
 from mdtraj.formats.xtc import XTCTrajectoryFile
+from mdtraj.formats.trr import TRRTrajectoryFile
 
 try:
     import cPickle as pickle
@@ -51,7 +51,7 @@ def get_trajectory( file_name ):
     ext = os.path.splitext( file_name )[1].lower()
     types = {
         ".xtc": XtcTrajectory,
-        ".trr": simpletraj_trajectory.TrrTrajectory,
+        ".trr": TrrTrajectory,
         ".netcdf": NetcdfTrajectory,
         ".nc": NetcdfTrajectory,
         ".dcd": DcdTrajectory,
@@ -191,6 +191,29 @@ class TrajectoryCollection( Trajectory ):
     def __del__( self ):
         for trajectory in self.parts:
             trajectory.__del__()
+
+class TrrTrajectory( Trajectory ):
+    def __init__( self, file_name ):
+        self.file_name = file_name
+        with TRRTrajectoryFile( self.file_name, 'r' ) as fp:
+            self.trr = fp.read()
+        self.numatoms = len(self.trr[0][0])
+        self.numframes = len(self.trr[1])
+
+        self.x = None
+        self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
+        self.time = 0.0
+
+    def _get_frame( self, index ):
+        xyz, time, step, box, lambd = self.trr
+        self.box = box[ index ] * 10
+        self.x = xyz[ index ] * 10
+        self.time = time[ index ]
+        return self.box, self.x, self.time
+
+    def __del__( self ):
+        if self.trr:
+            del self.trr
 
 class XtcTrajectory( Trajectory ):
     def __init__( self, file_name ):
