@@ -14,6 +14,7 @@ from mdtraj.formats.netcdf import NetCDFTrajectoryFile
 from mdtraj.formats.dcd import DCDTrajectoryFile
 from mdtraj.formats.xtc import XTCTrajectoryFile
 from mdtraj.formats.trr import TRRTrajectoryFile
+from mdtraj.formats.gro import GroTrajectoryFile
 
 try:
     import cPickle as pickle
@@ -55,6 +56,7 @@ def get_trajectory( file_name ):
         ".netcdf": NetcdfTrajectory,
         ".nc": NetcdfTrajectory,
         ".dcd": DcdTrajectory,
+        ".gro": GroTrajectory,
     }
     if ext in types:
         return types[ ext ]( file_name )
@@ -192,6 +194,34 @@ class TrajectoryCollection( Trajectory ):
         for trajectory in self.parts:
             trajectory.__del__()
 
+
+class GroTrajectory( Trajectory ):
+    def __init__( self, file_name ):
+        self.file_name = file_name
+        with GroTrajectoryFile( self.file_name, 'r' ) as fp:
+            self.gro = fp.read()
+        self.numatoms = len(self.gro[0][0])
+        self.numframes = len(self.gro[0])
+
+        self.x = None
+        self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
+        self.time = 0.0
+
+    def _get_frame( self, index ):
+        xyz, time, unitcell = self.gro
+        self.box = unitcell[ index ] * 10
+        self.x = xyz[ index ] * 10
+        try:
+            self.time = time[ index ]
+        except:
+            self.time = index
+        return self.box, self.x, self.time
+
+    def __del__( self ):
+        if self.gro:
+            del self.gro
+
+
 class TrrTrajectory( Trajectory ):
     def __init__( self, file_name ):
         self.file_name = file_name
@@ -215,6 +245,7 @@ class TrrTrajectory( Trajectory ):
         if self.trr:
             del self.trr
 
+
 class XtcTrajectory( Trajectory ):
     def __init__( self, file_name ):
         self.file_name = file_name
@@ -237,6 +268,7 @@ class XtcTrajectory( Trajectory ):
     def __del__( self ):
         if self.xtc:
             del self.xtc
+
 
 class NetcdfTrajectory( Trajectory ):
     def __init__( self, file_name ):
@@ -265,6 +297,7 @@ class NetcdfTrajectory( Trajectory ):
     def __del__( self ):
         if self.netcdf:
             self.netcdf.close()
+
 
 class DcdTrajectory( Trajectory ):
     def __init__( self, file_name ):
