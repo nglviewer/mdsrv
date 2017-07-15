@@ -16,22 +16,37 @@ env:
     - python=3.5
 
 install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install md5sha1sum; fi
-  #- source devtools/travis-ci/install_miniconda.sh
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then MINICONDA=Miniconda3-latest-MacOSX-x86_64.sh; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then MINICONDA=Miniconda3-latest-Linux-x86_64.sh;  fi
-  - MINICONDA_MD5=$(curl -s https://repo.continuum.io/miniconda/ | grep -A3 $MINICONDA | sed -n '4p' | sed -n 's/ *<td>\(.*\)<\/td> */\1/p')
-  - wget https://repo.continuum.io/miniconda/$MINICONDA
-  - if [[ $MINICONDA_MD5 != $(md5sum $MINICONDA | cut -d ' ' -f 1) ]]; then
-      echo "Miniconda MD5 mismatch"
-      exit 1
+  - sudo apt-get update
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
+    else
+      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
     fi
-  - bash $MINICONDA -b
-  - rm -f $MINICONDA
-  - export PATH=$HOME/miniconda3/bin:$PATH
-  - conda update -yq conda
-  - conda install -yq conda-build jinja2
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda update -q conda
+  - conda info -a
   - conda config --add channels omnia
+  - conda build develop/conda-recipe
+  - conda install mdsrv --use-local
+
+ # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install md5sha1sum; fi
+  #- source devtools/travis-ci/install_miniconda.sh
+  #- if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then MINICONDA=Miniconda3-latest-MacOSX-x86_64.sh; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then MINICONDA=Miniconda3-latest-Linux-x86_64.sh;  fi
+#  - MINICONDA_MD5=$(curl -s https://repo.continuum.io/miniconda/ | grep -A3 $MINICONDA | sed -n '4p' | sed -n 's/ *<td>\(.*\)<\/td> */\1/p')
+#  - wget https://repo.continuum.io/miniconda/$MINICONDA
+#  - if [[ $MINICONDA_MD5 != $(md5sum $MINICONDA | cut -d ' ' -f 1) ]]; then
+#      echo "Miniconda MD5 mismatch"
+#      exit 1
+#    fi
+#  - bash $MINICONDA -b
+#  - rm -f $MINICONDA
+#  - export PATH=$HOME/miniconda3/bin:$PATH
+#  - conda update -yq conda
+#  - conda install -yq conda-build jinja2
+#  - conda config --add channels omnia
 
   #- sudo apt-get update
   # We do this conditionally because it saves us some downloading if the
@@ -52,13 +67,13 @@ install:
 
 
 script:
-  #- mdsrv -h
-  - conda build develop/conda-recipe
+  - mdsrv -h
+
 
 os:
-  - osx
+ # - osx
   - linux
-  - windos
+ # - windos
 
 after_success:
   - echo "after_success"
