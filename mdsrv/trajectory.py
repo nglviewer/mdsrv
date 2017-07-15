@@ -13,6 +13,7 @@ import warnings
 from simpletraj import trajectory as simpletraj_trajectory
 from mdtraj.formats.netcdf import NetCDFTrajectoryFile
 from mdtraj.formats.dcd import DCDTrajectoryFile
+from mdtraj.formats.xtc import XTCTrajectoryFile
 
 try:
     import cPickle as pickle
@@ -49,7 +50,7 @@ def get_split_xtc( directory ):
 def get_trajectory( file_name ):
     ext = os.path.splitext( file_name )[1].lower()
     types = {
-        ".xtc": simpletraj_trajectory.XtcTrajectory,
+        ".xtc": XtcTrajectory,
         ".trr": simpletraj_trajectory.TrrTrajectory,
         ".netcdf": NetcdfTrajectory,
         ".nc": NetcdfTrajectory,
@@ -190,6 +191,29 @@ class TrajectoryCollection( Trajectory ):
     def __del__( self ):
         for trajectory in self.parts:
             trajectory.__del__()
+
+class XtcTrajectory( Trajectory ):
+    def __init__( self, file_name ):
+        self.file_name = file_name
+        with XTCTrajectoryFile( self.file_name, 'r' ) as fp:
+            self.xtc = fp.read()
+        self.numatoms = len(self.xtc[0][0])
+        self.numframes = len(self.xtc[1])
+
+        self.x = None
+        self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
+        self.time = 0.0
+
+    def _get_frame( self, index ):
+        xyz, time, step, box = self.xtc
+        self.box = box[ index ] * 10
+        self.x = xyz[ index ] * 10
+        self.time = time[ index ]
+        return self.box, self.x, self.time
+
+    def __del__( self ):
+        if self.xtc:
+            del self.xtc
 
 class NetcdfTrajectory( Trajectory ):
     def __init__( self, file_name ):
