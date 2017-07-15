@@ -26,13 +26,11 @@ requirements:
     - scipy
     - zlib
     - mdtraj
-    - simpletraj
 
   run:
     - python
     - setuptools
     - numpy
-    - simpletraj
     - flask
     - mdtraj
 

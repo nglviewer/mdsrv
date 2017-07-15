@@ -56,15 +56,14 @@ setup_args = {
     },
     'install_requires': {
         "flask": ["flask"],
-        "simpletraj": ["simpletraj"],
         "mdtraj": ["mdtraj"],
     },
     'packages': set(find_packages() + 
                 ['mdsrv']),
     'zip_safe': False,
     'cmdclass': versioneer.get_cmdclass(),
-    'author': 'Alexander S. Rose',
-    'author_email': 'alexander.rose@weirdbyte.de',
+    'author': 'Alexander S. Rose, Johanna K. S. Tiemann',
+    'author_email': 'alexander.rose@weirdbyte.de, johanna.tiemann@gmail.com',
     'url': 'https://github.com/arose/mdsrv',
     'keywords': [
         'Molecular Dynamics simulation',
