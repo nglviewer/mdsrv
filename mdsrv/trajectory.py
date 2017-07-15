@@ -12,6 +12,7 @@ import warnings
 
 from simpletraj import trajectory as simpletraj_trajectory
 from mdtraj.formats.netcdf import NetCDFTrajectoryFile
+from mdtraj.formats.dcd import DCDTrajectoryFile
 
 try:
     import cPickle as pickle
@@ -52,7 +53,7 @@ def get_trajectory( file_name ):
         ".trr": simpletraj_trajectory.TrrTrajectory,
         ".netcdf": NetcdfTrajectory,
         ".nc": NetcdfTrajectory,
-        ".dcd": simpletraj_trajectory.DcdTrajectory,
+        ".dcd": DcdTrajectory,
     }
     if ext in types:
         return types[ ext ]( file_name )
@@ -218,3 +219,27 @@ class NetcdfTrajectory( Trajectory ):
         if self.netcdf:
             self.netcdf.close()
 
+class DcdTrajectory( Trajectory ):
+    def __init__( self, file_name ):
+        self.file_name = file_name
+        self.dcd = DCDTrajectoryFile( self.file_name )
+        self.dcd_traj = self.dcd.read()
+        self.numatoms = len(self.dcd_traj[0][0])
+        self.numframes = len(self.dcd_traj[0])
+        self.x = None
+        self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
+        self.time = 0.0
+
+    def _get_frame( self, index ):
+        xyz, boxlength, boxangles = self.dcd_traj
+        if boxlength:
+            cell_lengths = boxlength
+            self.box[ 0, 0 ] = cell_lengths[ index ][ 0 ]
+            self.box[ 1, 1 ] = cell_lengths[ index ][ 1 ]
+            self.box[ 2, 2 ] = cell_lengths[ index ][ 2 ]
+        self.x = xyz[index]
+        return self.box, self.x, self.time
+
+    def __del__( self ):
+        if self.dcd:
+            self.dcd.close()
