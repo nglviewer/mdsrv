@@ -1,3 +1,4 @@
+# mainly from MDTraj appveyor
 environment:
   global:
     # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
@@ -7,20 +8,32 @@ environment:
     PYTHONUNBUFFERED: 1
 
   matrix:
-    - PYTHON: "C:\\Miniconda3"
-      CONDA_PY: "35"
-      CONDA_NPY: "1.10"
+    - PYTHON: "C:\\Miniconda2"
+      CONDA_PY: "27"
+    - PYTHON: "C:\\Miniconda2-x64"
+      CONDA_PY: "27"
+      ARCH: "64"
     - PYTHON: "C:\\Miniconda3"
       CONDA_PY: "27"
-      CONDA_NPY: "1.10"
     - PYTHON: "C:\\Miniconda3-x64"
       CONDA_PY: "27"
-      CONDA_NPY: "1.10"
       ARCH: "64"
+    - PYTHON: "C:\\Miniconda3"
+      CONDA_PY: "34"
+    - PYTHON: "C:\\Miniconda3-x64"
+      CONDA_PY: "34"
+      ARCH: "64"
+    - PYTHON: "C:\\Miniconda3"
+      CONDA_PY: "35"
     - PYTHON: "C:\\Miniconda3-x64"
       CONDA_PY: "35"
-      CONDA_NPY: "1.10"
       ARCH: "64"
+    - PYTHON: "C:\\Miniconda3"
+      CONDA_PY: "36"
+    - PYTHON: "C:\\Miniconda3-x64"
+      CONDA_PY: "36"
+      ARCH: "64"
+
 
 install:
   - set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
@@ -32,3 +45,5 @@ build: false
 
 test_script:
   - "%CMD_IN_ENV% conda build --quiet develop\\conda-recipe"
+  - "%CMD_IN_ENV% conda install --use-local mdsrv -y"
+  - "%CMD_IN_ENV% mdsrv -h
