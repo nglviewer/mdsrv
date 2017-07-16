@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
     <link rel="stylesheet" href="css/font-awesome.min.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="subresource" href="css/light.css" />
@@ -26,16 +25,13 @@
     <script src="js/ui/ui.helper.js"></script>
     <script src="js/gui.js"></script>
 
-    <!-- MDSRV -->
-    <script src="js/mdsrv.js"></script>
-
     <script>
         NGL.cssDirectory = "css/";
         NGL.documentationUrl = "http://arose.github.io/ngl/api/";
 
         // Datasources
         NGL.DatasourceRegistry.add(
-            "file", new MdsrvDatasource( window.location.origin + "/" )
+            "file", new NGL.MdsrvDatasource( window.location.origin + "/" )
         );
         NGL.DatasourceRegistry.listing = NGL.DatasourceRegistry.get( "file" );
         NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );
