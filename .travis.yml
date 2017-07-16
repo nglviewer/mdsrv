@@ -1,67 +1,66 @@
-language: python
+matrix:
+    include:
+        - os: osx
+          language: generic
+          env: PYTHON_VERSION=2.7
+        - os: osx
+          language: generic
+          env: PYTHON_VERSION=3.4
+        - os: osx
+          language: generic
+          env: PYTHON_VERSION=3.5
+        - os: osx
+          language: generic
+          env: PYTHON_VERSION=3.6
+        - os: linux
+          language: python
+          env: PYTHON_VERSION=2.7
+        - os: linux
+          language: python
+          env: PYTHON_VERSION=3.4
+        - os: linux
+          language: python
+          env: PYTHON_VERSION=3.5
+        - os: linux
+          language: python
+          env: PYTHON_VERSION=3.6
 
-#branches:
-#  only:
-#    - master
-
-#os:
-#  - linux
-#  - osx
-#  - windows
-
-env:
-  matrix:
-    - python=2.7
-    - python=3.3
-    - python=3.5
 
 install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install md5sha1sum; fi
-  #- source devtools/travis-ci/install_miniconda.sh
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then MINICONDA=Miniconda3-latest-MacOSX-x86_64.sh; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then MINICONDA=Miniconda3-latest-Linux-x86_64.sh;  fi
-  - MINICONDA_MD5=$(curl -s https://repo.continuum.io/miniconda/ | grep -A3 $MINICONDA | sed -n '4p' | sed -n 's/ *<td>\(.*\)<\/td> */\1/p')
-  - wget https://repo.continuum.io/miniconda/$MINICONDA
-  - if [[ $MINICONDA_MD5 != $(md5sum $MINICONDA | cut -d ' ' -f 1) ]]; then
-      echo "Miniconda MD5 mismatch"
-      exit 1
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      if [[ $PYTHON_VERSION == 2* ]]; then
+        wget https://repo.continuum.io/miniconda/Miniconda2-latest-MacOSX-x86_64.sh -O miniconda.sh;
+      elif [[ $PYTHON_VERSION == 3* ]]; then
+        wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
+      fi
     fi
-  - bash $MINICONDA -b
-  - rm -f $MINICONDA
-  - export PATH=$HOME/miniconda3/bin:$PATH
-  - conda update -yq conda
-  - conda install -yq conda-build jinja2
-  - conda config --add channels omnia
-
-  #- sudo apt-get update
-  # We do this conditionally because it saves us some downloading if the
-  # version is the same.
-  #- if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-  #    wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
-  #  else
-  #    wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-  #  fi
-  #- bash miniconda.sh -b -p $HOME/miniconda
-  #- export PATH="$HOME/miniconda/bin:$PATH"
-  #- hash -r
-  #- conda config --set always_yes yes --set changeps1 no
-  #- conda update -q conda
-  # Useful for debugging any issues with conda
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      if [[ $PYTHON_VERSION == 2* ]]; then
+        wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
+      elif [[ $PYTHON_VERSION == 3* ]]; then
+        wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+      fi
+    fi
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda update -qy conda
   #- conda info -a
-  #- python setup.py install
+  - conda config --add channels omnia
+  - conda install conda-build -y
+  - conda install python=$PYTHON_VERSION -y
+  - conda build develop/conda-recipe
+  #- python -E -V
+  - conda install mdsrv --use-local -y
 
 
 script:
-  #- mdsrv -h
-  - conda build develop/conda-recipe
+  - mdsrv -h
 
-os:
-  - osx
-  - linux
-  - windos
 
 after_success:
   - echo "after_success"
+
   
 notifications:
   email: false
