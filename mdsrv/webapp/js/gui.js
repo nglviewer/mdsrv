@@ -705,6 +705,10 @@ NGL.MenubarHelpWidget = function (stage, preferences) {
     window.open(NGL.documentationUrl, '_blank')
   }
 
+  function onMDsrvDocOptionClick () {
+    window.open(NGL.MDsrvdocumentationUrl, '_blank')
+  }
+
   function onDebugOnClick () {
     NGL.setDebug(true)
     stage.viewer.updateHelper()
@@ -747,7 +751,8 @@ NGL.MenubarHelpWidget = function (stage, preferences) {
 
   var menuConfig = [
     createOption('Overview', onOverviewOptionClick),
-    createOption('Documentation', onDocOptionClick),
+    createOption('NGL documentation', onDocOptionClick),
+    createOption('MDsrv documentation', onMDsrvDocOptionClick),
     createDivider(),
     createOption('Debug on', onDebugOnClick),
     createOption('Debug off', onDebugOffClick),
@@ -880,7 +885,8 @@ NGL.OverviewWidget = function (stage, preferences) {
   listingPanel
     .add(new UI.Panel().add(new UI.Html(
       'For more information please visit the ' +
-      "<a href='" + NGL.documentationUrl + "' target='_blank'>documentation pages</a>."
+      "<a href='" + NGL.documentationUrl + "' target='_blank'>NGL documentation</a> or the " +
+      "<a href='" + NGL.MDsrvdocumentationUrl + "' target='_blank'>MDsrv documentation</a> pages."
     )))
 
   var overview = preferences.getKey('overview')

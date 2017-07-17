@@ -234,9 +234,11 @@ class ArcTrajectory( Trajectory ):
 
     def _get_frame( self, index ):
         xyz, boxlength, boxangles = self.arc_traj
-        self.box[ 0, 0 ] = boxlength[ index ][ 0 ]
-        self.box[ 1, 1 ] = boxlength[ index ][ 1 ]
-        self.box[ 2, 2 ] = boxlength[ index ][ 2 ]
+        try:
+            self.box[ 0, 0 ] = boxlength[ index ][ 0 ]
+            self.box[ 1, 1 ] = boxlength[ index ][ 1 ]
+            self.box[ 2, 2 ] = boxlength[ index ][ 2 ]
+        except: pass
         self.x = xyz[ index ]
         return self.box, self.x, self.time
 
@@ -417,9 +419,11 @@ class NetcdfTrajectory( Trajectory ):
     def _get_frame( self, index ):
         xyz, time, boxlength, boxangles = self.netcdf_traj
         cell_lengths = boxlength
-        self.box[ 0, 0 ] = cell_lengths[ index ][ 0 ]
-        self.box[ 1, 1 ] = cell_lengths[ index ][ 1 ]
-        self.box[ 2, 2 ] = cell_lengths[ index ][ 2 ]
+        try:
+            self.box[ 0, 0 ] = cell_lengths[ index ][ 0 ]
+            self.box[ 1, 1 ] = cell_lengths[ index ][ 1 ]
+            self.box[ 2, 2 ] = cell_lengths[ index ][ 2 ]
+        except: pass
         self.x = xyz[index]
         self.time = time[index]
         return self.box, self.x, self.time
@@ -443,9 +447,11 @@ class DcdTrajectory( Trajectory ):
     def _get_frame( self, index ):
         xyz, boxlength, boxangles = self.dcd_traj
         cell_lengths = boxlength
-        self.box[ 0, 0 ] = cell_lengths[ index ][ 0 ]
-        self.box[ 1, 1 ] = cell_lengths[ index ][ 1 ]
-        self.box[ 2, 2 ] = cell_lengths[ index ][ 2 ]
+        try:
+            self.box[ 0, 0 ] = cell_lengths[ index ][ 0 ]
+            self.box[ 1, 1 ] = cell_lengths[ index ][ 1 ]
+            self.box[ 2, 2 ] = cell_lengths[ index ][ 2 ]
+        except: pass
         self.x = xyz[ index ]
         return self.box, self.x, self.time
 
