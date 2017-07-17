@@ -11,6 +11,7 @@ import numpy as np
 import warnings
 
 from mdtraj.formats import *
+from simpletraj import trajectory as simpletraj_trajectory
 
 try:
     import cPickle as pickle
@@ -47,11 +48,11 @@ def get_split_xtc( directory ):
 def get_trajectory( file_name ):
     ext = os.path.splitext( file_name )[1].lower()
     types = {
-        ".xtc": XtcTrajectory,
-        ".trr": TrrTrajectory,
+        ".xtc": simpletraj_trajectory.XtcTrajectory,
+        ".trr": simpletraj_trajectory.TrrTrajectory,
         ".netcdf": NetcdfTrajectory,
         ".nc": NetcdfTrajectory,
-        ".dcd": DcdTrajectory,
+        ".dcd": simpletraj_trajectory.DcdTrajectory,
         ".gro": GroTrajectory,
         ".lammpstrj": LammpsTrajectory,
         ".h5": Hdf5Trajectory,

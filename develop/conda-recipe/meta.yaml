@@ -26,6 +26,7 @@ requirements:
     - scipy
     - zlib
     - mdtraj
+    - simpletraj
 
   run:
     - python
@@ -33,6 +34,7 @@ requirements:
     - numpy
     - flask
     - mdtraj
+    - simpletraj
 
 test:
   imports:

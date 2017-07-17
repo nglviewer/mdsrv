@@ -57,6 +57,7 @@ setup_args = {
     'install_requires': {
         "flask": ["flask"],
         "mdtraj": ["mdtraj"],
+        "simpletraj": ["simpletraj"],
     },
     'packages': set(find_packages() + 
                 ['mdsrv']),
