@@ -14,7 +14,7 @@
   $(function(){
     $("#header").load("include/header.html");
     $("#side").load("include/side.html"); 
-    $("#side-docu").load("include/side-docu.html"); 
+    $("#side-sharing").load("include/side-sharing.html"); 
     $("#footer").load("include/footer.html"); 
   });
   </script> 
@@ -24,20 +24,9 @@
   <div id="main">
     <div id="header"></div>
     <div id="site_content">
-			<div id="sidebar_container">
-				<div class="sidebar">
-					<h3>Content:</h3>
-					<ul>
-						<li><strong><a href="viewing.html">Viewing trajectories</a></strong></li>
-						<li><strong><a href="sharing.html">Sharing trajectories</a></strong></li>
-					</ul>
-				</div>
-      </div>
+			<div id="side-sharing"></div>
       <div class="content">
-								<h1><a href="viewing.html">Viewing simulations</a></h1>
-				<p align=justify>To view simulations provided by the MDsrv, only a link to the session (e.g. provided by a collaborator) and on demand a user and a password is needed. The NGL Viewer requires your browser to support WebGL which is standard in almost all modern web browser. Therefore, there is no need to install anything. If you run into problems, please consult the <a href="faq.html">FAQ</a>.</p>
-				
-				<h1><a href="sharing.html">Sharing trajectories</a> - setup the MDsrv</h1>
+				<h1>Sharing trajectories - setup the MDsrv</h1>
 				
 <p align=justify>In order to provide others a MDsrv session including your simulations, MDsrv has to be installed, deployed and a script has to been written. In the following, we will go through the installation procedure, explain the deployment and how to set up a webserver, how to use the MDsrv from your command line, how to configure is, e.g. connect it with a cluster, how it can be utilized and how scripts have to be created.</p>
 

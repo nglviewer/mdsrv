@@ -10,57 +10,90 @@
   <!-- modernizr enables HTML5 elements and feature detects -->
   <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
   <script src="js/jquery.js"></script>
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/lightbox.js"></script>
   <script> 
   $(function(){
     $("#header").load("include/header.html");
-    $("#side").load("include/side.html"); 
+    $("#side").load("include/side.html");
+		$("#side-viewing").load("include/side-viewing.html");
     $("#footer").load("include/footer.html"); 
   });
-  </script> 
+  </script>
 </head>
 
 <body>
   <div id="main">
     <div id="header"></div>
     <div id="site_content">
-			<div id="sidebar_container">
-				<div class="sidebar">
-					<h3>See more:</h3>
-					<ul>
-            <li><a href="http://arose.github.io/ngl/">NGL GUI example</a></li>
-            <li><a href="http://arose.github.io/ngl/api/index.html">NGL documentation</a></li>
-            <li><a href="http://arose.github.io/ngl/gallery/index.html">NGL gallery</a></li>
-					</ul>
-				</div>
-			</div>
+			<div id="side-viewing"></div>
       <div class="content">
+
 				<h1>Viewing simulations</h1>
 				<p align=justify>To view simulations provided by the MDsrv, only a link to the session (e.g. provided by a collaborator) and on demand a user and a password is needed. The NGL Viewer requires your browser to support WebGL which is standard in almost all modern web browser. Therefore, there is no need to install anything. If you run into problems, please consult the <a href="faq.html">FAQ</a>.</p>
 				
-				<h1>NGL GUI guide</h1>
-				<h3>Basic NGL functions and selection language</h3>
-				<p align=justify>
-					<ul>
-						<li>To load a new structure use the <i>File</i> menu in the top left via drag'n'drop.</li>
-						<li>A number of clickable icons provide common actions. Most icons can be clicked on, just try it or hover the mouse pointer over it to see a tooltip.</li>
-						<li>Symbols:
-						<ul>
-							<li><strong>eye:</strong> Controls the visibility of a component.</li>
-							<li><strong>trash:</strong> Deletes a component. Note that a second click is required to confirm the action.</li>
-							<li><strong>bullseye:</strong> Centers a component.</li>
-							<li><strong>bars:</strong> Opens a menu with further options.</li>
-							<li><strong>square:</strong> Opens a menu with e.g. coloring options.</li>
-							<li><strong>filter:</strong>Indicates atom-selection input fields.</li>
-						</ul></li>
-						<li>Mouse controls:
-						<ul>
-					<li>Left button hold and move to rotate camera around center.</li>
-          <li>Left button click to pick atom.</li>
-          <li>Middle button hold and move to zoom camera in and out.</li>
-          <li>Middle button click to center camera on atom.</li>
-          <li>Right button hold and move to translate camera in the screen plane.</li>
-						</ul></li>
-						<li>Selection language:
+				
+				<h1>Quick usage guide</h1>
+				<p align=justify>Please open the <strong>provided URL</strong> (e.g. <a href="http://proteinformatics.charite.de/MDsrv-example2">http://proteinformatics.charite.de/MDsrv-example2</a>) and enter the user & passwort if necessarry.</p>
+				<a href="#img1">  <img src="data/overview.png" width=70% alt="NGL GUI sidebar-play" class="thumbnail"></a>
+				<a href="#_" class="lightbox" id="img1">  <img src="data/overview.png"></a>
+				<p align=justify>In the following we will refer to the standard <strong>NGL GUI symbols</strong> which are explained in the figure above. NOTE: Click on the figure to increase the size.</p>
+				<br>
+				
+			<div style="display:inline;text-align: left;float: left; width: 400px;">
+						<p align=justify><strong>Play</strong> the simulation by pressing the button <strong>(A)</strong>. The frames <strong>(B)</strong> and if the delta-time was provided also the runtime <strong>(C)</strong> is shown.</p>
+		</div>
+				<div  style="float: right; width: 300px"><a href="#img2">  <img src="data/sidebar-play.png" width=85% alt="NGL GUI sidebar-play" class="thumbnail"></a>
+				<a href="#_" class="lightbox" id="img2">  <img src="data/sidebar-play.png"></a></div>
+
+			<div style="clear:both"></div>
+							<br>
+			
+			<div style="display:inline;text-align: left;float: left; width: 400px;">
+						<p align=justify>The trajectory can be adjusted within the trajectory menu (reachable by clicking on the menu symbol next to <strong>(C)</strong> from the previous picture). There, <strong>centering</strong>, removal of periodic boundary condition (<strong>PBC</strong>) and <strong>superpositioning</strong> can be done with regards to the selection stated in the trajectory funnel (here <em>"backbone and not hydrogen"</em>, located above the play button <strong>(A)</strong> in the previous figure).<br> Other options are: step size, interpolation type (none, spline, linear), interpolation steps, play timeout, play direction (forward, backward), play mode (loop, once), delta time and time offset.</p>
+						
+		</div>
+				<div  style="float: right; width: 300px">
+				<a href="#img3"><img src="data/trajectory_menu.png" width=85% alt="NGL GUI trajectory menu" class="thumbnail"></a>
+				<a href="#_" class="lightbox" id="img3">  <img src="data/trajectory_menu.png"></a>
+
+				</div>
+
+			<div style="clear:both"></div>
+
+<br>
+
+
+			<div style="display:inline;text-align: left;float: left; width: 200px;">
+						<p align=justify>Structures are load with a default <strong>representation</strong> or as prepared by the expert. Still, the GUI provides the possibility to add new representations for each structure by entering the structure menu and add a new representation.</p>
+						
+		</div>
+				<div  style="float: right; width: 500px">
+				<a href="#img4"><img src="data/representations.png" width=100% alt="NGL GUI add representation" class="thumbnail"></a>
+				<a href="#_" class="lightbox" id="img4">  <img src="data/representations.png"></a>
+
+				</div>
+
+			<div style="clear:both"></div>
+				
+<br>
+
+
+			<div style="display:inline;text-align: left;float: left; width: 400px;">
+						<p align=justify>Each representation can be changed and <strong>modified</strong> by entering the menu located next to the representation (over its filter field). On the right, options for modifying the cartoon representation are shown.</p>
+						
+		</div>
+				<div  style="float: right; width: 300px">
+				<a href="#img5"><img src="data/cartoon-menu.png" width=100% alt="NGL GUI add representation" class="thumbnail"></a>
+				<a href="#_" class="lightbox" id="img5">  <img src="data/cartoon-menu.png"></a>
+
+				</div>
+
+			<div style="clear:both"></div>
+				
+<br>
+				<h3>NGL selection language</h3>
+				<p align=justify>The content of a structure can be specified through the <em><strong>filter selection</strong> input field</em> (e.g. <em>"/0 and not hydrogen"</em>). The same applies for each representation. Note that if a selection is specified via the structure filter selection (parent filter field), those also apply for the simulation and representation filters (does not need to be mentioned again).</p>
 						<ul>
 							<li><strong>* </strong> everythin/all.</li>
 							<li><strong>not _h </strong> no hydrogens</li>
@@ -70,24 +103,24 @@
 							<li><strong>.CA </strong> atom</li>
 							<li><strong>@703 </strong> atomindex</li>
 							<li><strong>10-15 </strong> range of residues</li>
-						</ul></li>
+							<li><strong>/0 </strong> number of model within the structure file</li>
 					</ul>
-					
-				</p>
+
+	
+
+<h1>Further information</h1>
+ 				<a href="#img6"><img src="data/gui.png" width=100% alt="NGL GUI" class="thumbnail"></a>
+				<a href="#_" class="lightbox" id="img6">  <img src="data/gui.png"></a>
+<p align=justify>The NGL GUI provides also other options:
+<br>Within the <strong><em>File menu</em></strong> <strong>(A)</strong>, new structures or other files can be loaded (local ones via <em>Open...</em>, deployed ones via <em>Import...</em>, PDBs via entering the PDB-ID) also with some preferences and images can be generated (simple via <em>Screenshot</em> and with further options via <em>Export image...</em>). In general, new structures can also be loaded via drag'n'drop.
+<br>Within the <strong><em>View menu</em></strong> <strong>(B)</strong>, the gui settings can be changed. The <strong><em>Help menu</em></strong> <strong>(C)</strong> provides more information and can also change the general <em>Preferences</em>.
+<br>A number of clickable icons provide common actions. Most icons can be clicked on, just try it or hover the mouse pointer over it to see a tooltip.</p>
+
+
 				
-				
-				<h3>Loading simulations</h3>
- <img src="data/gui.png" width=100% alt="NGL GUI">
+<h3>Loading simulations</h3>
  
-<p align=justify>Simulations can be loaded in several different ways into the NGL GUI. To load simulations into the <a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a>, a structure file has to be provided first. Structure and .ngl scripting files can be loaded by drag&drop into the viewer or by browsing through the folders by clicking <em>File --> Import</em> <strong>(A, B, C)</strong>.</p>
-
-<p align=justify>
-Within the structure menu, several trajectories can be imported via <em>Trajectory import</em> for autoloadable trajectories (currently supported for dcd and xtc files supported) or <em>Remote trajectory --> Import</em> for deposed trajectories <strong>(D, E)</strong>.</p>
-
-<p align=justify>If you want to load a trajectory containing already all atomistic information (e.g. .gro trajectories), select <em>File --> as trajectory</em> <strong>(A, B)</strong> before loading the file. This flag is set until it is removed. Then load the file as previously described via drag&drop or through the folders.</p>
-
-<h3>Simulation settings</h3>
-<p align=justify>The content of the simulation can be specified through the <em>filter selection</em> (e.g. <em>"protein and not #h"</em>). Within the trajectory menu <strong>(F)</strong>, the simulation can be further adjusted (e.g. centering, superposing, removing PBC, step sizes or play options).</p>
+<p align=justify>Simulations can be loaded in several different ways into the NGL GUI. The main focus of the MDsrv is to make deposited (remote) simulations available to others. Still, we provide an option for viewers (meaning those who have received a MDsrv session) to load their local trajectories, e.g. for comparison with the deposited simulations data into the session. Go <a href="loading.html">here</a> to find more about how to load a trajectory.</p>
 
 <br>
 <h1>
