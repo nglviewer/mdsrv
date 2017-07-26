@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>NGL - mobile</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    input {
+      font-size: 2em;
+    }
+  </style>
+</head>
+<body>
+  <!-- NGL -->
+  <script src="js/ngl.js"></script>
+
+  <!-- UI -->
+  <script src="js/lib/signals.min.js"></script>
+  <script src="js/lib/tether.min.js"></script>
+  <script src="js/lib/colorpicker.min.js"></script>
+  <script src="js/ui/ui.js"></script>
+  <script src="js/ui/ui.extra.js"></script>
+  <script src="js/ui/ui.ngl.js"></script>
+  <script src="js/ui/ui.helper.js"></script>
+  <script src="js/gui.js"></script>
+  <script>
+    var stage;
+    // Datasources
+    NGL.DatasourceRegistry.add(
+      "file", new NGL.MdsrvDatasource( window.location.origin + "/" )
+    );
+    NGL.DatasourceRegistry.listing = NGL.DatasourceRegistry.get( "file" );
+    NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );
+
+    document.addEventListener("DOMContentLoaded", function () {
+      stage = new NGL.Stage("viewport");
+      stage.viewer.container.addEventListener("dblclick", function () {
+          stage.toggleFullscreen();
+      });
+      function handleResize () {
+        stage.handleResize();
+      }
+      window.addEventListener("orientationchange", handleResize, false);
+      window.addEventListener("resize", handleResize, false);
+      var load = NGL.getQuery( "load" );
+      if( load ) stage.loadFile( load, { defaultRepresentation: true } ).then( function( comp ){comp.setName("simulation-name");} );
+
+      var struc = NGL.getQuery( "struc" );
+      var traj = NGL.getQuery( "traj" );
+      if( struc ){
+        var params = { defaultRepresentation: true };
+        stage.loadFile( struc, params ).then( function( o ){
+          o.setName( "sim" );
+          o.addRepresentation( "licorice", {sele: "not hydrogen", visible: false} );
+          if( traj ) o.addTrajectory( traj, { centerPbc: true, superpose: true, removePbc: true } );
+        } );
+      }
+      var toggleTheme = document.getElementById( "toggleTheme" );
+      var isLight = false;
+      toggleTheme.addEventListener( "click", function(){
+        if( !isLight ){
+          stage.setParameters( { backgroundColor: "white" } );
+          isLight = true;
+        }else{
+          stage.setParameters( { backgroundColor: "black" } );
+          isLight = false;
+        }
+      } );
+      var toggleSpin = document.getElementById( "toggleSpin" );
+      var isSpinning = false;
+      toggleSpin.addEventListener( "click", function(){
+        if( !isSpinning ){
+          stage.setSpin( [ 0, 1, 0 ], 0.01 );
+          isSpinning = true;
+        }else{
+          stage.setSpin( null, null );
+          isSpinning = false;
+        }
+      } );
+      var toggleSideChains = document.getElementById( "toggleSideChains" );
+      toggleSideChains.addEventListener( "click", function(){
+        stage.getRepresentationsByName( "licorice" ).list.forEach( function( repre ){
+					repre.setVisibility( !repre.visible );
+				} );
+      } );
+      var toggleRunMDs = document.getElementById( "toggleRunMDs" );
+      var isRunning = false;
+      toggleRunMDs.addEventListener( "click", function(){
+				var trajComp = stage.getComponentsByName("sim").list[0].trajList[0];
+				var player = new NGL.TrajectoryPlayer(trajComp.trajectory, {interpolateType: "spline" });
+				if( !isRunning ){
+					player.play();
+					isRunning = true;
+				}else{
+			   	 player.play();
+					player.pause();
+					isRunning = false;
+				}
+      } );
+    });
+  </script>
+  <div id="viewport" style="width:100%; height:100%;"></div>
+  <div style="text-align:center; position:relative; bottom:3em;">
+    <div style="display:inline-block;">
+    <button id="toggleSpin" style="opacity:0.7; width:6em;">spin on/off</button>
+    <button id="toggleTheme" style="opacity:0.7; width:6em;">light/dark background</button>
+    <button id="toggleRunMDs" style="opacity:0.7; width:6em;">start/stop MD</button>
+    <button id="toggleSideChains" style="opacity:0.7; width:6em;">show/hide sidechains</button>
+</div>
+</body>
+</html>
