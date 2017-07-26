@@ -7,40 +7,39 @@
 </head>
 <body>
     <!-- NGL -->
-    <script src="mdsrv/webapp/js/ngl.js"></script>
+    <script src="../mdsrv/webapp/js/ngl.js"></script>
 
     <!-- UI -->
-    <script src="mdsrv/webapp/js/lib/signals.min.js"></script>
-    <script src="mdsrv/webapp/js/lib/tether.min.js"></script>
-    <script src="mdsrv/webapp/js/lib/colorpicker.min.js"></script>
-    <script src="mdsrv/webapp/js/ui/ui.js"></script>
-    <script src="mdsrv/webapp/js/ui/ui.extra.js"></script>
-    <script src="mdsrv/webapp/js/ui/ui.ngl.js"></script>
-    <script src="mdsrv/webapp/js/ui/ui.helper.js"></script>
-    <script src="mdsrv/webapp/js/gui.js"></script>
-
-    <!-- MDSRV -->
-    <script src="mdsrv/webapp/js/mdsrv.js"></script>
+    <script src="../mdsrv/webapp/js/lib/signals.min.js"></script>
+    <script src="../mdsrv/webapp/js/lib/tether.min.js"></script>
+    <script src="../mdsrv/webapp/js/lib/colorpicker.min.js"></script>
+    <script src="../mdsrv/webapp/js/ui/ui.js"></script>
+    <script src="../mdsrv/webapp/js/ui/ui.extra.js"></script>
+    <script src="../mdsrv/webapp/js/ui/ui.ngl.js"></script>
+    <script src="../mdsrv/webapp/js/ui/ui.helper.js"></script>
+    <script src="../mdsrv/webapp/js/gui.js"></script>
 
     <script>
-        NGL.cssDirectory = "mdsrv/webapp/css/";
+        NGL.cssDirectory = "../mdsrv/webapp/css/";
         NGL.documentationUrl = "http://arose.github.io/ngl/api/";
+
+        NGL.MDsrvdocumentationUrl = "http://arose.github.io/mdsrv";
 
         // Datasources
         NGL.DatasourceRegistry.add(
-            "file", new MdsrvDatasource( window.location.origin + "/mdsrv/" )
+            "file", new NGL.MdsrvDatasource( window.location.origin + "/mdsrv/" )
         );
         NGL.DatasourceRegistry.listing = NGL.DatasourceRegistry.get( "file" );
         NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );
         document.addEventListener( "DOMContentLoaded", function(){
             stage = new NGL.Stage( "viewport" );
-            stage.loadFile( "/mdsrv/file/mine/MDs-Poster/1U19/md02/md02.part0010.gro", { defaultRepresentation: true } ).then( function( comp ){
+            stage.loadFile( "/mdsrv/file/examples_mdsrv/md_1u19.gro", { defaultRepresentation: false } ).then( function( comp ){
         	    comp.setName( "simulation-name" );
-	            comp.setSelection( "protein and not #h" );
+	            comp.setSelection( "protein and not hydrogen" );
         	    comp.addRepresentation( "cartoon", { color: "#55eb86", sele: "*" } );
         	    comp.addRepresentation( "licorice", { colorScheme: "element", colorValue: "#55eb86", visible: false, sele: "protein" } );
-		        comp.addTrajectory( "mine/MDs-Poster/1U19/md02/md02.xtc", {initialFrame: 1, defaultTimeout: 2000, defaultMode: "once", defaultDirection: "backward",defaultStep: 1, defaultInterpolateStep: 1});
-        	    comp.centerView();
+		        comp.addTrajectory( "examples_mdsrv/@md_1u19.xtc", {initialFrame: 1, defaultTimeout: 200, defaultMode: "once", defaultInterpolateType: "spline", defaultStep: 1, defaultInterpolateStep: 5});
+        	    comp.autoView();
 	        } );
             var toggleTheme = document.getElementById( "toggleTheme" );
             var isLight = false;
@@ -68,7 +67,7 @@
             var isRunning = false;
             toggleRunMDs.addEventListener( "click", function(){
 				var trajComp = stage.getComponentsByName("simulation-name").list[0].trajList[0];
-				var player = new NGL.TrajectoryPlayer(trajComp.trajectory, {start: 1, timeout: 20, mode: "loop", direction: "backward",step: 1, interpolateStep: 1});
+				var player = new NGL.TrajectoryPlayer(trajComp.trajectory, {start: 1, timeout: 200, mode: "loop", interpolateType: "spline",step: 1, interpolateStep: 5});
 				if( !isRunning ){
 					player.play();
 					isRunning = true;
@@ -78,6 +77,12 @@
 					isRunning = false;
 				}
             } );
+			var toggleSideChains = document.getElementById( "toggleSideChains" );
+			toggleSideChains.addEventListener( "click", function(){
+			  stage.getRepresentationsByName( "licorice" ).list.forEach( function( repre ){
+				repre.setVisibility( !repre.visible );
+				} );
+			} );
 
         } );
     </script>
@@ -85,7 +90,8 @@
     <div style="width:500px;">
         <button id="toggleSpin">spin on/off</button>
         <button id="toggleTheme">light/dark background</button>
-        <button id="toggleRunMDs">run MD</button>
+		<button id="toggleRunMDs">start/stop MD</button>
+		<button id="toggleSideChains">show/hide sidechains</button>
     </div>
 </body>
 </html>
