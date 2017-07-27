@@ -48,16 +48,23 @@ setup_args = {
     'entry_points': {'console_scripts':
           ['mdsrv = mdsrv:entry_point',]
     },
+    'setup_requires': {
+        "cython": ["cython"],
+        "numpy": ["numpy"],
+        "scipy": ["scipy"],
+        "setuptools": ["setuptools"],
+    },
     'install_requires': {
         "flask": ["flask"],
+        "mdtraj": ["mdtraj"],
         "simpletraj": ["simpletraj"],
     },
     'packages': set(find_packages() + 
                 ['mdsrv']),
     'zip_safe': False,
     'cmdclass': versioneer.get_cmdclass(),
-    'author': 'Alexander S. Rose',
-    'author_email': 'alexander.rose@weirdbyte.de',
+    'author': 'Alexander S. Rose, Johanna K. S. Tiemann',
+    'author_email': 'alexander.rose@weirdbyte.de, johanna.tiemann@gmail.com',
     'url': 'https://github.com/arose/mdsrv',
     'keywords': [
         'Molecular Dynamics simulation',

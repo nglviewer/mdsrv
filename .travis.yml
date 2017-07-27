@@ -1,0 +1,66 @@
+matrix:
+    include:
+        - os: osx
+          language: generic
+          env: PYTHON_VERSION=2.7
+        - os: osx
+          language: generic
+          env: PYTHON_VERSION=3.4
+        - os: osx
+          language: generic
+          env: PYTHON_VERSION=3.5
+        - os: osx
+          language: generic
+          env: PYTHON_VERSION=3.6
+        - os: linux
+          language: python
+          env: PYTHON_VERSION=2.7
+        - os: linux
+          language: python
+          env: PYTHON_VERSION=3.4
+        - os: linux
+          language: python
+          env: PYTHON_VERSION=3.5
+        - os: linux
+          language: python
+          env: PYTHON_VERSION=3.6
+
+
+install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      if [[ $PYTHON_VERSION == 2* ]]; then
+        wget https://repo.continuum.io/miniconda/Miniconda2-latest-MacOSX-x86_64.sh -O miniconda.sh;
+      elif [[ $PYTHON_VERSION == 3* ]]; then
+        wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
+      fi
+    fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      if [[ $PYTHON_VERSION == 2* ]]; then
+        wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
+      elif [[ $PYTHON_VERSION == 3* ]]; then
+        wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+      fi
+    fi
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda update -qy conda
+  #- conda info -a
+  - conda config --add channels omnia
+  - conda install conda-build -y
+  - conda install python=$PYTHON_VERSION -y
+  - conda build develop/conda-recipe
+  #- python -E -V
+  - conda install mdsrv --use-local -y
+
+
+script:
+  - mdsrv -h
+
+
+after_success:
+  - echo "after_success"
+
+  
+notifications:
+  email: false

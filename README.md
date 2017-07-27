@@ -2,6 +2,8 @@
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 [![Version](http://img.shields.io/badge/version-0.2-blue.svg?style=flat)](https://github.com/arose/mdsrv/releases/tag/v0.2)
 [![Changelog](https://img.shields.io/badge/changelog--lightgrey.svg?style=flat)](CHANGELOG)
+[![Travis Build Status](https://travis-ci.org/j0kaso/mdsrv.svg?branch=master)](https://travis-ci.org/j0kaso/mdsrv)
+[![Appveyor Build status](https://ci.appveyor.com/api/projects/status/uhw8xxumj2l45nxc)](https://ci.appveyor.com/project/j0kaso/mdsrv)
 
 
 MDsrv is a simple server that enables remote access to coordinate trajectories from molecular dynamics simulations. It can be used together with the NGL Viewer (http://github.com/arose/ngl) to interactively view trajectories of molecular complexes in a web-browser, either within a local network or from anywhere over the internet.

@@ -20,7 +20,7 @@ except NameError:
     def isstr(s):
         return isinstance(s, str)
 
-from simpletraj import trajectory
+from .trajectory import *
 
 from flask import Flask
 from flask import send_from_directory
@@ -234,7 +234,7 @@ def dir( root="", path="" ):
                     'path': os.path.join( root, path, fname ),
                     'dir': True
                 })
-    for fname in trajectory.get_split_xtc( dir_path ):
+    for fname in get_split_xtc( dir_path ):
         if sys.version_info < (3,):
             fname = fname.decode( "utf-8" ).encode( "utf-8" )
         dir_content.append({
@@ -242,7 +242,7 @@ def dir( root="", path="" ):
             'path': os.path.join( root, path, fname ),
             'size': sum([
                 os.path.getsize( x ) for x in
-                trajectory.get_xtc_parts( fname, dir_path )
+                get_xtc_parts( fname, dir_path )
             ])
         })
     return json.dumps( dir_content )
@@ -252,7 +252,7 @@ def dir( root="", path="" ):
 # trajectory server
 #####################
 
-TRAJ_CACHE = trajectory.TrajectoryCache()
+TRAJ_CACHE = TrajectoryCache()
 
 @app.route( '/traj/frame/<int:frame>/<root>/<path:filename>', methods=['POST'] )
 @requires_auth

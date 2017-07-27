@@ -26,16 +26,15 @@
     <script src="js/ui/ui.helper.js"></script>
     <script src="js/gui.js"></script>
 
-    <!-- MDSRV -->
-    <script src="js/mdsrv.js"></script>
-
     <script>
         NGL.cssDirectory = "css/";
         NGL.documentationUrl = "http://arose.github.io/ngl/api/";
+        
+        NGL.MDsrvdocumentationUrl = "http://arose.github.io/mdsrv";
 
         // Datasources
         NGL.DatasourceRegistry.add(
-            "file", new MdsrvDatasource( window.location.origin + "/" )
+            "file", new NGL.MdsrvDatasource( window.location.origin + "/" )
         );
         NGL.DatasourceRegistry.listing = NGL.DatasourceRegistry.get( "file" );
         NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );

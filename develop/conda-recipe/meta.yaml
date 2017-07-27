@@ -1,0 +1,50 @@
+{% set name = "mdsrv" %}
+{% set version = "v0.3.2" %}
+{% set sha256 = "8c476e6a02dffad9301858788ce549a9d778655d2c4fca15057462d39c98c88f" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  path: ../../
+  # {{ name }}-{{ version }}.tar.gz
+  # url: https://github.com/j0kaso/{{ name }}/archive/{{ version }}.tar.gz
+  
+build:
+  number: 1
+  script: python setup.py install 
+
+requirements:
+  build:
+    - python
+    - cython
+    - numpy
+    - msinttypes #  [win and py2k]
+    - setuptools
+    - flask
+    - scipy
+    - zlib
+    - mdtraj
+    - simpletraj
+
+  run:
+    - python
+    - setuptools
+    - numpy
+    - flask
+    - mdtraj
+    - simpletraj
+
+test:
+  imports:
+    - mdsrv
+
+about:
+  home: https://github.com/arose/mdsrv
+  license: MIT License
+  summary: "Simple server to visualize remote trajectories."
+  description: |
+    MDsrv is a simple server that enables remote access to coordinate trajectories from molecular dynamics simulations. It can be used together with the NGL Viewer (http://github.com/arose/ngl) to interactively view trajectories of molecular complexes in a web-browser, either within a local network or from anywhere over the internet.
+  dev_url: https://github.com/arose/mdsrv
+  
