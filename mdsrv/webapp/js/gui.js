@@ -2096,7 +2096,7 @@ NGL.TrajectoryComponentWidget = function (component, stage) {
     container.dispose()
   })
 
-  var numframes = new UI.Panel()
+  var frameCount = new UI.Panel()
     .setDisplay('inline')
     .add(new UI.Icon('spinner')
       .addClass('spin')
@@ -2116,7 +2116,7 @@ NGL.TrajectoryComponentWidget = function (component, stage) {
       time.setValue("")
     }
     frameRange.setValue(value)
-    numframes.clear().add(frame.setWidth('40px'))
+    frameCount.clear().add(frame.setWidth('40px'))
     frameTime.clear().add(time.setWidth('90px'))
   }
 
@@ -2137,7 +2137,7 @@ NGL.TrajectoryComponentWidget = function (component, stage) {
     player.setParameters({end: value - 1})
   }
 
-  signals.gotNumframes.add(init)
+  signals.countChanged.add(init)
   signals.frameChanged.add(setFrame)
 
   // Name
@@ -2252,7 +2252,7 @@ NGL.TrajectoryComponentWidget = function (component, stage) {
     step: step.getValue(),
     timeout: timeout.getValue(),
     start: 0,
-    end: traj.numframes,
+    end: traj.frameCount - 1,
     interpolateType: interpolateType.getValue(),
     interpolateStep: interpolateStep.getValue(),
     direction: playDirection.getValue(),
@@ -2282,7 +2282,7 @@ NGL.TrajectoryComponentWidget = function (component, stage) {
       .setValue(true)
   })
 
-  frameRow.add(playerButton, frameRange, numframes)
+  frameRow.add(playerButton, frameRange, frameCount)
 
 
   // Selection
@@ -2359,8 +2359,8 @@ NGL.TrajectoryComponentWidget = function (component, stage) {
 
   //
 
-  if (traj.numframes) {
-    init(traj.numframes)
+  if (traj.frameCount) {
+    init(traj.frameCount)
   }
 
   // Menu
