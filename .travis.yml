@@ -61,11 +61,13 @@ script:
 
 after_success:
   - echo $TRAVIS_TAG
+  - echo $CONDA_USER
   - export CONDA_PACKAGE=`conda build --output develop/conda-recipe | grep bz2`
   - echo $CONDA_PACKAGE
+  # Only for initial release (or special issues)
+  # - anaconda -t $CONDA_UPLOAD_TOKEN upload -u $CONDA_USER $CONDA_PACKAGE
   # If this build is because of a tag, upload the build if it succeeds.
-  - anaconda -t $CONDA_UPLOAD_TOKEN upload -u j0kaso $CONDA_PACKAGE
-  #- if [ "$TRAVIS_TAG" ]; then anaconda -t $CONDA_UPLOAD_TOKEN upload -u j0kaso $CONDA_PACKAGE; fi
+  - if [ "$TRAVIS_TAG" ]; then anaconda -t $CONDA_UPLOAD_TOKEN upload -u $CONDA_USER $CONDA_PACKAGE; fi
     
   
 notifications:
