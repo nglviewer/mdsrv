@@ -14,7 +14,7 @@
   $(function(){
     $("#header").load("include/header.html");
     $("#side").load("include/side.html"); 
-    $("#side-usage").load("include/side-usage.html"); 
+    $("#side-docu").load("include/side-docu.html"); 
     $("#footer").load("include/footer.html"); 
   });
   </script> 
@@ -24,16 +24,25 @@
   <div id="main">
     <div id="header"></div>
     <div id="site_content">
-			<div id="side-usage"></div>
+			<div id="sidebar_container">
+				<div class="sidebar">
+					<h3>Content:</h3>
+					<ul>
+						<li><strong><a href="viewing.html">Viewing trajectories</a></strong></li>
+						<li><strong><a href="sharing.html">Sharing trajectories</a></strong></li>
+					</ul>
+				</div>
+      </div>
       <div class="content">
-				<h1>Scripting</h1>
+								<h1><a href="viewing.html">Viewing simulations</a></h1>
+				<p align=justify>To view simulations provided by the MDsrv, only a link to the session (e.g. provided by a collaborator) and on demand a user and a password is needed. The NGL Viewer requires your browser to support WebGL which is standard in almost all modern web browser. Therefore, there is no need to install anything. If you run into problems, please consult the <a href="faq.html">FAQ</a>.</p>
 				
-<p align=justify>The MDsrv uses .ngl or .js files to prepair a session. We are currently developing an automated function to generate those files so that only minor changes have to be done by the user. </p>
+				<h1><a href="sharing.html">Sharing trajectories</a> - setup the MDsrv</h1>
+				
+<p align=justify>In order to provide others a MDsrv session including your simulations, MDsrv has to be installed, deployed and a script has to been written. In the following, we will go through the installation procedure, explain the deployment and how to set up a webserver, how to use the MDsrv from your command line, how to configure is, e.g. connect it with a cluster, how it can be utilized and how scripts have to be created.</p>
 
-<p align=justify>This scripting tutorial contains information about the web-application (<a target="_blank" href="data/index.html">index.html file</a>), embedding, the NGL selection language (in detail at the <a target="_blank" href="http://arose.github.io/ngldev/api/manual/index.html">NGL documentation</a>) and session scripting including functions and other examples.</p>
 
-
-
+<br>
 <h1><a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
 
 <p align=justify>If you have any <strong>questions</strong>, found some <strong>bugs</strong>, or want to report
@@ -42,7 +51,6 @@
 <a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
 
 <p>Please give us <strong>feedback</strong>!</p>
-
       </div>
     </div>
     <div id="scroll">

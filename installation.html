@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>MDsrv</title>
+  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick online access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
+  <meta name="keywords" content="MDsrv, MD simulation, visualization, web server, NGL" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <!-- modernizr enables HTML5 elements and feature detects -->
+  <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
+  <script src="js/jquery.js"></script>
+  <script> 
+  $(function(){
+    $("#header").load("include/header.html");
+    $("#side").load("include/side.html"); 
+    $("#side-install").load("include/side-install.html"); 
+    $("#footer").load("include/footer.html"); 
+  });
+  </script> 
+</head>
+
+<body>
+  <div id="main">
+    <div id="header"></div>
+    <div id="site_content">
+			<div id="side-install"></div>
+      <div class="content">
+				<h1>Installation</h1>
+				
+				<p align=justify>Installation and deployment is shown in short below (for Linux and MacOS system) and in more detail in the <a href="deployment.html">Install & Deployment chapter</a>.</p>
+				
+<h2><a id="quickinstall" class="anchor" target="_blank" href="#quickinstall" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Quick installation</h2>
+
+
+
+<p align=justify>To deploy the MDsrv, just follow these 8 steps.</p>
+<ol><li><p align=justify>Install MDsrv via PyPi:</p> 
+	<pre><code>pip install mdsrv
+</code></pre>
+</li><li><p align=justify>Install Apache2 and mod-wsgi:</p> 
+	<pre><code>sudo apt-get install apache2 libapache2-mod-wsgi</code></pre>
+</li><li>
+ <p align=justify>Add the content of <a target="_blank" href="data/apache.config">apache.config</a> into <em>/etc/apache2/sites-available/000-default.conf</em> or replace this file.<br>
+ <strong>Important:</strong> Adjust the <em>user</em> and <em>group</em> according to your environment settings.</p>
+</li><li>
+<p>Copy <a target="_blank" href="data/mdsrv.html">mdsrv.html</a> into the folder <em>/var/www/html/</em>.</p>
+</li><li>
+<p align=justify>Save and adjust the configuration file <a target="_blank" href="data/app.cfg">app.cfg</a>. The content and setting is explained <a href="configuration.html">elsewhere</a>.</p>
+</li><li>
+<p align=justify>Place <a target="_blank" href="data/mdsrv.wsgi">mdsrv.wsgi</a> into <em>/var/www/mdsrv/mdsrv.wsgi</em>. Add the path of the configuration file (<a target="_blank" href="data/app.cfg">app.cfg</a>) into the <a target="_blank" href="data/mdsrv.wsgi">mdsrv.wsgi</a> file including the name of the file (<em>APP_CFG = '/home/nickname/important/app.cfg'</em>).</p>
+</li><li>
+	<p align=justify>Restart the apache server (additional to whenever the <em>app.cfg</em> file is changed):</p>
+<pre><code>sudo service apache2 restart</code></pre>
+</li><li>
+	<p align=justify>Access the MDsrv/NGL GUI including your simulations via:</p>
+	<pre><code>http://localhost/html/mdsrv.html</code></pre>
+</li>
+</ol>
+
+
+
+<h2><a id="operatingsys" class="anchor" target="_blank" href="#operatingsys" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Operating systems</h2>
+<p align=justify>The MDsrv has been tested and can be installed on Linux and Mac OS. Windows support is currently under development.</p>
+<p align=justify>The deployed NGL sessions can be viewed on every operating system and browser which supports WebGL.</p>
+
+
+
+
+
+<p align=justify>To get information how to do this, inspect the <a href="deployment.html">deployment guide</a>.</p>
+
+<h1><a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
+
+<p align=justify>If you have any <strong>questions</strong>, found some <strong>bugs</strong>, or want to report
+<strong>enhancement requests</strong> use the <a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a>, use the <a href="contact.html">contact formular</a> or write a mail to
+<a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
+<a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
+
+<p>Please give us <strong>feedback</strong>!</p>
+
+      </div>
+    </div>
+    <div id="scroll">
+      <a title="Scroll to the top" class="top" href="#"><img src="images/top.png" alt="top" /></a>
+    </div>
+  <div id="footer"></div>
+  </div>
+</body>
+</html>

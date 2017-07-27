@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>MDsrv</title>
+  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick online access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
+  <meta name="keywords" content="MDsrv, MD simulation, visualization, web server, NGL" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <!-- modernizr enables HTML5 elements and feature detects -->
+  <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
+  <script src="js/jquery.js"></script>
+  <script> 
+  $(function(){
+    $("#header").load("include/header.html");
+    $("#side").load("include/side.html");
+		$("#side-install").load("include/side-install.html");
+    $("#footer").load("include/footer.html"); 
+  });
+  </script> 
+</head>
+
+<body>
+  <div id="main">
+    <div id="header"></div>
+    <div id="site_content">
+			<div id="side-install"></div>
+      <div class="content">
+
+<h1>Installation & Deployment</h1>
+<p align=justify>MDsrv is working under Linux and Mac OS systems. Support for Windows is currently under development.</p>
+<h3>1. Install the MDsrv</h3>
+<p align=justify>The latest stable release of MDsrv can be easily installed via PyPI.</p>
+
+<pre><code>pip install mdsrv
+</code></pre>
+<br>
+<p align=justify>Conda support is currently under development.<br>
+To install the development version, download it from the
+<a target="_blank" href="https://github.com/arose/mdsrv/releases">MDsrv GitHub page</a> and install it manually (via executing <em>setup.py</em> within the repository). <br>
+Pip needs to be installed in advance to add underlying tools otherwise an installation error (e.g. "import setuptools not found") might rise.
+<br>
+For further information, consult the <em>setuptools</em> <a target="_blank" href="http://setuptools.readthedocs.io/en/latest/setuptools.html#development-mode">documentation</a>.</p>
+
+<h3>Deployment even on your local machine - why?</h3>
+<p align=justify>With step 1, you can already use the MDsrv locally within your network. In order to add the MDsrv into your daily research, deploy and configure it to your system and your settings. The advantage is that you can add project folders permanently, including their security settings. By setting up an apache server (locally on your machine or global on a webserver), you are able to share your sessions and files with colleagues within the same network, collaborators or reviewers. Additionally, you can add a link to your cluster and inspect your unprocessed simulations remotely.</p>
+
+<h3>2. Install Apache2 and WSGI</h3>
+
+<p align=justify>To serve MDsrv as an <a target="_blank" href="http://httpd.apache.org/">Apache</a> Webserver via <a target="_blank" href="https://modwsgi.readthedocs.org">mod_wsgi</a>, install apache2 and libapache2-mod-wsgi to your system.
+
+<pre><code>sudo apt-get install apache2 libapache2-mod-wsgi
+</code></pre>
+</p>
+
+<h3>3. Add MDsrv-wsgi settings to apache.config</h3>
+ <p align=justify>Add the content of <a target="_blank" href="data/apache.config">apache.config</a> into <em>/etc/apache2/sites-available/000-default.conf</em> or replace this file.</p>
+ <img src="data/config.png" width=100% alt="apache configuration file">
+  <p align=justify><strong>Important:</strong> Adjust the <em>user</em> and <em>group</em> according to your environment settings (e.g. local installation on a pc (nickname@pc) with <em>user=nickname</em> and <em>group=nickname</em>) so that the wsgi process can run with the specified <em>user</em> & <em>group</em>. Make also sure that the files and directories you want to serve are accessible with that user & group combination.
+ For further information on <em>apache.config</em>, please consult the <a target="_blank" href="https://httpd.apache.org/docs/2.4/en/">documentation</a>.</p>
+
+<h3>4. Add html for MDsrv gui</h3>
+<p>Copy <a target="_blank" href="data/mdsrv.html">mdsrv.html</a> into the folder <em>/var/www/html/</em>.</p>
+
+<h3>5. Add & adjust the MDsrv configuration file</h3>
+<p align=justify>Download the configuration file <a target="_blank" href="data/app.cfg">app.cfg</a> and save it within a secure directory (e.g. not within <em>/var/www/hmtl/</em>). Here, you can change the host and port, the list of directories where you store your structure and trajectory files (<em>DATA_DIRS</em>) and the security settings. The content and setting is explained <a href="configuration.html">elsewhere</a>.</p>
+
+<h3>6. Place mdsrv.wsgi</h3>
+<p align=justify>Generate a folder mdsrv in <em>/var/www/</em> and place <a target="_blank" href="data/mdsrv.wsgi">mdsrv.wsgi</a> into this folder (<em>/var/www/mdsrv/mdsrv.wsgi</em>). Add the path of the configuration file (<a target="_blank" href="data/app.cfg">app.cfg</a>) into the <a target="_blank" href="data/mdsrv.wsgi">mdsrv.wsgi</a> file including the name of the file (<em>APP_CFG = '/home/nickname/important/app.cfg'</em>). Restart now the apache server.</p>
+
+<h3>7. Restart the apache server</h3>
+<p align=justify>Whenever the <a target="_blank" href="data/app.cfg">app.cfg</a> file is changed, the apache server has to be restarted. If content within the directories is changed, a restart is not necessary. To restart execute
+<pre><code>sudo /etc/init.d/apache2 restart
+</code></pre> or <pre><code>sudo service apache2 restart</code></pre>
+</p>
+
+<h3>8. Access & Visualize your simulations</h3>
+<p align=justify>The MDsrv with the structures and trajectories within the defined folder can be reached at <em>http://localhost/mdsrv.html</em> by loading a structure via "File -> Import" and adding afterwards the trajectory within the structure menu by selecting "Remote trajectory - import".</p>
+
+<h1><a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
+
+<p align=justify>If you have any <strong>questions</strong>, found some <strong>bugs</strong>, or want to report
+<strong>enhancement requests</strong> use the <a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a>, use the <a href="contact.html">contact formular</a> or write a mail to
+<a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
+<a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
+
+<p>Please give us <strong>feedback</strong>!</p>
+
+      </div>
+    </div>
+    <div id="scroll">
+      <a title="Scroll to the top" class="top" href="#"><img src="images/top.png" alt="top" /></a>
+    </div>
+  <div id="footer"></div>
+  </div>
+</body>
+</html>

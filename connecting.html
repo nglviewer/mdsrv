@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>MDsrv</title>
+  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick online access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
+  <meta name="keywords" content="MDsrv, MD simulation, visualization, web server, NGL" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <!-- modernizr enables HTML5 elements and feature detects -->
+  <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
+  <script src="js/jquery.js"></script>
+  <script> 
+  $(function(){
+    $("#header").load("include/header.html");
+    $("#side").load("include/side.html");
+		$("#side-install").load("include/side-install.html");
+    $("#footer").load("include/footer.html"); 
+  });
+  </script> 
+</head>
+
+<body>
+  <div id="main">
+    <div id="header"></div>
+    <div id="site_content">
+			<div id="side-install"></div>
+      <div class="content">
+				<h1>Connecting to clusters with restricted access</h1>
+				
+<p align=justify>MDsrv is meant to be deployed on local supercumputer clusters where MD data will be hosted and streamed. However, sometimes one might require to access MD data hosted at big supercomputers with specific security restrictions (e.g. dual authentication/National Supercomputers). In these particular cases, MD trajectories can be accessed by a classical approach, namely mounting a remote file system. We explain below how to do so.
+
+<br><br>
+
+Note that you need to have installed the MDsrv on your local machine. Please keep your and your HPC center security guidelines in mind!</p>
+
+<h2>UNIX: sshfs - FUSE</h2>
+
+<p align=justify>This tutorial is tested for Linux and Mac OS systems. We use sshfs, a FUSE module to mount the remote file system. If it is not already installed, do so:</p>
+
+<br>
+
+<pre><code>sudo apt-get install sshfs</code></pre>
+
+<br>
+
+<p align=justify>Create a local directory in which to mount the remote file system:</p>
+
+<pre><code>mkdir /dir/to/mounted/system</code></pre>
+
+<br>
+
+<p align=justify>Now connect to the HPC center and view the current simulation using MDsrv:</p>
+
+<pre><code>sshfs username@cluster:/work/username/ /dir/to/mounted/system
+cd /dir/to/mounted/system/projects/sims/
+mdsrv gs_1.part0010.gro gs_1.part0001.xtc</code></pre>
+
+<br>
+
+<p align=justify>You can easily unmount it if you do not need it anymore with this command:</p>
+
+<pre><code>fusermount -u /dir/to/mounted/system</code></pre>
+
+<br>
+
+<p align=justify>Note that this provides only a temporary mount point. If the virtual server or local machine is powered off or restarted, you will need to use the same process to mount it again. You can overcome this by mounting it permanently (see below).</p>
+
+<h3>Speed it up!</h3>
+
+<p align=justify>To speed up the connection, you need to change the syncronization by using one of those options:</p> 
+<pre><code>sshfs username@cluster:/work/username/ /dir/to/mounted/system -o Ciphers=arcfour
+
+sshfs username@cluster:/work/username/ /dir/to/mounted/system -oauto_cache,reconnect
+
+further sshfs_opts="-o auto_cache -o cache_timeout=115200 -o attr_timeout=115200
+                    -o entry_timeout=1200 -o max_readahead=90000 -o large_read 
+                    -o big_writes -o no_remote_lock"</code></pre>
+
+<br>
+                    
+
+<h3>Permanently mounting</h3>
+<p align=justify>In order to set up a permanent mount point, you need to edit the <em>/etc/fstab</em> file on the local machine to automatically mount the file system each time the system is booted. Therefore add the following entry to your <em>/etc/fstab</em> at the bottom of the file and reboot afterwards:</p> 
+
+<pre><code>sshfs#root@xxx.xxx.xxx.xxx:/ /dir/to/mounted/system</code></pre>
+
+<br>
+<p align=justify>Please note that permanently mounting your HPC file system locally is a <strong>potential security risk</strong>. If your local machine is compromised it allows for a direct route to your HPC file system. Therefore it is not recommended to setup permanent mounts on production servers.</p> 
+
+
+
+<br>
+
+
+<h2>Windows: sshfs - FUSE</h2>
+
+<p align=justify>sshfs also offers the possiblity for Windows users to mount remote file systems. We have not tested this but refer to this <a target="_blank" href="https://www.digitalocean.com/community/tutorials/how-to-use-sshfs-to-mount-remote-file-systems-over-ssh">tutorial</a>. </p> 
+
+<br>
+
+
+
+      </div>
+    </div>
+    <div id="scroll">
+      <a title="Scroll to the top" class="top" href="#"><img src="images/top.png" alt="top" /></a>
+    </div>
+  <div id="footer"></div>
+  </div>
+</body>
+</html>

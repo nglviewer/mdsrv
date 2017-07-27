@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>MDsrv</title>
+  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick online access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
+  <meta name="keywords" content="MDsrv, MD simulation, visualization, web server, NGL" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <!-- modernizr enables HTML5 elements and feature detects -->
+  <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
+  <script src="js/jquery.js"></script>
+  <script> 
+  $(function(){
+    $("#header").load("include/header.html");
+    $("#side").load("include/side.html"); 
+    $("#footer").load("include/footer.html"); 
+  });
+  </script> 
+</head>
+
+<body>
+  <div id="main">
+    <div id="header"></div>
+    <div id="site_content">
+      <div class="content">
+          <h1><a id="news" class="anchor" target="_blank" href="#news" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What's new?</h1>
+
+
+				<p align=justify><a href="https://github.com/j0kaso/mdsrv/releases/tag/v0.3.2">Release v0.3.2</a>:</p>
+				<ui>
+					<li>
+						[NGL] movable popup windows
+						[NGL] show simulation length in time units
+					</li>
+				</ui>
+
+				<p align=justify><a href="https://github.com/j0kaso/mdsrv/releases/tag/v0.3.1">Release v0.3.1</a> is out including psf, nc, dcd, gro, trr and xtc support for client side loading.</p>
+		
+				<p align=justify><a href="https://github.com/j0kaso/mdsrv/commit">What are the next milestones?</a> We are currently working on WINDOWS deployment support, automated session generation and speeding up the trajectory and file handling.</p>
+
+				<p align=justify>If you have any wishes, ideas or would like to contribute, get in touch with us!</p>
+
+          <h1><a id="Features" class="anchor" target="_blank" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features, supported formats and operating systems</h1>
+<ul>
+	<li><strong>basic rendering</strong>: depth cueing/fog, front/back cutting planes</li>
+	<li><strong>adv. rendering</strong>: anti aliasing (MSAA, SSAA), material parameters</li>
+	<li><strong>basic representations</strong>: cartoon, ball + stick, spacefill, surface, line, isosurface, slice and more</li>
+	<li><strong>adv. representations</strong>: HyperBall, Rope</li>
+	<li><strong>structure formats</strong>: mmCIF, PDB, PQR, GRO, SDF, MOL2, MMTF</li>
+	<li><strong>topology formats</strong>: PSF, PRMTOP, TOP</li>
+	<li><strong>trajectory formats</strong>:
+	<ul>
+		<li><strong>client-side loading</strong>: DCD, NCTRAJ, TRR, XTC</li>
+		<li><strong>server-side loading</strong>: DCD, NCTRAJ/NetCDF, TRR, XTC, LAMMPSTRJ, HDF5, DTR, ARC, TNG, GRO</li>
+	</ul></li>
+	<li><strong>volume formats</strong>: MRC/MAP/CCP4, DX/DXBIN, CUBE, BRIX/DSN6, XPLOR/CNS</li>
+	<li><strong>scripting language</strong>: JavaScript</li>
+	<li><strong>basic analysis tools</strong>: distance measurements, info about picked atom</li>
+	<li><strong>on-the-fly trajectory processing</strong>: interpolation (linear, spline), centering, approx. PBC removal</li>
+	<li><strong>environments</strong>: web browser (desktop, mobile), no further installation required</li>
+	<li><strong>operating systems</strong>: Linux, MacOS, Windows, Android</li>
+</ul>
+
+<!--				<p align=justify>
+					<ul>
+						<li><details><summary>Trajectory files:</summary>
+						<ul>
+							<li><strong>* </strong> everythin/all.</li>
+							<li><strong>not _h </strong> no hydrogens</li>
+						</ul></details></li>
+					</ul>
+				</p>-->
+
+      </div>
+    </div>
+    <div id="scroll">
+      <a title="Scroll to the top" class="top" href="#"><img src="images/top.png" alt="top" /></a>
+    </div>
+  <div id="footer"></div>
+  </div>
+</body>
+</html>

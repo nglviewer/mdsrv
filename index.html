@@ -1,19 +1,26 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="MDsrv : MD trajectory server">
+<head>
+  <title>MDsrv</title>
+  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick online access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
+  <meta name="keywords" content="MDsrv, MD simulation, visualization, web server, NGL" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <!-- modernizr enables HTML5 elements and feature detects -->
+  <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
+  <script src="js/jquery.js"></script>
+  <script> 
+  $(function(){
+    $("#header").load("include/header.html");
+    $("#side").load("include/side.html"); 
+    $("#footer").load("include/footer.html"); 
+  });
+  </script> 
+</head>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>MDsrv</title>
-  </head>
-
-  <body>
-
-    <script src="data/ngl.js"></script>
+<body>
+      <script src="data/ngl.js"></script>
 
     <script>
         document.addEventListener( "DOMContentLoaded", function() {
@@ -22,104 +29,71 @@
 		        return href.substr( 0, href.lastIndexOf( "/" ) + 1 ) + model;
 			}
             var stage = new NGL.Stage( "viewport" );
+                stage.setParameters( { backgroundColor: "white" } );
           	stage.loadFile( getModelURL("data/md.gro"), { asTrajectory: true }  ).then( function( o ){
-                o.addRepresentation( "cartoon");
-                o.centerView();
-	      		var trajComp = o.addTrajectory();
-	      		var player = new NGL.TrajectoryPlayer(trajComp.trajectory, {start: 1, timeout: 200} );
-	      		player.play();
+                o.addRepresentation( "cartoon", {color: "#c40000"});
+								o.addRepresentation("label", { color: "black", labelType: "text", labelText: {1: "play with me!"}, scale: 3});
+                o.autoView();
+							var trajComp = o.addTrajectory();
+							var player = new NGL.TrajectoryPlayer(trajComp.trajectory, {start: 1, timeout: 200} );
+							player.play();
             } );
-            stage.setOrientation(
-                [[28.074999809265137,28.16999912261963,27.22000026702881],[38.041256212103626,4.000447687884037,-11.16747719008557],[-29.3665595756232,2.0906799525729096,11.365819960687398],[0,0,0]]
-            );
         } );
 
     </script>
+  <div id="main">
+    <div id="header"></div>
+    <div id="site_content">
+      <div id="side"></div>
+      <div class="content">
+        <h1>Welcome to the MD trajectory server</h1>
+        <div id="viewport" style="width:800px; height:300px; margin:0 auto;"></div>
+<p align=justify ><strong>MDsrv</strong> is a web-based tool developed to enhance collaborative research by providing non-experts with easy and quick online access to molecular dynamics (MD) simulations. As a member of the <strong>nglviewer</strong> family, MDsrv channels MD trajectories through a web server using a powerful web application (<a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a>) to visualize them.  
 
+<p align=justify >
+<strong>From research collaborators, to peer reviewers or students, they can now visualize third-party MD simulations through a web browser - without any software installation.</strong></p>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" target="_blank" href="https://github.com/arose/mdsrv">View on GitHub</a>
-
-          <h1 id="project_title">MDsrv</h1>
-          <h2 id="project_tagline">MD trajectory server</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/arose/mdsrv/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/arose/mdsrv/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-
-    <div id="main_content_wrap" class="outer">
-      <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
-      <section id="main_content" class="inner">
-        <div id="viewport" style="width:300px; height:300px; margin:0 auto;">
-        </div>
-          <p align=justify ><strong>MDsrv</strong> is a tool to show molecular dynamics (MD) trajectories on-line
-          using a web
-server that provides fast access to MD trajectories and a web application (<a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a>)
-to view them. To allow meaningful display of raw datasets processing options
-for centering, superposition and handling of periodic boundaries are included.
-Further, the MD trajectories can be filtered on-the-fly to sub-sets of
-atoms and coarse time-resolutions. The resulting molecular-visualization
-web application displays large molecular structures and animates their
-MD trajectories to allow interactive exploration and collaborative visual
-analysis within a local network or over the Internet.</p>
-
-<p align=justify>A small <strong>example of the usage</strong> of the MDsrv in combination with the <a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a> is embedded on this page (above). It can be interactively moved, scaled and rotated. 
-A more capable example can be found <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example">here</a>. There, two simulations are shown and can be run by pressing the 'play' button. Additionally, the <a target="_blank" href="data/script.ngl">.ngl script file</a> which is used to generate the example gives the possibility to add specific self-written functions as 'show/hide all'.
-</p>
-
-<h3>
-<a id="availability" class="anchor" href="#availability" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Read more:</h3>
+<p align=justify><strong>Highlights:</strong></p>
 
 <ul>
-<li><a href="installation_deployment.html">installation and deployment</a></li>
-<li><a href="usage.html">usage</a></li>
-<li><a href="restful_api.html">RESTful API</a></li>
-<li><a href="scripting.html">scripting</a></li>
-<li><a href="browser_support.html">NGL browser support</a></li>
-<li><a href="citations.html">citation</a></li>
-</ul>
+  <li> Direct meaningful display of raw simulation data by automatically handling periodic boundary conditions, centering and superposition.</li>
+  <li> Further on-the-fly MD trajectory processing (e.g. by filtering out frames and/or atoms) allows generating customized sessions that can be easily shared.</li>
+  <li> Specific self-written functions such as 'show/hide ligand' can be added to customized sessions. </li>
+  <li> MDsrv can display large molecular structures, densities and animate MD trajectories to allow interactive exploration and collaborative visual analysis within a local network or over the Internet. </li>
+</ul>  
 
-<h3>
-<a id="availability" class="anchor" href="#availability" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Availability</h3>
+<p align=justify><strong>Features:</strong> Go <a href="features.html">here</a> to find out what <strong>file formats</strong> are supported and what is new since the last release!</p>
 
-<p>The source code is available under the
+<p align=justify>A small <strong>example of the usage</strong> of the MDsrv in combination with the <a target="_blank" href="https://github.com/arose/ngl">NGL viewer</a> is embedded on this page (above). It can be interactively moved, scaled and rotated. 
+More capable examples can be found <a href="examples.html">here</a>.</p>
+
+
+<h2>
+<a id="availability" class="anchor" href="#availability" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Availability</h2>
+
+<p align=justify>The source code is available under the
 <a target="_blank" href="https://opensource.org/licenses/MIT">MIT License</a> from
 <a target="_blank" href="https://github.com/arose/MDsrv">github.com/arose/mdsrv</a> and the Python
 Package index
-<a target="_blank" href="http://pypi.python.org/pypi/MDsrv">pypi.python.org/pypi/MDsrv</a>.</p>
+<a target="_blank" href="http://pypi.python.org/pypi/MDsrv">pypi.python.org/pypi/MDsrv</a>. The visualization capabilities of MDsrv require no previous installation other than a modern web browser. The streaming capabilities (i.e. from a local or a dedicated web-server) do require <a href="installation.html">installation</a> and have been fully tested for Linux and Mac OS operating systems. </p>
 
 <h3>
 <a id="participating" class="anchor" href="#participating" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Participating</h3>
 
 <p align=justify>If you have any <strong>questions</strong>, found some <strong>bugs</strong>, or want to report
-<strong>enhancement requests</strong> use the <a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a> or write a mail to
-<a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
-<a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>.</p>
-
-<p>Please give us <strong>feedback</strong>!</p>
+<strong>enhancement requests</strong> use the <a target="_blank" href="https://github.com/arose/mdsrv/issues">Issue Tracker</a>, the <a href="contact.html">contact formular</a> or mail us directly
+(<a href="mailto:johanna.tiemann@gmail.com">johanna.tiemann@gmail.com</a> or
+<a href="mailto:alexander.rose@weirdbyte.de">alexander.rose@weirdbyte.de</a>).</p>
 
 <p align=justify>MDsrv is <strong>open source</strong> and welcomes <em>your</em> contributions. <a target="_blank" href="https://github.com/arose/mdsrv#fork-destination-box">Fork
 the repository on GitHub</a> and submit a pull request.</p>
 
-      </section>
+      </div>
     </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">MDsrv maintained by <a target="_blank" href="https://github.com/arose">arose</a></p>
-        <p>Published with <a target="_blank" href="https://pages.github.com">GitHub Pages</a></p>
-      </footer>
+    <div id="scroll">
+      <a title="Scroll to the top" class="top" href="#"><img src="images/top.png" width=50% alt="top";/></a>
     </div>
-
-
-
-  </body>
+  <div id="footer"></div>
+  </div>
+</body>
 </html>
