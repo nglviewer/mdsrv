@@ -46,6 +46,8 @@ install:
   - hash -r
   - conda update -qy conda
   #- conda info -a
+  - conda config --add channels conda-forge
+  - conda install anaconda-client -y
   - conda config --add channels omnia
   - conda install conda-build -y
   - conda install python=$PYTHON_VERSION -y
@@ -57,10 +59,16 @@ install:
 script:
   - mdsrv -h
 
-
 after_success:
-  - echo "after_success"
-
+  - echo $TRAVIS_TAG
+  - echo $CONDA_USER
+  - export CONDA_PACKAGE=`conda build --output develop/conda-recipe | grep bz2`
+  - echo $CONDA_PACKAGE
+  # Only for initial release (or special issues)
+  # - anaconda -t $CONDA_UPLOAD_TOKEN upload -u $CONDA_USER $CONDA_PACKAGE
+  # If this build is because of a tag, upload the build if it succeeds.
+  - if [ "$TRAVIS_TAG" ]; then anaconda -t $CONDA_UPLOAD_TOKEN upload -u $CONDA_USER $CONDA_PACKAGE; fi
+    
   
 notifications:
   email: false

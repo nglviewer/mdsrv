@@ -1,5 +1,5 @@
 {% set name = "mdsrv" %}
-{% set version = "v0.3.2" %}
+{% set version = "v0.3.3" %}
 {% set sha256 = "8c476e6a02dffad9301858788ce549a9d778655d2c4fca15057462d39c98c88f" %}
 
 package:
