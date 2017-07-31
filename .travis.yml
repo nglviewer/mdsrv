@@ -60,6 +60,8 @@ script:
   - mdsrv -h
 
 after_success:
+  - tags: true
+  - branch: master
   - echo $TRAVIS_TAG
   - echo $CONDA_USER
   - export CONDA_PACKAGE=`conda build --output develop/conda-recipe | grep bz2`
