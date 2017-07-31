@@ -307,7 +307,7 @@ def traj_path( index, root, filename ):
 # main
 ############################
 
-def open_browser( app, host, port, structure=None, trajectory=None, script=None ):
+def open_browser( app, host, port, structure=None, trajectory=None, deltaTime=None, timeOffset=None, script=None ):
     if not app.config.get( "BROWSER_OPENED", False ):
         import webbrowser
         url = "http://" + host + ":" + str(port) + "/webapp"
@@ -315,8 +315,13 @@ def open_browser( app, host, port, structure=None, trajectory=None, script=None 
             url += "?struc=file://cwd/" + structure
             if trajectory:
                 url += "&traj=file://cwd/" + trajectory
+                if deltaTime != "0.00":
+                    url += "&dt=" + deltaTime
+                if timeOffset != "0.00":
+                    url += "&to=" + timeOffset
         if script:
             url += "?load=file://cwd/" + script
+
         webbrowser.open( url, new=2, autoraise=True )
         app.config.BROWSER_OPENED = True
 
@@ -350,21 +355,28 @@ def parse_args():
         help="Path to a trajectory file. Supported are xtc/trr, nc and dcd "+\
             "files. The file must be included within the current working "+\
             "directory (cwd) or a sub directory." )
-    parser.add_argument( '--script', type=str, default="",
+    parser.add_argument( '--deltaTime', '-dt', type=str, default="0.00",
+        help="Delta time of the trajectory (to convert frame steps into ns time scale)." )
+    parser.add_argument( '--timeOffset', '-to', type=str, default="0.00",
+        help="Time offset of the trajectory (to convert frame steps into ns time scale)." )
+    parser.add_argument( '--script', '-sc', type=str, default="",
         help="Path to an ngl script file. The file must be included within "+\
             "the current working directory (cwd) or a sub directory. See "+\
             "https://github.com/arose/mdsrv/blob/master/script.ngl or the "+\
             "documentation for an example." )
-    parser.add_argument( '--cfg', '--configure', type=str, help="Path to a "+\
+    parser.add_argument( '--setting', '-st', type=str, default="",
+        help="Path to an NGL setting file defining e.g. default "+\
+             "representations, trajectory or stage settings." )
+    parser.add_argument( '--configure', '-cfg', type=str, help="Path to a "+\
             "configuration file. "+\
             "See https://github.com/arose/mdsrv/blob/master/app.cfg.sample "+\
             "or the documentation for an example." )
-    parser.add_argument( '--host', type=str, default="127.0.0.1",
+    parser.add_argument( '--host', '-ho', type=str, default="127.0.0.1",
         help="Host for the server. The default is 127.0.0.1 or localhost. "+\
             "To make the server available to other clients set to your IP "+\
             "address or to 0.0.0.0 for automatic host determination. This is "+\
             "overwritten by the PORT in a configuration file." )
-    parser.add_argument( '--port', type=int, default=0, help="Port to bind "+\
+    parser.add_argument( '--port', '-po', type=int, default=0, help="Port to bind "+\
             "the server to. The default is 0 for an automatic choose of a "+\
             "free port. Fails when the given port is already in use on "+\
             "your machine. This is overwritten by the PORT in a configuration file." )
@@ -385,14 +397,14 @@ def entry_point():
 
 def main():
     args = parse_args()
-    app_config( args.cfg )
+    app_config( args.configure )
     DATA_DIRS = app.config.get( "DATA_DIRS", {} )
     DATA_DIRS.update( {
         "cwd": os.path.abspath( os.getcwd() )
     } )
     app.config[ "DATA_DIRS" ] = DATA_DIRS
     def on_bind( host, port ):
-        open_browser( app, host, port, args.structure, args.trajectory, args.script )
+        open_browser( app, host, port, args.structure, args.trajectory, args.deltaTime, args.timeOffset, args.script )
     patch_socket_bind( on_bind )
     app.run(
         debug=app.config.get( 'DEBUG', False ),
