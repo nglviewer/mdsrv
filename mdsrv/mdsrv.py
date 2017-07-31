@@ -364,9 +364,6 @@ def parse_args():
             "the current working directory (cwd) or a sub directory. See "+\
             "https://github.com/arose/mdsrv/blob/master/script.ngl or the "+\
             "documentation for an example." )
-    parser.add_argument( '--setting', '-st', type=str, default="",
-        help="Path to an NGL setting file defining e.g. default "+\
-             "representations, trajectory or stage settings." )
     parser.add_argument( '--configure', '-cfg', type=str, help="Path to a "+\
             "configuration file. "+\
             "See https://github.com/arose/mdsrv/blob/master/app.cfg.sample "+\
