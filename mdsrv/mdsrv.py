@@ -352,7 +352,8 @@ def parse_args():
             "cif files. The file must be included within the current working "+\
             "directory (cwd) or a sub directory." )
     parser.add_argument( 'trajectory', type=str, nargs='?', default="",
-        help="Path to a trajectory file. Supported are xtc/trr, nc and dcd "+\
+        help="Path to a trajectory file. Supported are xtc/trr, nc/netcdf, "+\
+             "lammpstrj, h5, dtr, arc, tng,  and dcd "+\
             "files. The file must be included within the current working "+\
             "directory (cwd) or a sub directory." )
     parser.add_argument( '--deltaTime', '-dt', type=str, default="0.00",
@@ -360,7 +361,7 @@ def parse_args():
     parser.add_argument( '--timeOffset', '-to', type=str, default="0.00",
         help="Time offset of the trajectory (to convert frame steps into ns time scale)." )
     parser.add_argument( '--script', '-sc', type=str, default="",
-        help="Path to an ngl script file. The file must be included within "+\
+        help="Path to an ngl/js script file. The file must be included within "+\
             "the current working directory (cwd) or a sub directory. See "+\
             "https://github.com/arose/mdsrv/blob/master/script.ngl or the "+\
             "documentation for an example." )
