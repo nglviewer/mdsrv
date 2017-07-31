@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file, following the suggestions of [Keep a CHANGELOG](http://keepachangelog.com/). This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [v0.3.4] - 2017-07-31
+### Added
+- conda support via ngl channel
+- delta time and time offset as CMD variables
+
+
 ## [v0.3.3] - 2017-07-27
 ### Changed
 - NGL update to version 0.10.5-15 incl. bugfixes related to interpolation, change superpositioning on initial frame, add bounce direction for trajectoy player, animations
@@ -9,6 +15,7 @@ All notable changes to this project will be documented in this file, following t
 ### Added
 - conda support
 - netcdf, gro, lammpstrj, hdf5, dtr, arc tng trajectory support from mdtraj
+
 
 ## [v0.3.2] - 2017-07-03
 ### Changed

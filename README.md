@@ -1,16 +1,15 @@
 
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
-[![Version](http://img.shields.io/badge/version-0.2-blue.svg?style=flat)](https://github.com/arose/mdsrv/releases/tag/v0.2)
+[![Version](http://img.shields.io/badge/version-0.3.4-blue.svg?style=flat)](https://github.com/arose/mdsrv/releases/tag/v0.3.4)
 [![Changelog](https://img.shields.io/badge/changelog--lightgrey.svg?style=flat)](CHANGELOG)
-[![Travis Build Status](https://travis-ci.org/j0kaso/mdsrv.svg?branch=master)](https://travis-ci.org/j0kaso/mdsrv)
-[![Appveyor Build status](https://ci.appveyor.com/api/projects/status/uhw8xxumj2l45nxc)](https://ci.appveyor.com/project/j0kaso/mdsrv)
+[![Travis Build Status](https://travis-ci.org/arose/mdsrv.svg?branch=master)](https://travis-ci.org/arose/mdsrv)
 
 
 MDsrv is a simple server that enables remote access to coordinate trajectories from molecular dynamics simulations. It can be used together with the NGL Viewer (http://github.com/arose/ngl) to interactively view trajectories of molecular complexes in a web-browser, either within a local network or from anywhere over the internet.
 
 See it in action:
-* [Web application](http://proteinformatics.charite.de/MDsrv-example)
-* [Documentation](http://arose.github.io/mdsrv/)
+* [Web application](http://nglviewer.org/mdsrv/examples)
+* [Documentation](http://nglviewer.org/mdsrv/)
 
 
 Features
@@ -19,7 +18,7 @@ Features
 * Coordinate trajectories (animation, remote access)
 * Trajectory formats supported (xtc/trr, nc/netcdf, dcd)
 * [NGL Viewer](https://github.com/arose/ngl/) (Molecular structures, Density volumes, User interaction, Embeddable)
-* Lightweight coordinate-only trajecotry reader (via [SimpleTraj](https://github.com/arose/simpletraj/)
+* Lightweight coordinate-only trajecotry reader (via [SimpleTraj](https://github.com/arose/simpletraj/) and [MDTraj](http://mdtraj.org/)
 
 
 
@@ -36,7 +35,7 @@ Table of contents
 Documentation
 ============
 
-Detailed information concerning the installation, deployment, usage and scripting examples can be found at the [documentation](http://arose.github.io/mdsrv/).
+Detailed information concerning the installation, deployment, usage and scripting examples can be found at the [documentation](http://nglviewer.org/mdsrv/).
 
 
 Installation
@@ -45,6 +44,10 @@ Installation
 From PyPI:
 
     pip install mdsrv
+    
+From conda:
+    
+    conda install -c ngl mdsrv
 
 
 Running
@@ -61,6 +64,7 @@ Load a topology and trajectory at startup
 
     mdsrv struc.gro traj.xtc
 
+For more options, please consult [the documentation](http://nglviewer.org/mdsrv)
 
 Configuration file
 ------------------
@@ -82,7 +86,7 @@ Finally, to restart apache issue
 
     sudo /etc/init.d/apache2 restart
 
-More information can be found at the [documentation](http://arose.github.io/mdsrv/).
+More information can be found at the [documentation](http://nglviewer.org/mdsrv/).
 
 RESTful API
 ===========
@@ -91,7 +95,7 @@ The RESTful API is the interface through which the web application gets all data
 
 You can retrieve information about directory content (e.g. name of sub-directory, file name, file size), number of frames and frame coordinates.
 
-For more information, please visit the [documentation](http://arose.github.io/mdsrv/).
+For more information, please visit the [documentation](http://nglviewer.org/mdsrv/).
 
 NGL browser support
 ===============
@@ -133,3 +137,4 @@ When using MGsrv please cite:
 * A. S. Rose, and MDsrv Contributors. MDsrv v0.2 Zenodo (2016), doi:10.5281/zenodo.45961.  [doi:10.5281/zenodo.45961](http://dx.doi.org/10.5281/zenodo.45961)
 * AS Rose, AR Bradley, Y Valasatava, JM Duarte, A Prlić and PW Rose. _Web-based molecular graphics for large complexes._ ACM Proceedings of the 21st International Conference on Web3D Technology (Web3D '16): 185-186, 2016. [doi:10.1145/2945292.2945324](http://dx.doi.org/10.1145/2945292.2945324)
 * AS Rose and PW Hildebrand. _NGL Viewer: a web application for molecular visualization._ Nucl Acids Res (1 July 2015) 43 (W1): W576-W579 first published online April 29, 2015. [doi:10.1093/nar/gkv402](https://doi.org/10.1093/nar/gkv402)
+* RT McGibbon, KA Beauchamp, MP Harrigan, C Klein, JM Swails, CX Hernández, CR Schwantes, LP Wang, TJ Lane, VS Pande. _MDTraj: A Modern Open Library for the Analysis of Molecular Dynamics Trajectories._ Biophys J. (20 October 2015) 109(8):1528-32. [doi: 10.1016/j.bpj.2015.08.015](http:/dx.doi.org/10.1016/j.bpj.2015.08.015)

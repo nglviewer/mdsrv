@@ -46,5 +46,5 @@ about:
   summary: "Simple server to visualize remote trajectories."
   description: |
     MDsrv is a simple server that enables remote access to coordinate trajectories from molecular dynamics simulations. It can be used together with the NGL Viewer (http://github.com/arose/ngl) to interactively view trajectories of molecular complexes in a web-browser, either within a local network or from anywhere over the internet.
-  dev_url: https://github.com/arose/mdsrv
+  dev_url: https://nglviewer.org/mdsrv
   

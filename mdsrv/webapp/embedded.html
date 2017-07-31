@@ -34,12 +34,16 @@
 
       var struc = NGL.getQuery( "struc" );
       var traj = NGL.getQuery( "traj" );
+      var deltaTime = NGL.getQuery( "dt" );
+      var timeOffset = NGL.getQuery( "to" );
+      if( deltaTime === undefined ) deltaTime = "0.00";
+      if( timeOffset === undefined ) timeOffset = "0.00";
       if( struc ){
         var params = { defaultRepresentation: true };
         stage.loadFile( struc, params ).then( function( o ){
           o.setName( "sim" );
           o.addRepresentation( "licorice", {sele: "not hydrogen", visible: false} );
-          if( traj ) o.addTrajectory( traj, { centerPbc: true, superpose: true, removePbc: true } );
+          if( traj ) o.addTrajectory( traj, { centerPbc: true, superpose: true, removePbc: true, "deltaTime": parseFloat(deltaTime), "timeOffset": parseFloat(timeOffset) } );
         } );
       }
       var toggleTheme = document.getElementById( "toggleTheme" );
