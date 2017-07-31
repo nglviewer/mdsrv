@@ -307,7 +307,7 @@ def traj_path( index, root, filename ):
 # main
 ############################
 
-def open_browser( app, host, port, structure=None, trajectory=None, script=None ):
+def open_browser( app, host, port, structure=None, trajectory=None, deltaTime=None, timeOffset=None, script=None ):
     if not app.config.get( "BROWSER_OPENED", False ):
         import webbrowser
         url = "http://" + host + ":" + str(port) + "/webapp"
@@ -315,8 +315,13 @@ def open_browser( app, host, port, structure=None, trajectory=None, script=None 
             url += "?struc=file://cwd/" + structure
             if trajectory:
                 url += "&traj=file://cwd/" + trajectory
+                if deltaTime != "0.00":
+                    url += "&dt=" + deltaTime
+                if timeOffset != "0.00":
+                    url += "&to=" + timeOffset
         if script:
             url += "?load=file://cwd/" + script
+
         webbrowser.open( url, new=2, autoraise=True )
         app.config.BROWSER_OPENED = True
 
@@ -350,6 +355,10 @@ def parse_args():
         help="Path to a trajectory file. Supported are xtc/trr, nc and dcd "+\
             "files. The file must be included within the current working "+\
             "directory (cwd) or a sub directory." )
+    parser.add_argument( '--dt', '--deltaTime', type=str, default="0.00",
+        help="Delta time of the trajectory (to convert frame steps into ns time scale)." )
+    parser.add_argument( '--to', '--timeOffset', type=str, default="0.00",
+        help="Time offset of the trajectory (to convert frame steps into ns time scale)." )
     parser.add_argument( '--script', type=str, default="",
         help="Path to an ngl script file. The file must be included within "+\
             "the current working directory (cwd) or a sub directory. See "+\
@@ -369,6 +378,7 @@ def parse_args():
             "free port. Fails when the given port is already in use on "+\
             "your machine. This is overwritten by the PORT in a configuration file." )
     args = parser.parse_args()
+    print(args)
     return args
 
 
@@ -392,7 +402,7 @@ def main():
     } )
     app.config[ "DATA_DIRS" ] = DATA_DIRS
     def on_bind( host, port ):
-        open_browser( app, host, port, args.structure, args.trajectory, args.script )
+        open_browser( app, host, port, args.structure, args.trajectory, args.dt, args.to, args.script )
     patch_socket_bind( on_bind )
     app.run(
         debug=app.config.get( 'DEBUG', False ),

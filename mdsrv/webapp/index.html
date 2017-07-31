@@ -47,10 +47,16 @@
 
             var struc = NGL.getQuery( "struc" );
             var traj = NGL.getQuery( "traj" );
+            var deltaTime = NGL.getQuery( "dt" );
+            if( deltaTime === undefined ) deltaTime = "0.00";
+            var timeOffset = NGL.getQuery( "to" );
+            if( timeOffset === undefined ) timeOffset = "0.00";
             if( struc ){
                 var params = { defaultRepresentation: true };
                 stage.loadFile( struc, params ).then( function( o ){
-                    if( traj ) o.addTrajectory( traj );
+                    if( traj ){
+                        o.addTrajectory( traj, { "deltaTime": parseFloat(deltaTime), "timeOffset": parseFloat(timeOffset) } );
+                    }
                 } );
             }
         } );
