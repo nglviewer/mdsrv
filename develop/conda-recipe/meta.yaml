@@ -20,7 +20,7 @@ requirements:
     - scipy
     - zlib
     - mdtraj
-    - simpletraj
+   # - simpletraj
 
   run:
     - python
@@ -28,7 +28,7 @@ requirements:
     - numpy
     - flask
     - mdtraj
-    - simpletraj
+   # - simpletraj
 
 test:
   imports:

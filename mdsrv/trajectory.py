@@ -10,8 +10,9 @@ import collections
 import numpy as np
 import warnings
 
+import mdtraj as md
 from mdtraj.formats import *
-from simpletraj import trajectory as simpletraj_trajectory
+#from simpletraj import trajectory as simpletraj_trajectory
 
 try:
     import cPickle as pickle
@@ -45,23 +46,28 @@ def get_split_xtc( directory ):
         return sorted( [ k for k, v in split.iteritems() if v > 1 ] )
 
 
-def get_trajectory( file_name ):
+def get_trajectory( file_name, struc_path ):
     ext = os.path.splitext( file_name )[1].lower()
     types = {
-        ".xtc": simpletraj_trajectory.XtcTrajectory,
-        ".trr": simpletraj_trajectory.TrrTrajectory,
-        ".netcdf": NetcdfTrajectory,
-        ".nc": NetcdfTrajectory,
-        ".dcd": simpletraj_trajectory.DcdTrajectory,
+        ".xtc": MDTrajTrajectory, #XtcTrajectory, simpletraj_trajectory.XtcTrajectory,
+        ".trr": MDTrajTrajectory, #TrrTrajectory, simpletraj_trajectory.TrrTrajectory,
+        ".netcdf": MDTrajTrajectory, #NetcdfTrajectory,
+        ".nc": MDTrajTrajectory, #NetcdfTrajectory,
+        ".dcd": DcdTrajectory, #MDTrajTrajectory, simpletraj_trajectory.DcdTrajectory,
         ".gro": GroTrajectory,
-        ".lammpstrj": LammpsTrajectory,
-        ".h5": Hdf5Trajectory,
-        ".dtr": DtrTrajectory,
-        ".arc": ArcTrajectory,
-        ".tng": TngTrajectory,
+        ".pdb": MDTrajTrajectory,
+        ".lammpstrj": MDTrajTrajectory, #LammpsTrajectory,
+        ".gz": MDTrajTrajectory,
+        ".xyz": MDTrajTrajectory, #XyzTrajectory,
+        ".mdcrd": MDTrajTrajectory, #MdcrdTrajectory,
+        ".binpos": MDTrajTrajectory, #BinposTrajectory,
+        ".h5": MDTrajTrajectory, #Hdf5Trajectory,
+        ".dtr": DtrTrajectory, #MDTrajTrajectory,
+        ".arc": ArcTrajectory, #MDTrajTrajectory,
+        ".tng": MDTrajTrajectory, #TngTrajectory,
     }
     if ext in types:
-        return types[ ext ]( file_name )
+        return types[ ext ]( file_name, struc_path )
     else:
         raise Exception( "extension '%s' not supported" % ext )
 
@@ -72,8 +78,8 @@ class TrajectoryCache( object ):
         self.mtime = {}
         self.parts = {}
 
-    def add( self, path, pathList ):
-        self.cache[ path ] = TrajectoryCollection( pathList )
+    def add( self, path, pathList, struc_path ):
+        self.cache[ path ] = TrajectoryCollection( pathList, struc_path )
         # initial mtimes
         mtime = {}
         for partPath in pathList:
@@ -82,7 +88,7 @@ class TrajectoryCache( object ):
         # initial pathList
         self.parts[ path ] = pathList
 
-    def get( self, path ):
+    def get( self, path, struc_path ):
         stem = os.path.basename( path )
         if stem.startswith( "@" ):
             pathList = frozenset(
@@ -91,7 +97,7 @@ class TrajectoryCache( object ):
         else:
             pathList = frozenset( [ path ] )
         if path not in self.cache:
-            self.add( path, pathList )
+            self.add( path, pathList, struc_path )
         elif pathList != self.parts[ path ]:
             # print( "pathList changed, rebuilding" )
             del self.cache[ path ]
@@ -109,7 +115,7 @@ class TrajectoryCache( object ):
 
 
 class Trajectory( object ):
-    def __init__( self, file_name ):
+    def __init__( self, file_name, struc_name ):
         pass
 
     def update( self, force=False ):
@@ -165,10 +171,10 @@ class Trajectory( object ):
 
 
 class TrajectoryCollection( Trajectory ):
-    def __init__( self, parts ):
+    def __init__( self, parts, struc_path ):
         self.parts = []
         for file_name in sorted( parts ):
-            self.parts.append( get_trajectory( file_name ) )
+            self.parts.append( get_trajectory( file_name, struc_path ) )
         self.box = self.parts[ 0 ].box
         self._update_numframes()
 
@@ -196,7 +202,7 @@ class TrajectoryCollection( Trajectory ):
 
 
 class TngTrajectory( Trajectory ):
-    def __init__( self, file_name ):
+    def __init__( self, file_name, struc_name ):
         self.file_name = file_name
         self.tng = TNGTrajectoryFile( self.file_name )
         self.tng_traj = self.tng.read()
@@ -217,12 +223,14 @@ class TngTrajectory( Trajectory ):
         return self.box, self.x, self.time
 
     def __del__( self ):
-        if self.tng:
+        try:
             self.tng.close()
+        except:
+            pass
 
 
 class ArcTrajectory( Trajectory ):
-    def __init__( self, file_name ):
+    def __init__( self, file_name, struc_name ):
         self.file_name = file_name
         self.arc = ArcTrajectoryFile( self.file_name )
         self.arc_traj = self.arc.read()
@@ -244,12 +252,14 @@ class ArcTrajectory( Trajectory ):
         return self.box, self.x, self.time
 
     def __del__( self ):
-        if self.arc:
+        try:
             self.arc.close()
+        except:
+            pass
 
 
 class DtrTrajectory( Trajectory ):
-    def __init__( self, file_name ):
+    def __init__( self, file_name, struc_name ):
         self.file_name = file_name
         self.dtr = DTRTrajectoryFile( self.file_name )
         self.dtr_traj = self.dtr.read()
@@ -270,12 +280,14 @@ class DtrTrajectory( Trajectory ):
         return self.box, self.x, self.time
 
     def __del__( self ):
-        if self.dtr:
+        try:
             self.dtr.close()
+        except:
+            pass
 
 
 class Hdf5Trajectory( Trajectory ):
-    def __init__( self, file_name ):
+    def __init__( self, file_name, struc_name ):
         self.file_name = file_name
         self.hdf5 = HDF5TrajectoryFile( self.file_name )
         self.hdf5_traj = self.hdf5.read()
@@ -299,12 +311,14 @@ class Hdf5Trajectory( Trajectory ):
         return self.box, self.x, self.time
 
     def __del__( self ):
-        if self.hdf5:
+        try:
             self.hdf5.close()
+        except:
+            pass
 
 
 class LammpsTrajectory( Trajectory ):
-    def __init__( self, file_name ):
+    def __init__( self, file_name, struc_name ):
         self.file_name = file_name
         self.lammps = LAMMPSTrajectoryFile( self.file_name )
         self.lammps_traj = self.lammps.read()
@@ -325,12 +339,14 @@ class LammpsTrajectory( Trajectory ):
         return self.box, self.x, self.time
 
     def __del__( self ):
-        if self.lammps:
+        try:
             self.lammps.close()
+        except:
+            pass
 
 
 class GroTrajectory( Trajectory ):
-    def __init__( self, file_name ):
+    def __init__( self, file_name, struc_name ):
         self.file_name = file_name
         with GroTrajectoryFile( self.file_name, 'r' ) as fp:
             self.gro = fp.read()
@@ -352,12 +368,14 @@ class GroTrajectory( Trajectory ):
         return self.box, self.x, self.time
 
     def __del__( self ):
-        if self.gro:
-            del self.gro
+        try:
+            self.gro.close()
+        except:
+            pass
 
 
 class TrrTrajectory( Trajectory ):
-    def __init__( self, file_name ):
+    def __init__( self, file_name, struc_name ):
         self.file_name = file_name
         with TRRTrajectoryFile( self.file_name, 'r' ) as fp:
             self.trr = fp.read()
@@ -376,36 +394,40 @@ class TrrTrajectory( Trajectory ):
         return self.box, self.x, self.time
 
     def __del__( self ):
-        if self.trr:
-            del self.trr
+        try:
+            self.trr.close()
+        except:
+            pass
 
 
 class XtcTrajectory( Trajectory ):
-    def __init__( self, file_name ):
+    def __init__( self, file_name, struc_name ):
         self.file_name = file_name
-        with XTCTrajectoryFile( self.file_name, 'r' ) as fp:
-            self.xtc = fp.read()
-        self.numatoms = len(self.xtc[0][0])
-        self.numframes = len(self.xtc[1])
+        self.xtc = XTCTrajectoryFile( self.file_name )
+        self.xtc_traj = self.xtc.read()
+        self.numatoms = len(self.xtc_traj[0][0])
+        self.numframes = len(self.xtc_traj[1])
 
         self.x = None
         self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
         self.time = 0.0
 
     def _get_frame( self, index ):
-        xyz, time, step, box = self.xtc
+        xyz, time, step, box = self.xtc_traj
         self.box = box[ index ] * 10
         self.x = xyz[ index ] * 10
         self.time = time[ index ]
         return self.box, self.x, self.time
 
     def __del__( self ):
-        if self.xtc:
-            del self.xtc
+        try:
+            self.xtc.close()
+        except:
+            pass
 
 
 class NetcdfTrajectory( Trajectory ):
-    def __init__( self, file_name ):
+    def __init__( self, file_name, struc_name ):
         # http://ambermd.org/netcdf/nctraj.pdf
         self.file_name = file_name
         self.netcdf = NetCDFTrajectoryFile( self.file_name )
@@ -430,12 +452,14 @@ class NetcdfTrajectory( Trajectory ):
         return self.box, self.x, self.time
 
     def __del__( self ):
-        if self.netcdf:
+        try:
             self.netcdf.close()
+        except:
+            pass
 
 
 class DcdTrajectory( Trajectory ):
-    def __init__( self, file_name ):
+    def __init__( self, file_name, struc_name ):
         self.file_name = file_name
         self.dcd = DCDTrajectoryFile( self.file_name )
         self.dcd_traj = self.dcd.read()
@@ -457,5 +481,120 @@ class DcdTrajectory( Trajectory ):
         return self.box, self.x, self.time
 
     def __del__( self ):
-        if self.dcd:
+        try:
             self.dcd.close()
+        except:
+            pass
+
+
+class MdcrdTrajectory( Trajectory ):
+    def __init__( self, file_name, struc_name ):
+        self.file_name = file_name
+        self.struc_name = struc_name
+        topology = md.load( self.struc_name ).topology
+        self.numatoms = topology.n_atoms
+        self.mdcrd = MDCRDTrajectoryFile( self.file_name, self.numatoms )
+        self.mdcrd_traj = self.mdcrd.read()
+        self.numframes = len(self.mdcrd_traj[0])
+        self.x = None
+        self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
+        self.time = 0.0
+
+    def _get_frame( self, index ):
+        xyz, cell_lengths = self.mdcrd_traj
+        try:
+            self.box[ 0, 0 ] = cell_lengths[ index ][ 0 ]
+            self.box[ 1, 1 ] = cell_lengths[ index ][ 1 ]
+            self.box[ 2, 2 ] = cell_lengths[ index ][ 2 ]
+        except: pass
+        self.x = xyz[ index ]
+        return self.box, self.x, self.time
+
+    def __del__( self ):
+        try:
+            self.mdcrd.close()
+        except:
+            pass
+
+
+class BinposTrajectory( Trajectory ):
+    def __init__( self, file_name, struc_name ):
+        self.file_name = file_name
+        self.binpos = BINPOSTrajectoryFile( self.file_name )
+        self.binpos_traj = self.binpos.read()
+        self.numatoms = len(self.binpos_traj[0][0])
+        self.numframes = len(self.binpos_traj[0])
+        self.x = None
+        self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
+        self.time = 0.0
+
+    def _get_frame( self, index ):
+        xyz = self.binpos_traj
+        self.x = xyz[index]
+        return self.box, self.x, self.time
+
+    def __del__( self ):
+        try:
+            self.binpos.close()
+        except:
+            pass
+
+
+class XyzTrajectory( Trajectory ):
+    def __init__( self, file_name, struc_name ):
+        self.file_name = file_name
+        self.xyz = XYZTrajectoryFile( self.file_name, 'r' )
+        self.xyz_traj = self.xyz.read()
+        self.numframes = len(self.xyz_traj[0])
+        self.numatoms = len(self.xyz_traj[0][0])
+        self.x = None
+        self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
+        self.time = 0.0
+
+    def _get_frame( self, index ):
+        xyz = self.xyz_traj
+        self.x = xyz[index]
+        return self.box, self.x, self.time
+
+    def __del__( self ):
+        try:
+            self.xyz.close()
+        except:
+            pass
+
+
+class MDTrajTrajectory( Trajectory ):
+    def __init__( self, file_name, struc_path ):
+        self.file_name = file_name
+        self.struc_name = struc_path
+        filesize = os.path.getsize(self.file_name)
+        if filesize <= 1500000000:
+            self.frame =  md.load(self.file_name, top=self.struc_name)
+            self.numframes = self.frame.n_frames
+            self.numatoms = self.frame.n_atoms
+        else:
+            first_frame = md.load_frame(self.file_name, 0, self.struc_name)
+            times = 0
+            for chunk in md.iterload(self.file_name, top=self.struc_name, chunk=100, atom_indices=[1]):
+                times += chunk.n_frames
+            self.numframes = times
+            self.numatoms = first_frame.n_atoms
+            self.frame = None
+        self.x = None
+        self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
+        self.time = 0.0
+
+    def _get_frame( self, index ):
+        if self.frame:
+            frame = self.frame[index]
+        else:
+            frame = md.load_frame(self.file_name, index, self.struc_name)
+        try:
+            self.box = frame.unitcell_vectors * 10
+        except:
+            self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
+            pass
+        self.x = frame.xyz * 10
+        self.time = frame.time
+        return self.box, self.x, self.time
+
