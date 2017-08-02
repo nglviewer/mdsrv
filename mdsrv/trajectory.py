@@ -10,9 +10,26 @@ import collections
 import numpy as np
 import warnings
 
-import mdtraj as md
-from mdtraj.formats import *
-#from simpletraj import trajectory as simpletraj_trajectory
+importarray = [ False, False, False ]
+
+try:
+    import MDAnalysis
+    importarray[0] = True
+except ImportError:
+    pass
+
+try:
+    import mdtraj as md
+    from mdtraj.formats import *
+    importarray[1] = True
+except ImportError:
+    pass
+
+try:
+    from simpletraj import trajectory as simpletraj_trajectory
+    importarray[2] = True
+except ImportError:
+    pass
 
 try:
     import cPickle as pickle
@@ -49,25 +66,33 @@ def get_split_xtc( directory ):
 def get_trajectory( file_name, struc_path ):
     ext = os.path.splitext( file_name )[1].lower()
     types = {
-        ".xtc": MDTrajTrajectory, #XtcTrajectory, simpletraj_trajectory.XtcTrajectory,
-        ".trr": MDTrajTrajectory, #TrrTrajectory, simpletraj_trajectory.TrrTrajectory,
-        ".netcdf": MDTrajTrajectory, #NetcdfTrajectory,
-        ".nc": MDTrajTrajectory, #NetcdfTrajectory,
-        ".dcd": DcdTrajectory, #MDTrajTrajectory, simpletraj_trajectory.DcdTrajectory,
-        ".gro": GroTrajectory,
-        ".pdb": MDTrajTrajectory,
-        ".lammpstrj": MDTrajTrajectory, #LammpsTrajectory,
-        ".gz": MDTrajTrajectory,
-        ".xyz": MDTrajTrajectory, #XyzTrajectory,
-        ".mdcrd": MDTrajTrajectory, #MdcrdTrajectory,
-        ".binpos": MDTrajTrajectory, #BinposTrajectory,
-        ".h5": MDTrajTrajectory, #Hdf5Trajectory,
-        ".dtr": DtrTrajectory, #MDTrajTrajectory,
-        ".arc": ArcTrajectory, #MDTrajTrajectory,
-        ".tng": MDTrajTrajectory, #TngTrajectory,
+        ".xtc": [ MDAnalysisTrajectory, MDTrajTrajectory, simpletraj_trajectory.XtcTrajectory ] ,#XtcTrajectory
+        ".trr": [ MDAnalysisTrajectory, MDTrajTrajectory, simpletraj_trajectory.TrrTrajectory ],#TrrTrajectory
+        ".netcdf": [ MDAnalysisTrajectory, MDTrajTrajectory, None ],#NetcdfTrajectory
+        ".nc": [ MDAnalysisTrajectory, MDTrajTrajectory, None ],#NetcdfTrajectory
+        ".dcd": [ MDAnalysisTrajectory, DcdTrajectory, simpletraj_trajectory.DcdTrajectory ],#MDTrajTrajectory
+        ".gro": [ MDAnalysisTrajectory, GroTrajectory, None ],#MDTrajTrajectory
+        ".pdb": [ MDAnalysisTrajectory, MDTrajTrajectory, None ],
+        ".lammpstrj": [ None, LammpsTrajectory, None ],
+        ".gz": [ MDAnalysisTrajectory, MDTrajTrajectory, None ],
+        ".xyz": [ MDAnalysisTrajectory, MDTrajTrajectory, None],#XyzTrajectory
+        ".mdcrd": [ MDAnalysisTrajectory, MDTrajTrajectory, None],#MdcrdTrajectory
+        ".binpos": [ None, MDTrajTrajectory, None ],#BinposTrajectory
+        ".h5": [ None, MDTrajTrajectory, None ], #Hdf5Trajectory
+        ".dtr": [ None, DtrTrajectory, None ],#MDTrajTrajectory
+        ".arc": [ None, ArcTrajectory, None ],#MDTrajTrajectory
+        ".tng": [ None, MDTrajTrajectory, None ], #TngTrajectory,
+        ".dms": [ MDAnalysisTrajectory, None, None ],
+        ".crd": [ MDAnalysisTrajectory, None, None ],
+        '.trj': [ MDAnalysisTrajectory, None, None ],
+        '.trz': [ MDAnalysisTrajectory, None, None ],
+        '.ent': [ MDAnalysisTrajectory, None, None ],
+        '.ncdf': [ MDAnalysisTrajectory, None, None ],
     }
     if ext in types:
-        return types[ ext ]( file_name, struc_path )
+        for index, elem in enumerate(importarray):
+            if elem & (types[ext][index] != None ):
+                return types[ ext ][index]( file_name, struc_path )
     else:
         raise Exception( "extension '%s' not supported" % ext )
 
@@ -598,3 +623,27 @@ class MDTrajTrajectory( Trajectory ):
         self.time = frame.time
         return self.box, self.x, self.time
 
+
+class MDAnalysisTrajectory( Trajectory ):
+    def __init__( self, file_name, struc_path ):
+        self.file_name = file_name
+        self.struc_name = struc_path
+        self.universe = MDAnalysis.Universe(self.struc_name, self.file_name)
+        self.numatoms = self.universe.trajectory.n_atoms
+        self.numframes = self.universe.trajectory.n_frames
+        self.x = None
+        self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
+        self.time = 0.0
+
+    def _get_frame( self, index ):
+        frame = self.universe.trajectory[index]
+        try:
+            self.box[ 0, 0 ] = frame.dimensions[ 0 ]
+            self.box[ 1, 1 ] = frame.dimensions[ 1 ]
+            self.box[ 2, 2 ] = frame.dimensions[ 2 ]
+        except:
+            self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
+            pass
+        self.x = frame.positions
+        self.time = frame.frame
+        return self.box, self.x, self.time

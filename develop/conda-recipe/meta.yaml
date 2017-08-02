@@ -14,13 +14,14 @@ requirements:
     - python
     - cython
     - numpy
-    - msinttypes #  [win and py2k]
+    - msinttypes # [win and py2k]
     - setuptools
     - flask
     - scipy
     - zlib
     - mdtraj
-   # - simpletraj
+    - mdanalysis # [not win]
+    - simpletraj # [not win]
 
   run:
     - python
@@ -28,7 +29,8 @@ requirements:
     - numpy
     - flask
     - mdtraj
-   # - simpletraj
+    - mdanalysis # [not win]
+    - simpletraj # [not win]
 
 test:
   imports:
