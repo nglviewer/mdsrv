@@ -56,7 +56,8 @@ setup_args = {
     'install_requires': {
         "flask": ["flask"],
         "mdtraj": ["mdtraj"],
-        #"simpletraj": ["simpletraj"],
+        "mdanalysis;python_version<'3.4';platform_system!='Windows'": ["mdanalysis"],
+        "simpletraj;platform_system!='Windows'": ["simpletraj"],
     },
     'packages': set(find_packages() + 
                 ['mdsrv']),
