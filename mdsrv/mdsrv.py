@@ -36,6 +36,7 @@ MODULE_DIR = os.path.split( os.path.abspath( __file__ ) )[0]
 
 app = Flask(__name__)
 
+struct = []
 
 ############################
 # basic auth
@@ -153,6 +154,12 @@ def crossdomain(
 @requires_auth
 @crossdomain( origin='*' )
 def webapp( filename="index.html" ):
+    if request.args.get('struc'):
+        structurefile = request.args.get('struc').split('file://')[1]
+        path = structurefile.split('/')[0]
+        name = '/'.join(structurefile.split('/')[1:])
+        global struct
+        struct = [path, name]
     directory = os.path.join( MODULE_DIR, "webapp" )
     return send_from_directory( directory, filename )
 
@@ -263,13 +270,18 @@ def traj_frame( frame, root, filename ):
         path = os.path.join( directory, filename )
     else:
         return
+    directory_struc = get_directory( struct[0] )
+    if directory_struc:
+        struc_path = os.path.join( directory_struc, struct[1] )
+    else:
+        return
     atom_indices = request.form.get( "atomIndices" )
     if atom_indices:
         atom_indices = [
             [ int( y ) for y in x.split( "," ) ]
             for x in atom_indices.split( ";" )
         ]
-    return TRAJ_CACHE.get( path ).get_frame_string(
+    return TRAJ_CACHE.get( path, struc_path ).get_frame_string(
         frame, atom_indices=atom_indices
     )
 
@@ -283,7 +295,12 @@ def traj_numframes( root, filename ):
         path = os.path.join( directory, filename )
     else:
         return
-    return str( TRAJ_CACHE.get( path ).numframes )
+    directory_struc = get_directory( struct[0] )
+    if directory_struc:
+        struc_path = os.path.join( directory_struc, struct[1] )
+    else:
+        return
+    return str( TRAJ_CACHE.get( path, struc_path ).numframes )
 
 
 @app.route( '/traj/path/<int:index>/<root>/<path:filename>', methods=['POST'] )
@@ -295,10 +312,15 @@ def traj_path( index, root, filename ):
         path = os.path.join( directory, filename )
     else:
         return
+    directory_struc = get_directory( struct[0] )
+    if directory_struc:
+        struc_path = os.path.join( directory_struc, struct[1] )
+    else:
+        return
     frame_indices = request.form.get( "frameIndices" )
     if frame_indices:
         frame_indices = None
-    return TRAJ_CACHE.get( path ).get_path_string(
+    return TRAJ_CACHE.get( path, struc_path ).get_path_string(
         index, frame_indices=frame_indices
     )
 
@@ -352,7 +374,8 @@ def parse_args():
             "cif files. The file must be included within the current working "+\
             "directory (cwd) or a sub directory." )
     parser.add_argument( 'trajectory', type=str, nargs='?', default="",
-        help="Path to a trajectory file. Supported are xtc/trr, nc and dcd "+\
+        help="Path to a trajectory file. Supported are xtc/trr, nc/netcdf, "+\
+             "lammpstrj, h5, dtr, arc, tng,  and dcd "+\
             "files. The file must be included within the current working "+\
             "directory (cwd) or a sub directory." )
     parser.add_argument( '--deltaTime', '-dt', type=str, default="0.00",
@@ -360,7 +383,7 @@ def parse_args():
     parser.add_argument( '--timeOffset', '-to', type=str, default="0.00",
         help="Time offset of the trajectory (to convert frame steps into ns time scale)." )
     parser.add_argument( '--script', '-sc', type=str, default="",
-        help="Path to an ngl script file. The file must be included within "+\
+        help="Path to an ngl/js script file. The file must be included within "+\
             "the current working directory (cwd) or a sub directory. See "+\
             "https://github.com/arose/mdsrv/blob/master/script.ngl or the "+\
             "documentation for an example." )
