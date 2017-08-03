@@ -8,7 +8,8 @@ environment:
     PYTHONUNBUFFERED: 1
   BINSTAR_TOKEN:
     secure: LJUoqxkUbcJR0UnL2Ap7/dLquM6cX8i1JC0mXNvwXEbTTVW3C98qQ/JlJWzAYpoy
-
+#  BINSTAR_TOKEN:
+#    secure: iG/R6JSE4NP4kGAKws0IDTnhB70bYlUI2FHnmPpH9FCOlEta6TXinmu76MSSW03W
 
   matrix:
     - PYTHON: "C:\\Miniconda3"
@@ -59,7 +60,7 @@ deploy_script:
   # because appveyor prints to stderror, we will run it in command mode by doing a check first
   - ps: If ($env:APPVEYOR_REPO_TAG -eq "true" -And $env:APPVEYOR_REPO_BRANCH -eq "master") { $env:conda_upload = 'true' } Else { write-output "Not on a tag on master, won't deploy to anaconda" }
   - cmd: IF "%conda_upload%"=="true" anaconda -t %BINSTAR_TOKEN% upload .\win-*\*.tar.bz2 -u j0kaso --no-progress --force
-
+#  - cmd: IF "%conda_upload%"=="true" anaconda -t %BINSTAR_TOKEN% upload .\win-*\*.tar.bz2 -u ngl --no-progress --force
 
 notifications:
   email: false

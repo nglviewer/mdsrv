@@ -20,7 +20,7 @@ requirements:
     - scipy
     - zlib
     - mdtraj
-    - mdanalysis # [not win]
+    - mdanalysis # [not win and py2k]
     - simpletraj # [not win]
 
   run:
@@ -29,7 +29,7 @@ requirements:
     - numpy
     - flask
     - mdtraj
-    - mdanalysis # [not win]
+    - mdanalysis # [not win and py2k]
     - simpletraj # [not win]
 
 test:
