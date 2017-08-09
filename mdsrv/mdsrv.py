@@ -302,7 +302,6 @@ def traj_numframes( root, filename ):
         struc_path = os.path.join( directory_struc, struct[1] )
     except:
         struc_path=""
-    struc_path=""
     return str( TRAJ_CACHE.get( path, struc_path ).numframes )
 
 
@@ -321,7 +320,6 @@ def traj_path( index, root, filename ):
         struc_path = os.path.join( directory_struc, struct[1] )
     except:
         struc_path=""
-    struc_path=""
     frame_indices = request.form.get( "frameIndices" )
     if frame_indices:
         frame_indices = None
