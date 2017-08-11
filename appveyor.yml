@@ -1,4 +1,4 @@
-# mainly from MDTraj appveyor
+# modified from MDTraj appveyor
 environment:
   global:
     # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
@@ -6,10 +6,12 @@ environment:
     # See: http://stackoverflow.com/a/13751649/163740
     CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\develop\\appveyor-ci\\run_with_env.cmd"
     PYTHONUNBUFFERED: 1
-#  BINSTAR_TOKEN:
-#    secure: LJUoqxkUbcJR0UnL2Ap7/dLquM6cX8i1JC0mXNvwXEbTTVW3C98qQ/JlJWzAYpoy
   BINSTAR_TOKEN:
-    secure: iG/R6JSE4NP4kGAKws0IDTnhB70bYlUI2FHnmPpH9FCOlEta6TXinmu76MSSW03W
+    secure: LJUoqxkUbcJR0UnL2Ap7/dLquM6cX8i1JC0mXNvwXEbTTVW3C98qQ/JlJWzAYpoy
+  BINSTAR_USER: "j0kaso"
+#  BINSTAR_TOKEN:
+#    secure: iG/R6JSE4NP4kGAKws0IDTnhB70bYlUI2FHnmPpH9FCOlEta6TXinmu76MSSW03W
+#  BINSTAR_USER: "ngl"
 
   matrix:
     - PYTHON: "C:\\Miniconda3"
@@ -39,7 +41,7 @@ install:
   - conda config --add channels omnia
   - conda config --add channels conda-forge
   - conda update -yq --all
-  - conda install -yq conda-build jinja2
+  - conda install -yq anaconda-client conda-build jinja2
   - conda install python=%CONDA_PY:~0,1%.%CONDA_PY:~1,2% -y
 #  - python -E -V
   - conda build --quiet develop\\conda-recipe
@@ -51,16 +53,17 @@ build: false
 
 test_script:  
   - "%CMD_IN_ENV% mdsrv -h"
+  - "%CMD_IN_ENV% python develop\\test.py data\\md.xtc data\\md.gro"
 
 
 deploy_script:
   - echo "Starting Deployment"
   # upload conda builds to conda cloud
-  - cmd: set PATH=%PYTHON%;%PYTHON%/Scripts;%PYTHON%/Library/bin;%PATH%
-  # because appveyor prints to stderror, we will run it in command mode by doing a check first
-  - ps: If ($env:APPVEYOR_REPO_TAG -eq "true" -And $env:APPVEYOR_REPO_BRANCH -eq "master") { $env:conda_upload = 'true' } Else { write-output "Not on a tag on master, won't deploy to anaconda" }
-#  - cmd: IF "%conda_upload%"=="true" anaconda -t %BINSTAR_TOKEN% upload .\win-*\*.tar.bz2 -u j0kaso --no-progress --force
-  - cmd: IF "%conda_upload%"=="true" anaconda -t %BINSTAR_TOKEN% upload .\win-*\*.tar.bz2 -u ngl --no-progress --force
+  - cmd: set PATH=%PYTHON%;%PYTHON%\Scripts;%PYTHON%\Library\bin;%PATH%
+  - echo %APPVEYOR_REPO_TAG%
+  - ps: If ($env:APPVEYOR_REPO_TAG -eq "true") { $env:conda_upload = 'true' } Else { write-output "Not on a tag, won't deploy to anaconda" }
+  - cmd: IF "%conda_upload%"=="true" anaconda -t %BINSTAR_TOKEN% upload %PYTHON%\conda\win-*\*.tar.bz2 -u %BINSTAR_USER% --no-progress --force
+
 
 notifications:
   email: false

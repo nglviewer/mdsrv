@@ -11,7 +11,7 @@ build:
 
 requirements:
   build:
-    - python
+#    - python
     - cython
     - numpy
     - msinttypes # [win and py2k]
@@ -24,8 +24,8 @@ requirements:
     - simpletraj # [not win]
 
   run:
-    - python
-    - setuptools
+#    - python
+ #   - setuptools
     - numpy
     - flask
     - mdtraj
