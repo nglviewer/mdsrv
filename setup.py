@@ -52,13 +52,16 @@ setup_args = {
         "numpy": ["numpy"],
         "scipy": ["scipy"],
         "setuptools": ["setuptools"],
+        "flask": ["flask"],
     },
     'install_requires': {
-        "flask": ["flask"],
         "mdtraj": ["mdtraj"],
-        "mdanalysis": ["mdanalysis;platform_system!='Windows' and python_version<'3.4'"],
-        "simpletraj": ["simpletraj;platform_system!='Windows'"],
+        "mdanalysis;platform_system!='Windows' and python_version<'3.4'": ["mdanalysis"],
+        #"simpletraj;platform_system!='Windows'": ["simpletraj"]
     },
+#    'extra_requires': [
+#        
+#    ],
     'packages': set(find_packages() + 
                 ['mdsrv']),
     'zip_safe': False,
