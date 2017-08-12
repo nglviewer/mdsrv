@@ -270,11 +270,12 @@ def traj_frame( frame, root, filename ):
         path = os.path.join( directory, filename )
     else:
         return
-    directory_struc = get_directory( struct[0] )
-    if directory_struc:
+    global struct
+    try:
+        directory_struc = get_directory( struct[0] )
         struc_path = os.path.join( directory_struc, struct[1] )
-    else:
-        return
+    except:
+        struc_path=""
     atom_indices = request.form.get( "atomIndices" )
     if atom_indices:
         atom_indices = [
@@ -295,11 +296,12 @@ def traj_numframes( root, filename ):
         path = os.path.join( directory, filename )
     else:
         return
-    directory_struc = get_directory( struct[0] )
-    if directory_struc:
+    global struct
+    try:
+        directory_struc = get_directory( struct[0] )
         struc_path = os.path.join( directory_struc, struct[1] )
-    else:
-        return
+    except:
+        struc_path=""
     return str( TRAJ_CACHE.get( path, struc_path ).numframes )
 
 
@@ -312,18 +314,18 @@ def traj_path( index, root, filename ):
         path = os.path.join( directory, filename )
     else:
         return
-    directory_struc = get_directory( struct[0] )
-    if directory_struc:
+    global struct
+    try:
+        directory_struc = get_directory( struct[0] )
         struc_path = os.path.join( directory_struc, struct[1] )
-    else:
-        return
+    except:
+        struc_path=""
     frame_indices = request.form.get( "frameIndices" )
     if frame_indices:
         frame_indices = None
     return TRAJ_CACHE.get( path, struc_path ).get_path_string(
         index, frame_indices=frame_indices
     )
-
 
 ############################
 # main

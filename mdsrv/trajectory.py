@@ -10,23 +10,18 @@ import collections
 import numpy as np
 import warnings
 
-importarray = [ False, False, False ]
+importarray = [ False, False, False ]#, False ]
 
 try:
     import MDAnalysis
-    importarray[0] = True
+    importarray[1] = True
 except ImportError:
     pass
 
 try:
     import mdtraj as md
     from mdtraj.formats import *
-    importarray[1] = True
-except ImportError:
-    pass
-
-try:
-    from simpletraj import trajectory as simpletraj_trajectory
+    importarray[0] = True
     importarray[2] = True
 except ImportError:
     pass
@@ -66,30 +61,32 @@ def get_split_xtc( directory ):
 def get_trajectory( file_name, struc_path ):
     ext = os.path.splitext( file_name )[1].lower()
     types = {
-        ".xtc": [ MDAnalysisTrajectory, MDTrajTrajectory, simpletraj_trajectory.XtcTrajectory ] ,#XtcTrajectory
-        ".trr": [ MDAnalysisTrajectory, MDTrajTrajectory, simpletraj_trajectory.TrrTrajectory ],#TrrTrajectory
-        ".netcdf": [ MDAnalysisTrajectory, MDTrajTrajectory, None ],#NetcdfTrajectory
-        ".nc": [ MDAnalysisTrajectory, MDTrajTrajectory, None ],#NetcdfTrajectory
-        ".dcd": [ MDAnalysisTrajectory, DcdTrajectory, simpletraj_trajectory.DcdTrajectory ],#MDTrajTrajectory
-        ".gro": [ MDAnalysisTrajectory, GroTrajectory, None ],#MDTrajTrajectory
-        ".pdb": [ MDAnalysisTrajectory, MDTrajTrajectory, None ],
-        ".lammpstrj": [ None, LammpsTrajectory, None ],
-        ".gz": [ MDAnalysisTrajectory, MDTrajTrajectory, None ],
-        ".xyz": [ MDAnalysisTrajectory, MDTrajTrajectory, None],#XyzTrajectory
-        ".mdcrd": [ MDAnalysisTrajectory, MDTrajTrajectory, None],#MdcrdTrajectory
-        ".binpos": [ None, MDTrajTrajectory, None ],#BinposTrajectory
-        ".h5": [ None, MDTrajTrajectory, None ], #Hdf5Trajectory
-        ".dtr": [ None, DtrTrajectory, None ],#MDTrajTrajectory
-        ".arc": [ None, ArcTrajectory, None ],#MDTrajTrajectory
-        ".tng": [ None, MDTrajTrajectory, None ], #TngTrajectory,
-        ".dms": [ MDAnalysisTrajectory, None, None ],
-        ".crd": [ MDAnalysisTrajectory, None, None ],
-        '.trj': [ MDAnalysisTrajectory, None, None ],
-        '.trz': [ MDAnalysisTrajectory, None, None ],
-        '.ent': [ MDAnalysisTrajectory, None, None ],
-        '.ncdf': [ MDAnalysisTrajectory, None, None ],
+        ".xtc": [ XtcTrajectory, MDAnalysisTrajectory, MDTrajTrajectory ],
+        ".trr": [ TrrTrajectory, MDAnalysisTrajectory, MDTrajTrajectory ],
+        ".netcdf": [ NetcdfTrajectory, MDAnalysisTrajectory, MDTrajTrajectory ],
+        ".nc": [ NetcdfTrajectory, MDAnalysisTrajectory, MDTrajTrajectory ],
+        ".dcd": [ DcdTrajectory, MDAnalysisTrajectory, DcdTrajectory ],
+        ".gro": [ GroTrajectory, MDAnalysisTrajectory, GroTrajectory ], 
+        ".pdb": [ None, MDAnalysisTrajectory, MDTrajTrajectory ],
+        ".lammpstrj": [ LammpsTrajectory, None, LammpsTrajectory ],
+        ".gz": [ None, MDAnalysisTrajectory, MDTrajTrajectory ],
+        ".xyz": [ XyzTrajectory, MDAnalysisTrajectory, MDTrajTrajectory ],
+        ".mdcrd": [ None, MDAnalysisTrajectory, MDTrajTrajectory ],
+        ".binpos": [ BinposTrajectory, None, MDTrajTrajectory ],
+        ".h5": [ Hdf5Trajectory, None, MDTrajTrajectory ],
+        ".dtr": [ DtrTrajectory, None, DtrTrajectory ],
+        ".arc": [ ArcTrajectory, None, ArcTrajectory ],
+        ".tng": [ TngTrajectory, None, MDTrajTrajectory ],
+        ".dms": [ None, MDAnalysisTrajectory, None ],
+        ".crd": [ None, MDAnalysisTrajectory, None ],
+        '.trj': [ None, MDAnalysisTrajectory, None ],
+        '.trz': [ None, MDAnalysisTrajectory, None ],
+        '.ent': [ None, MDAnalysisTrajectory, None ],
+        '.ncdf': [ None, MDAnalysisTrajectory, None ],
     }
     if ext in types:
+        if struc_path!="" and importarray[1]:
+            importarray[0] = False
         for index, elem in enumerate(importarray):
             if elem & (types[ext][index] != None ):
                 return types[ ext ][index]( file_name, struc_path )
@@ -229,22 +226,25 @@ class TrajectoryCollection( Trajectory ):
 class TngTrajectory( Trajectory ):
     def __init__( self, file_name, struc_name ):
         self.file_name = file_name
-        self.tng = TNGTrajectoryFile( self.file_name )
-        self.tng_traj = self.tng.read()
+        self.tng = TNGTrajectoryFile( self.file_name, 'r' )
+        self.tng_traj = self.tng.read(n_frames=1)
+        self.tng.seek(0, whence=2)
+
         self.numatoms = len(self.tng_traj[0][0])
-        self.numframes = len(self.tng_traj[0])
+        self.numframes = self.tng.tell()
 
         self.x = None
         self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
         self.time = 0.0
 
     def _get_frame( self, index ):
-        xyz, time, boxlength = self.tng_traj
-        self.box[ 0, 0 ] = boxlength[ index ][ 0 ][ 0 ] * 10
-        self.box[ 1, 1 ] = boxlength[ index ][ 1 ][ 1 ] * 10
-        self.box[ 2, 2 ] = boxlength[ index ][ 2 ][ 2 ] * 10
-        self.x = xyz[ index ] * 10
-        self.time = time[ index ]
+        self.tng.seek(index)
+        xyz, time, boxlength = self.tng.read(n_frames=1)
+        self.box[ 0, 0 ] = boxlength[ 0 ][ 0 ][ 0 ] * 10
+        self.box[ 1, 1 ] = boxlength[ 0 ][ 1 ][ 1 ] * 10
+        self.box[ 2, 2 ] = boxlength[ 0 ][ 2 ][ 2 ] * 10
+        self.x = xyz[ 0 ] * 10
+        self.time = time[ 0 ]
         return self.box, self.x, self.time
 
     def __del__( self ):
@@ -257,8 +257,9 @@ class TngTrajectory( Trajectory ):
 class ArcTrajectory( Trajectory ):
     def __init__( self, file_name, struc_name ):
         self.file_name = file_name
-        self.arc = ArcTrajectoryFile( self.file_name )
+        self.arc = ArcTrajectoryFile( self.file_name, 'r' )
         self.arc_traj = self.arc.read()
+
         self.numatoms = len(self.arc_traj[0][0])
         self.numframes = len(self.arc_traj[0])
 
@@ -286,22 +287,25 @@ class ArcTrajectory( Trajectory ):
 class DtrTrajectory( Trajectory ):
     def __init__( self, file_name, struc_name ):
         self.file_name = file_name
-        self.dtr = DTRTrajectoryFile( self.file_name )
-        self.dtr_traj = self.dtr.read()
+        self.dtr = DTRTrajectoryFile( self.file_name, 'r' )
+        self.dtr_traj = self.dtr.read(n_frames=1)
+        self.dtr.seek(0, whence=2)
+
         self.numatoms = len(self.dtr_traj[0][0])
-        self.numframes = len(self.dtr_traj[0])
+        self.numframes = self.dtr.tell()
 
         self.x = None
         self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
         self.time = 0.0
 
     def _get_frame( self, index ):
-        xyz, times, boxlength, boxangles = self.dtr_traj
-        self.box[ 0, 0 ] = boxlength[ index ][ 0 ]
-        self.box[ 1, 1 ] = boxlength[ index ][ 1 ]
-        self.box[ 2, 2 ] = boxlength[ index ][ 2 ]
-        self.x = xyz[ index ]
-        self.time = times[ index ]
+        self.dtr.seek(index)
+        xyz, times, boxlength, boxangles = self.dtr.read(n_frames=1)
+        self.box[ 0, 0 ] = boxlength[ 0 ][ 0 ]
+        self.box[ 1, 1 ] = boxlength[ 0 ][ 1 ]
+        self.box[ 2, 2 ] = boxlength[ 0 ][ 2 ]
+        self.x = xyz[ 0 ]
+        self.time = times[ 0 ]
         return self.box, self.x, self.time
 
     def __del__( self ):
@@ -314,25 +318,29 @@ class DtrTrajectory( Trajectory ):
 class Hdf5Trajectory( Trajectory ):
     def __init__( self, file_name, struc_name ):
         self.file_name = file_name
-        self.hdf5 = HDF5TrajectoryFile( self.file_name )
-        self.hdf5_traj = self.hdf5.read()
+        self.hdf5 = HDF5TrajectoryFile( self.file_name, 'r' )
+        self.hdf5_traj = self.hdf5.read(n_frames=1)
+        self.hdf5.seek(0, whence=2)
+
         self.numatoms = len(self.hdf5_traj[0][0])
-        self.numframes = len(self.hdf5_traj[0])
+        self.numframes = self.hdf5.tell()
 
         self.x = None
         self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
         self.time = 0.0
 
     def _get_frame( self, index ):
+        self.hdf5.seek(index)
+        self.hdf5_traj = self.hdf5.read(n_frames=1)
         xyz = self.hdf5_traj.coordinates
         boxlength = self.hdf5_traj.cell_lengths
         cell_lengths = self.hdf5_traj.cell_angles
         time = self.hdf5_traj.time
-        self.time = time[ index ]
-        self.box[ 0, 0 ] = cell_lengths[ index ][ 0 ] * 10
-        self.box[ 1, 1 ] = cell_lengths[ index ][ 1 ] * 10
-        self.box[ 2, 2 ] = cell_lengths[ index ][ 2 ] * 10
-        self.x = xyz[ index ] * 10
+        self.time = time[ 0 ]
+        self.box[ 0, 0 ] = cell_lengths[ 0 ][ 0 ] * 10
+        self.box[ 1, 1 ] = cell_lengths[ 0 ][ 1 ] * 10
+        self.box[ 2, 2 ] = cell_lengths[ 0 ][ 2 ] * 10
+        self.x = xyz[ 0 ] * 10
         return self.box, self.x, self.time
 
     def __del__( self ):
@@ -345,22 +353,24 @@ class Hdf5Trajectory( Trajectory ):
 class LammpsTrajectory( Trajectory ):
     def __init__( self, file_name, struc_name ):
         self.file_name = file_name
-        self.lammps = LAMMPSTrajectoryFile( self.file_name )
-        self.lammps_traj = self.lammps.read()
+        self.lammps = LAMMPSTrajectoryFile( self.file_name, 'r' )
+        self.lammps_traj = self.lammps.read(n_frames=1)
+        looping(self.lammps, self.lammps_traj[0])
+
         self.numatoms = len(self.lammps_traj[0][0])
-        self.numframes = len(self.lammps_traj[0])
+        self.numframes = self.lammps.tell()
 
         self.x = None
         self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
         self.time = 0.0
 
     def _get_frame( self, index ):
-        xyz, boxlength, boxangles = self.lammps_traj
-        cell_lengths = boxlength
-        self.box[ 0, 0 ] = cell_lengths[ index ][ 0 ]
-        self.box[ 1, 1 ] = cell_lengths[ index ][ 1 ]
-        self.box[ 2, 2 ] = cell_lengths[ index ][ 2 ]
-        self.x = xyz[index]
+        self.lammps.seek(index)
+        xyz, cell_lengths, boxangles = self.lammps.read(n_frames=1)
+        self.box[ 0, 0 ] = cell_lengths[ 0 ][ 0 ]
+        self.box[ 1, 1 ] = cell_lengths[ 0 ][ 1 ]
+        self.box[ 2, 2 ] = cell_lengths[ 0 ][ 2 ]
+        self.x = xyz[0]
         return self.box, self.x, self.time
 
     def __del__( self ):
@@ -373,17 +383,17 @@ class LammpsTrajectory( Trajectory ):
 class GroTrajectory( Trajectory ):
     def __init__( self, file_name, struc_name ):
         self.file_name = file_name
-        with GroTrajectoryFile( self.file_name, 'r' ) as fp:
-            self.gro = fp.read()
-        self.numatoms = len(self.gro[0][0])
-        self.numframes = len(self.gro[0])
+        self.gro = GroTrajectoryFile( self.file_name, 'r' )
+        self.gro_traj = self.gro.read()
+        self.numatoms = len(self.gro_traj[0][0])
+        self.numframes = len(self.gro_traj[0])
 
         self.x = None
         self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
         self.time = 0.0
 
     def _get_frame( self, index ):
-        xyz, time, unitcell = self.gro
+        xyz, time, unitcell = self.gro_traj
         self.box = unitcell[ index ] * 10
         self.x = xyz[ index ] * 10
         try:
@@ -402,20 +412,23 @@ class GroTrajectory( Trajectory ):
 class TrrTrajectory( Trajectory ):
     def __init__( self, file_name, struc_name ):
         self.file_name = file_name
-        with TRRTrajectoryFile( self.file_name, 'r' ) as fp:
-            self.trr = fp.read()
-        self.numatoms = len(self.trr[0][0])
-        self.numframes = len(self.trr[1])
+        self.trr = TRRTrajectoryFile( self.file_name, 'r' )
+        self.trr_traj = self.trr.read(n_frames=1)
+        looping2(self.trr, self.trr_traj[0])
+
+        self.numatoms = len(self.trr_traj[0][0])
+        self.numframes = self.trr.tell()+1
 
         self.x = None
         self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
         self.time = 0.0
 
     def _get_frame( self, index ):
-        xyz, time, step, box, lambd = self.trr
-        self.box = box[ index ] * 10
-        self.x = xyz[ index ] * 10
-        self.time = time[ index ]
+        self.trr.seek(index)
+        xyz, time, step, box, lambd = self.trr.read(n_frames=1)
+        self.box = box[ 0 ] * 10
+        self.x = xyz[ 0 ] * 10
+        self.time = time[ 0 ]
         return self.box, self.x, self.time
 
     def __del__( self ):
@@ -425,23 +438,46 @@ class TrrTrajectory( Trajectory ):
             pass
 
 
+def looping2(traj, r_traj):
+    stepsizes = [100000, 50000, 10000, 5000, 1000, 500, 100, 10, 1]
+    for index, stepsize in enumerate(stepsizes):
+        r = r_traj
+        while r.size!=0:
+            try:
+                traj.seek(stepsize, whence=1)
+                r = traj.read(n_frames=1)[0]
+                stepsize += stepsizes[index]
+                stepsize -= 1
+            except:
+                traj.seek(-1, whence=1)
+                break
+        try:
+            stepsize -=stepsizes[index]
+            traj.seek(-stepsize, whence=1)
+            r = traj.read(n_frames=1)[0]
+        except: break
+
+
 class XtcTrajectory( Trajectory ):
     def __init__( self, file_name, struc_name ):
         self.file_name = file_name
-        self.xtc = XTCTrajectoryFile( self.file_name )
-        self.xtc_traj = self.xtc.read()
+        self.xtc = XTCTrajectoryFile( self.file_name, 'r' )
+        self.xtc_traj = self.xtc.read(n_frames=1)
+        looping2(self.xtc, self.xtc_traj[0])
+
         self.numatoms = len(self.xtc_traj[0][0])
-        self.numframes = len(self.xtc_traj[1])
+        self.numframes = self.xtc.tell()
 
         self.x = None
         self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
         self.time = 0.0
 
     def _get_frame( self, index ):
-        xyz, time, step, box = self.xtc_traj
-        self.box = box[ index ] * 10
-        self.x = xyz[ index ] * 10
-        self.time = time[ index ]
+        self.xtc.seek(index)
+        xyz, time, step, box = self.xtc.read(n_frames=1)
+        self.box = box[0] * 10
+        self.x = xyz[0] * 10
+        self.time = time[0]
         return self.box, self.x, self.time
 
     def __del__( self ):
@@ -458,22 +494,24 @@ class NetcdfTrajectory( Trajectory ):
         self.netcdf = NetCDFTrajectoryFile( self.file_name )
         self.numatoms = self.netcdf.n_atoms
         self.numframes = self.netcdf.n_frames
-        self.netcdf_traj = self.netcdf.read()
 
         self.x = None
         self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
         self.time = 0.0
 
     def _get_frame( self, index ):
-        xyz, time, boxlength, boxangles = self.netcdf_traj
-        cell_lengths = boxlength
+        self.netcdf.seek(index)
+        xyz, time, cell_lengths, boxangles = self.netcdf.read(n_frames=1)
         try:
-            self.box[ 0, 0 ] = cell_lengths[ index ][ 0 ]
-            self.box[ 1, 1 ] = cell_lengths[ index ][ 1 ]
-            self.box[ 2, 2 ] = cell_lengths[ index ][ 2 ]
+            self.box[ 0, 0 ] = cell_lengths[ 0 ][ 0 ]
+            self.box[ 1, 1 ] = cell_lengths[ 0 ][ 1 ]
+            self.box[ 2, 2 ] = cell_lengths[ 0 ][ 2 ]
         except: pass
-        self.x = xyz[index]
-        self.time = time[index]
+        self.x = xyz[0]
+        try:
+            self.time = time[0]
+        except:
+            self.time = index
         return self.box, self.x, self.time
 
     def __del__( self ):
@@ -483,26 +521,46 @@ class NetcdfTrajectory( Trajectory ):
             pass
 
 
+def looping(traj, r_traj):
+    stepsizes = [100000, 50000, 10000, 5000, 1000, 500, 100, 10, 1]
+    for index, stepsize in enumerate(stepsizes):
+        r = r_traj
+        while r.size!=0:
+            try:
+                traj.seek(stepsize, whence=1)
+                r = traj.read(n_frames=1)[0]
+                stepsize += stepsizes[index]
+            except: break
+        try:
+            stepsize -=stepsizes[index]
+            traj.seek(-stepsize, whence=1)
+            r = traj.read(n_frames=1)[0]
+        except: break
+        
+
 class DcdTrajectory( Trajectory ):
     def __init__( self, file_name, struc_name ):
         self.file_name = file_name
-        self.dcd = DCDTrajectoryFile( self.file_name )
-        self.dcd_traj = self.dcd.read()
+        self.dcd = DCDTrajectoryFile( self.file_name, 'r' )
+        self.dcd_traj = self.dcd.read(n_frames=1)
+        looping(self.dcd, self.dcd_traj[0])
+        
         self.numatoms = len(self.dcd_traj[0][0])
-        self.numframes = len(self.dcd_traj[0])
+        self.numframes = self.dcd.tell()-2
+
         self.x = None
         self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
         self.time = 0.0
 
     def _get_frame( self, index ):
-        xyz, boxlength, boxangles = self.dcd_traj
-        cell_lengths = boxlength
+        self.dcd.seek(index)
+        xyz, cell_lengths, boxangles = self.dcd.read(n_frames=1)
         try:
-            self.box[ 0, 0 ] = cell_lengths[ index ][ 0 ]
-            self.box[ 1, 1 ] = cell_lengths[ index ][ 1 ]
-            self.box[ 2, 2 ] = cell_lengths[ index ][ 2 ]
+            self.box[ 0, 0 ] = cell_lengths[ 0 ][ 0 ]
+            self.box[ 1, 1 ] = cell_lengths[ 0 ][ 1 ]
+            self.box[ 2, 2 ] = cell_lengths[ 0 ][ 2 ]
         except: pass
-        self.x = xyz[ index ]
+        self.x = xyz[ 0 ]
         return self.box, self.x, self.time
 
     def __del__( self ):
@@ -545,17 +603,21 @@ class MdcrdTrajectory( Trajectory ):
 class BinposTrajectory( Trajectory ):
     def __init__( self, file_name, struc_name ):
         self.file_name = file_name
-        self.binpos = BINPOSTrajectoryFile( self.file_name )
-        self.binpos_traj = self.binpos.read()
+        self.binpos = BINPOSTrajectoryFile( self.file_name, 'r' )
+        self.binpos_traj = self.binpos.read(n_frames=1)
+        self.binpos.seek(-1, whence=2)
+
         self.numatoms = len(self.binpos_traj[0][0])
-        self.numframes = len(self.binpos_traj[0])
+        self.numframes = self.binpos.tell()
+
         self.x = None
         self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
         self.time = 0.0
 
     def _get_frame( self, index ):
-        xyz = self.binpos_traj
-        self.x = xyz[index]
+        self.binpos.seek(index)
+        xyz = self.binpos.read(n_frames=1)
+        self.x = xyz[0]
         return self.box, self.x, self.time
 
     def __del__( self ):
@@ -569,16 +631,20 @@ class XyzTrajectory( Trajectory ):
     def __init__( self, file_name, struc_name ):
         self.file_name = file_name
         self.xyz = XYZTrajectoryFile( self.file_name, 'r' )
-        self.xyz_traj = self.xyz.read()
-        self.numframes = len(self.xyz_traj[0])
+        self.xyz_traj = self.xyz.read(n_frames=1)
+        looping(self.xyz, self.xyz_traj)
+
+        self.numframes = self.xyz.tell()
         self.numatoms = len(self.xyz_traj[0][0])
+
         self.x = None
         self.box = np.zeros( ( 3, 3 ), dtype=np.float32 )
         self.time = 0.0
 
     def _get_frame( self, index ):
-        xyz = self.xyz_traj
-        self.x = xyz[index]
+        self.xyz.seek(index)
+        xyz = self.xyz.read(n_frames=1)
+        self.x = xyz[0]
         return self.box, self.x, self.time
 
     def __del__( self ):

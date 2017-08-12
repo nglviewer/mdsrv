@@ -8,6 +8,7 @@ MAX_CONTENT_LENGTH = 64 * 1024 * 1024
 SEND_FILE_MAX_AGE_DEFAULT = 0
 
 DATA_DIRS = {
+    # "examplepath": os.path.abspath("/path/unprotected/available"),
 	# "_hidden": os.path.abspath("/path/hidden/from/dir/listing"),
 	# "protected": os.path.abspath("/path/protected"),
 }
