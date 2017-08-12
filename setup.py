@@ -57,7 +57,6 @@ setup_args = {
     'install_requires': {
         "mdtraj": ["mdtraj"],
         "mdanalysis;platform_system!='Windows' and python_version<'3.4'": ["mdanalysis"],
-        #"simpletraj;platform_system!='Windows'": ["simpletraj"]
     },
 #    'extra_requires': [
 #        

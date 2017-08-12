@@ -64,7 +64,6 @@ install:
   - conda install anaconda-client -y
   #- conda list
   #- python -E -V
-  - conda config --add channels omnia
   - conda config --add channels conda-forge
   - conda build develop/conda-recipe
   #- python -E -V

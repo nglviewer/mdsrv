@@ -26,12 +26,6 @@ try:
 except ImportError:
     pass
 
-# try:
-#     from simpletraj import trajectory as simpletraj_trajectory
-#     importarray[3] = True
-# except ImportError:
-#     pass
-
 try:
     import cPickle as pickle
 except ImportError:
@@ -67,28 +61,28 @@ def get_split_xtc( directory ):
 def get_trajectory( file_name, struc_path ):
     ext = os.path.splitext( file_name )[1].lower()
     types = {
-        ".xtc": [ XtcTrajectory, MDAnalysisTrajectory, MDTrajTrajectory ], #, simpletraj_trajectory.XtcTrajectory ] ,
-        ".trr": [ TrrTrajectory, MDAnalysisTrajectory, MDTrajTrajectory ], #, simpletraj_trajectory.TrrTrajectory ],
-        ".netcdf": [ NetcdfTrajectory, MDAnalysisTrajectory, MDTrajTrajectory ], #, None ],
-        ".nc": [ NetcdfTrajectory, MDAnalysisTrajectory, MDTrajTrajectory ], #, None ],
-        ".dcd": [ DcdTrajectory, MDAnalysisTrajectory, DcdTrajectory ], #, simpletraj_trajectory.DcdTrajectory ],
-        ".gro": [ GroTrajectory, MDAnalysisTrajectory, GroTrajectory ], #, None ],#MDTrajTrajectory
-        ".pdb": [ None, MDAnalysisTrajectory, MDTrajTrajectory ], #, None ],
-        ".lammpstrj": [ LammpsTrajectory, None, LammpsTrajectory ], #, None ],
-        ".gz": [ None, MDAnalysisTrajectory, MDTrajTrajectory ], #, None ],
-        ".xyz": [ XyzTrajectory, MDAnalysisTrajectory, MDTrajTrajectory ], #, None],
-        ".mdcrd": [ None, MDAnalysisTrajectory, MDTrajTrajectory ], #, None],#MdcrdTrajectory
-        ".binpos": [ BinposTrajectory, None, MDTrajTrajectory ], #, None ],
-        ".h5": [ Hdf5Trajectory, None, MDTrajTrajectory ], #, None ], 
-        ".dtr": [ DtrTrajectory, None, DtrTrajectory ], #, None ],#MDTrajTrajectory
-        ".arc": [ ArcTrajectory, None, ArcTrajectory ], #, None ],#MDTrajTrajectory
-        ".tng": [ TngTrajectory, None, MDTrajTrajectory ], #, None ],
-        ".dms": [ None, MDAnalysisTrajectory, None ], #, None ],
-        ".crd": [ None, MDAnalysisTrajectory, None ], #, None ],
-        '.trj': [ None, MDAnalysisTrajectory, None ], #, None ],
-        '.trz': [ None, MDAnalysisTrajectory, None ], #, None ],
-        '.ent': [ None, MDAnalysisTrajectory, None ], #, None ],
-        '.ncdf': [ None, MDAnalysisTrajectory, None ], #, None ],
+        ".xtc": [ XtcTrajectory, MDAnalysisTrajectory, MDTrajTrajectory ],
+        ".trr": [ TrrTrajectory, MDAnalysisTrajectory, MDTrajTrajectory ],
+        ".netcdf": [ NetcdfTrajectory, MDAnalysisTrajectory, MDTrajTrajectory ],
+        ".nc": [ NetcdfTrajectory, MDAnalysisTrajectory, MDTrajTrajectory ],
+        ".dcd": [ DcdTrajectory, MDAnalysisTrajectory, DcdTrajectory ],
+        ".gro": [ GroTrajectory, MDAnalysisTrajectory, GroTrajectory ], 
+        ".pdb": [ None, MDAnalysisTrajectory, MDTrajTrajectory ],
+        ".lammpstrj": [ LammpsTrajectory, None, LammpsTrajectory ],
+        ".gz": [ None, MDAnalysisTrajectory, MDTrajTrajectory ],
+        ".xyz": [ XyzTrajectory, MDAnalysisTrajectory, MDTrajTrajectory ],
+        ".mdcrd": [ None, MDAnalysisTrajectory, MDTrajTrajectory ],
+        ".binpos": [ BinposTrajectory, None, MDTrajTrajectory ],
+        ".h5": [ Hdf5Trajectory, None, MDTrajTrajectory ],
+        ".dtr": [ DtrTrajectory, None, DtrTrajectory ],
+        ".arc": [ ArcTrajectory, None, ArcTrajectory ],
+        ".tng": [ TngTrajectory, None, MDTrajTrajectory ],
+        ".dms": [ None, MDAnalysisTrajectory, None ],
+        ".crd": [ None, MDAnalysisTrajectory, None ],
+        '.trj': [ None, MDAnalysisTrajectory, None ],
+        '.trz': [ None, MDAnalysisTrajectory, None ],
+        '.ent': [ None, MDAnalysisTrajectory, None ],
+        '.ncdf': [ None, MDAnalysisTrajectory, None ],
     }
     if ext in types:
         if struc_path!="" and importarray[1]:

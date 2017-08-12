@@ -38,7 +38,6 @@ environment:
 
 install:
   - set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
-  - conda config --add channels omnia
   - conda config --add channels conda-forge
   - conda update -yq --all
   - conda install -yq anaconda-client conda-build jinja2
