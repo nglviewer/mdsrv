@@ -11,7 +11,7 @@ build:
 
 requirements:
   build:
-#    - python
+    - python
     - cython
     - numpy
     - msinttypes # [win and py2k]
@@ -21,16 +21,14 @@ requirements:
     - zlib
     - mdtraj
     - mdanalysis # [not win and py2k]
-    - simpletraj # [not win]
 
   run:
-#    - python
- #   - setuptools
+    - python
+    - setuptools
     - numpy
     - flask
     - mdtraj
     - mdanalysis # [not win and py2k]
-    - simpletraj # [not win]
 
 test:
   imports:

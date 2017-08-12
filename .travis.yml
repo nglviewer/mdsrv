@@ -72,6 +72,8 @@ install:
 
 script:
   - mdsrv -h
+  - python develop/test.py data/md.xtc data/md.gro
+
 
 after_success:
   - tags: true
