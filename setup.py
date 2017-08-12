@@ -56,11 +56,11 @@ setup_args = {
     },
     'install_requires': {
         "mdtraj": ["mdtraj"],
+
+    },
+    'extra_requires': {
         "mdanalysis;platform_system!='Windows' and python_version<'3.4'": ["mdanalysis"],
     },
-#    'extra_requires': [
-#        
-#    ],
     'packages': set(find_packages() + 
                 ['mdsrv']),
     'zip_safe': False,
