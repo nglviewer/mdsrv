@@ -14,9 +14,9 @@ environment:
 #  BINSTAR_USER: "ngl"
 
   matrix:
-    - PYTHON: "C:\\Miniconda3"
+    - PYTHON: "C:\\Miniconda"
       CONDA_PY: "27"
-    - PYTHON: "C:\\Miniconda3-x64"
+    - PYTHON: "C:\\Miniconda-x64"
       CONDA_PY: "27"
       ARCH: "64"
     - PYTHON: "C:\\Miniconda3"
