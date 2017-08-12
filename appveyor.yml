@@ -6,12 +6,12 @@ environment:
     # See: http://stackoverflow.com/a/13751649/163740
     CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\develop\\appveyor-ci\\run_with_env.cmd"
     PYTHONUNBUFFERED: 1
-  BINSTAR_TOKEN:
-    secure: LJUoqxkUbcJR0UnL2Ap7/dLquM6cX8i1JC0mXNvwXEbTTVW3C98qQ/JlJWzAYpoy
-  BINSTAR_USER: "j0kaso"
 #  BINSTAR_TOKEN:
-#    secure: iG/R6JSE4NP4kGAKws0IDTnhB70bYlUI2FHnmPpH9FCOlEta6TXinmu76MSSW03W
-#  BINSTAR_USER: "ngl"
+#    secure: LJUoqxkUbcJR0UnL2Ap7/dLquM6cX8i1JC0mXNvwXEbTTVW3C98qQ/JlJWzAYpoy
+#  BINSTAR_USER: "j0kaso"
+  BINSTAR_TOKEN:
+    secure: iG/R6JSE4NP4kGAKws0IDTnhB70bYlUI2FHnmPpH9FCOlEta6TXinmu76MSSW03W
+  BINSTAR_USER: "ngl"
 
   matrix:
     - PYTHON: "C:\\Miniconda"
