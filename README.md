@@ -1,6 +1,6 @@
 
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
-[![Version](http://img.shields.io/badge/version-0.3.4-blue.svg?style=flat)](https://github.com/arose/mdsrv/releases/tag/v0.3.4)
+[![Version](http://img.shields.io/badge/version-0.3.5-blue.svg?style=flat)](https://github.com/arose/mdsrv/releases/tag/v0.3.5)
 [![Changelog](https://img.shields.io/badge/changelog--lightgrey.svg?style=flat)](CHANGELOG)
 [![Travis Build Status](https://travis-ci.org/arose/mdsrv.svg?branch=master)](https://travis-ci.org/arose/mdsrv)
 
@@ -16,9 +16,11 @@ Features
 --------
 
 * Coordinate trajectories (animation, remote access)
-* Trajectory formats supported (xtc/trr, nc/netcdf, dcd)
+* Trajectory formats supported (xtc/trr, nc/netcdf, dcd, lammpstrj, xyz, binpos, hdf5, dtr, arc, tng)
+* Additional trajectory formats supported - only unix with py2 (mdcrd/crd, dms,
+trj, ent ncdf)
 * [NGL Viewer](https://github.com/arose/ngl/) (Molecular structures, Density volumes, User interaction, Embeddable)
-* Lightweight coordinate-only trajecotry reader (via [SimpleTraj](https://github.com/arose/simpletraj/) and [MDTraj](http://mdtraj.org/)
+* Lightweight coordinate-only trajecotry reader (via [MDTraj](http://mdtraj.org/) and [MDAnalysis](http://www.mdanalysis.org/) )
 
 
 
@@ -46,8 +48,11 @@ From PyPI:
     pip install mdsrv
     
 From conda:
-    
+    conda config --add channels conda-forge
     conda install -c ngl mdsrv
+
+
+MDsrv depends on MDtraj. Please ensure that this is installed correctly and functional.
 
 
 Running

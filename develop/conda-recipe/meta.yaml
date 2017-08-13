@@ -1,6 +1,6 @@
 package:
   name: mdsrv
-  version: {{ environ.get('GIT_DESCRIBE_TAG', 'v0.3.4')}}
+  version: {{ environ.get('GIT_DESCRIBE_TAG', 'v0.3.5')}}
 
 source:
   path: ../../

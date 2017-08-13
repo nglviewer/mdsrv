@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file, following the suggestions of [Keep a CHANGELOG](http://keepachangelog.com/). This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [v0.3.5] - 2017-08-13
+### Added
+- WINDOWS support (tested for conda)
+### Changed
+- trajectory support switched from simpletraj to MDTraj with MDAnalysis as extra requirement
+- NGL update to version 0.10.5-18 including bugfixes related to superpositioning, updated remove trajectory formats, IE11 workaround
+
+
 ## [v0.3.4] - 2017-07-31
 ### Added
 - conda support via ngl channel
