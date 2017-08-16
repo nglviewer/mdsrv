@@ -3,7 +3,7 @@
 
 <head>
   <title>MDsrv</title>
-  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick online access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
+  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick on-line access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
   <meta name="keywords" content="MDsrv, MD simulation, visualization, web server, NGL" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -59,18 +59,18 @@ stage.setParameters( { lighthoverTimeout: -1 } );
 stage.setParameters( { workerDefault: false } ); 
       //default: true; worker for faster handling, under development 
       //(may cause problems, e.g. surface representation)
-stage.centerView();
+stage.autoView();
 stage.viewer.container.addEventListener( "dblclick", function(){
     stage.toggleFullscreen();
 } );
 stage.setSpin( [ 0, 1, 0 ], 0.005 );
 stage.setSpin( null, null );
 console.log(stage.getOrientation())
-stage.setOrientation([
-    [28.074999809265137,28.16999912261963,27.22000026702881],
-    [38.041256212103626,4.000447687884037,-11.16747719008557],
-    [-29.3665595756232,2.0906799525729096,11.365819960687398],
-    [0,0,0]
+stage.viewerControls.orient([
+    5.16, -0.86, -8.11, 0,
+    3.05, 9.11, 0.97, 0,
+    7.56, -3.08, 5.15, 0,
+    -28.57, -13.64, 3.36, 1
 ]);
 </code></pre>
 <br>
@@ -101,7 +101,7 @@ comp.addRepresentation( "cartoon", { * } );
 <br>
 <pre><code>//representation examples
 com.addRepresentation("label", {labelType: "text", labelText:  {65: "atom index 65"}})</code></pre>
-
+<br>
 
 
 <h1><a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>

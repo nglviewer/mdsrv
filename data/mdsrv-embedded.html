@@ -33,12 +33,12 @@
         NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );
         document.addEventListener( "DOMContentLoaded", function(){
             stage = new NGL.Stage( "viewport" );
-            stage.loadFile( "/mdsrv/file/examples_mdsrv/md_1u19.gro", { defaultRepresentation: false } ).then( function( comp ){
+            stage.loadFile( "/mdsrv/file/examplepath/md_1u19.gro", { defaultRepresentation: false } ).then( function( comp ){
         	    comp.setName( "simulation-name" );
 	            comp.setSelection( "protein and not hydrogen" );
         	    comp.addRepresentation( "cartoon", { color: "#55eb86", sele: "*" } );
         	    comp.addRepresentation( "licorice", { colorScheme: "element", colorValue: "#55eb86", visible: false, sele: "protein" } );
-		        comp.addTrajectory( "examples_mdsrv/@md_1u19.xtc", {initialFrame: 1, defaultTimeout: 200, defaultMode: "once", defaultInterpolateType: "spline", defaultStep: 1, defaultInterpolateStep: 5});
+		        comp.addTrajectory( "examplepath/@md_1u19.xtc", {initialFrame: 1, defaultTimeout: 200, defaultMode: "once", defaultInterpolateType: "spline", defaultStep: 1, defaultInterpolateStep: 5});
         	    comp.autoView();
 	        } );
             var toggleTheme = document.getElementById( "toggleTheme" );

@@ -3,7 +3,7 @@
 
 <head>
   <title>MDsrv</title>
-  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick online access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
+  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick on-line access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
   <meta name="keywords" content="MDsrv, MD simulation, visualization, web server, NGL" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -28,7 +28,7 @@
       <div class="content">
 				
 <h1>Advanced scripting</h1>
-<p align=justify>Here we collected usefull functions, scripting example codes and definitions for more advanced scripting. This will be updated regularly. Please feel free to also drop an issue at GitHub or mail us!</p>
+<p align=justify>Here we collected useful functions, scripting example codes and definitions for more advanced scripting. This will be updated regularly. Please feel free to also drop an issue at GitHub or mail us!</p>
 
 
 
@@ -79,7 +79,7 @@ h.uiText()      //= add text to panel
 h.uiBreak()     //= add newline to panel
 h.uiButton()    //= add button with click option to panel</code></pre>
 
-<p align=justify>Here we present a random selection of functions. For many, you might want to use the <em>scriptHelperFunctions</em> (here refered as <em>h</em>).</p><br>
+<p align=justify>Here we present a random selection of functions. For many, you might want to use the <em>scriptHelperFunctions</em> (here refereed as <em>h</em>).</p><br>
 <pre><code>h.uiButton(
     "reverse view",
     function(){
@@ -147,7 +147,7 @@ toggleSpinning.addEventListener( "click", function(){
         isSpinning = false;
     }
 } );</code></pre>
-<p align=justify>This code lets the stage spinn around the center with the speed of 0.01 and the tilt/angle of 0, 1 and 0.5 for x, y and z coordinates.</p><br>
+<p align=justify>This code lets the stage spin around the center with the speed of 0.01 and the tilt/angle of 0, 1 and 0.5 for x, y and z coordinates.</p><br>
 
 <pre><code>var toggleDownload = document.getElementById( "toggleDownload" );
 toggleDownload.addEventListener( "click", function(){
@@ -190,10 +190,12 @@ Trajectory Options:
 
 <pre><code>setTimeout(myfunc2, 10000);
 function myfunc2(){
-	stage.setOrientation([
-         [26.626668106519364,43.03096570969528,19.286422037346785],
-         [23.941559483086454,23.435509540438492,32.25882758784041],
-         [0.4788234882332539,0.43805461490045916,0.7608128688980521]])
+	stage.viewerControls.orient([
+		5.16, -0.86, -8.11, 0,
+		3.05, 9.11, 0.97, 0,
+		7.56, -3.08, 5.15, 0,
+		-28.57, -13.64, 3.36, 1
+		])
 }</code></pre>
 <p align=justify>With this workaround, the orientation is set after a certain time.</p><br>
 
@@ -211,7 +213,7 @@ stage.loadFile( "rcsb://3pqr" ).then( function( o ){
     o.addRepresentation( "licorice", { sele: atomSet2.toSeleString() }
     );
     o.addRepresentation( "cartoon" );
-    o.centerView();
+    o.autoView();
 } );</code></pre>
 
 

@@ -3,7 +3,7 @@
 
 <head>
   <title>MDsrv</title>
-  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick online access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
+  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick on-line access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
   <meta name="keywords" content="MDsrv, MD simulation, visualization, web server, NGL" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -28,24 +28,27 @@
       <div class="content">
 				<h1>Installation</h1>
 				
-				<p align=justify>Installation and deployment is shown in short below (for Linux and MacOS system) and in more detail in the <a href="deployment.html">Install & Deployment chapter</a>.</p>
+				<p align=justify>Installation and deployment is shown in short below (for Linux and MacOS system) and in more detail in the <a href="deployment.html">Install & Deployment chapter</a>. The deployment via apache2 and mod-wsgi is tested for debian-based Linux systems. A guide for windows installation (tested only for conda) and deployment can be found <a href="windows.html">here</a>.</p>
 				
 <h2><a id="quickinstall" class="anchor" target="_blank" href="#quickinstall" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Quick installation</h2>
 
 
 
 <p align=justify>To deploy the MDsrv, just follow these 8 steps.</p>
-<ol><li><p align=justify>Install MDsrv via PyPi:</p> 
+<ol><li>Install MDsrv
+	<ul><li>via PyPi:
 	<pre><code>pip install mdsrv
 </code></pre>
-</li><li><p align=justify>Install MDsrv via conda:</p> 
-	<pre><code>conda install -c ngl mdsrv
-</code></pre>
+</li><li>via conda:
+	<pre><code>conda config --add channels conda-forge</code></pre>
+	<pre><code>conda install mdsrv</code></pre>
+</li><li>dependencies: <em>mdtraj (incl. cython, numpy, scipy), setuptools, flask</em>
+</li></ul>
 </li><li><p align=justify>Install Apache2 and mod-wsgi:</p> 
 	<pre><code>sudo apt-get install apache2 libapache2-mod-wsgi</code></pre>
 </li><li>
  <p align=justify>Add the content of <a target="_blank" href="data/apache.config">apache.config</a> into <em>/etc/apache2/sites-available/000-default.conf</em> or replace this file.<br>
- <strong>Important:</strong> Adjust the <em>user</em> and <em>group</em> according to your environment settings.</p>
+ <strong>Important:</strong> Adjust the <em>user</em> and <em>group</em> according to your environment settings and set the <em>python-path</em> or remove it.</p>
 </li><li>
 <p>Copy <a target="_blank" href="data/mdsrv.html">mdsrv.html</a> into the folder <em>/var/www/html/</em>.</p>
 </li><li>
@@ -57,14 +60,14 @@
 <pre><code>sudo service apache2 restart</code></pre>
 </li><li>
 	<p align=justify>Access the MDsrv/NGL GUI including your simulations via:</p>
-	<pre><code>http://localhost/html/mdsrv.html</code></pre>
+	<pre><code>http://localhost/mdsrv.html</code></pre>
 </li>
 </ol>
 
 
 
 <h2><a id="operatingsys" class="anchor" target="_blank" href="#operatingsys" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Operating systems</h2>
-<p align=justify>The MDsrv has been tested and can be installed on Linux and Mac OS. Windows support is currently under development.</p>
+<p align=justify>The MDsrv has been tested and can be installed on Linux,  Mac OS and Windows. Deployment is excessively tested for Debian-based Linux systems.</p>
 <p align=justify>The deployed NGL sessions can be viewed on every operating system and browser which supports WebGL.</p>
 
 

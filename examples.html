@@ -3,7 +3,7 @@
 
 <head>
   <title>MDsrv</title>
-  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick online access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
+  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick on-line access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
   <meta name="keywords" content="MDsrv, MD simulation, visualization, web server, NGL" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -111,21 +111,29 @@
 <p align=justify>Not sure <strong>what the MDsrv can do</strong> and how you can <strong>benefit</strong> from it? Check out our <strong>examples</strong> and get enthusiastic on how to <strong>present your work</strong> to reviewers, collaborators, the scientific community or simply to the public!</p>				
 <br>
 <h3><a id="example_embedded" class="anchor" href="#example_embedded" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Simulations embedded into a website</h3>
-<p align=justify>Embedded simulations are a great opportinuty to present your work along with the publication on your website. It also enriches websites which provide a selection of MD simulations (similar to structure viewer on the PDB) or which provide analysis of MD simulations.</p>
+<p align=justify>Embedded simulations are a great opportunity to present your work along with the publication on your website. It also enriches websites which provide a selection of MD simulations (similar to structure viewer on the PDB) or which provide analysis of MD simulations.</p>
 <div id="viewport1" style="width:200px; height:200px; margin:0 auto;"></div>
 <p align=justify><strong>More than a static video - </strong>as used here and on the <a href="index.html">home</a> page, simulations can be embedded and automatically played within a web site. It can be interactively moved, scaled, centered and rotated.</p><br>
-<p align=justify><strong>Get more control!</strong> You can easily add additional functions (e.g. residue selection or coloring according to other analyses). Below, an embedded example with function button is shown. A html file with those functions can be <a target="_blank" href="data/mdsrv-embedded.html">downloaded</a> and is further explained within the <a href="embedded.html">scripting section</a>. Have also a look at the <a target="_blank" href="http://arose.github.io/ngl/gallery/index.html">NGL gallery</a>.</p>
+<p align=justify><strong>Get more control!</strong> You can easily add additional functions (e.g. residue selection or coloring according to other analyses). Below, an embedded example with function button is shown. An html file with those functions can be <a target="_blank" href="data/mdsrv-embedded.html">downloaded</a> and is further explained within the <a href="embedded.html">scripting section</a>. Have also a look at the <a target="_blank" href="http://arose.github.io/ngl/gallery/index.html">NGL gallery</a>.</p>
 		<div id="viewport" style="width:250px; height:250px; margin:0 auto;"></div>
 			<div style="width:200px; margin:0 auto;">
         <button id="toggleSpin">spin on/off</button>
         <button id="toggleTheme">light/dark background</button>
-        <button id="toggleLicorice">sidechains on/off</button>
+        <button id="toggleLicorice">side-chains on/off</button>
         <button id="toggleRunMDs">run/pause MD</button>
     </div>
+<br><br>
+<ul><li>
+	<p align=justify><strong>Published simulation embedded next to the reference: <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example-embedded1">embedded link #1</a></strong>.</p>
+</li><li>
+	<p align=justify><strong>Simulation within a wiki-like article: <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example-embedded2">embedded link #2</a></strong></p>
+</li><li>
+	<p align=justify><strong>Comparison of simulations with different membrane composition: <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example-embedded3">embedded link #3</a></strong></p>
+</li></ul>
 <br>
 <br>
-<h3><a id="example_1" class="anchor" href="#example_1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Simulation session provided MDsrv within the NGL GUI </h3>
-<p align=justify>You want to have <strong>more featurs</strong> to investigate the simulation (e.g. other representation, simulation settings or selection)? By providing a simulation link from the MDsrv using the <strong>NGL GUI</strong>, a <strong>manifold collection of options</strong> for visualization is available on default. By providing a simulation session within the NGL GUI, a greater flexibility and more features are provided. <strong>Try out</strong> some of those prepared sessions by yourself:</p>
+<h3><a id="example_1" class="anchor" href="#example_1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Simulation sessions served by MDsrv using the NGL GUI </h3>
+<p align=justify>You want to have <strong>more features</strong> to present the simulation (e.g. other representations, animation settings or trajectory processing)? By providing a simulation session served MDsrv using the <strong>NGL GUI</strong>, a <strong>manifold collection of options</strong> for visualization is available by default, offering  greater flexibility and more features. <strong>Try out</strong> some of the prepared sessions below yourself:</p>
 <ul><li>
 	<p align=justify><strong>Simulation of Rhodopsin with Gt peptide (3PQR): <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example1">link #1</a></strong><br>200ns simulation of G-protein alpha-5 subunit peptide of transducin bound to active Opsin.</p>
 </li><li>
@@ -133,13 +141,17 @@
 </li><li>
 	<p align=justify><strong>Coarse-Grained simulation of Bace1 helices: <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example3">link #3</a></strong><br>Self-assembly of three Bace1 transmembrane helices and a DPPC lipid bilayer.</p>
 </li><li>
-	<p align=justify><strong>Simulation of a GPCR in complex with its G protein: <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example4">link #4</a></strong><br>500ns of &beta;2AR in complex with Gs-empty protein.</p>
+	<p align=justify><strong>Simulation of a GPCR in complex with its G protein: <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example4">link #4</a></strong><br>200ns of &beta;2AR in complex with Gs-empty protein.</p>
+</li><li>
+	<p align=justify><strong>Coarse-Grained simulation of GPCR dimer: <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example5">link #5</a></strong><br>Steer CG-MD simulation of GPCR dimer dissociation.</p>
+</li><li>
+	<p align=justify><strong>Simulation of a GPCR dimers in poly-lipid membranes: <a target="_blank" href="http://proteinformatics.charite.de/MDsrv-example6">link #6</a></strong><br>PUFA-mediated GPCR oligomerization (Guixà-González et al. Sci. Rep. 2016 6:19839).</p>
 </li></ul>
 <p align=justify>For information <strong>how to use the NGL GUI</strong>, e.g. to add simulation, change representations and adjust the playing settings, consult the <a target="_blank" href="viewing.html">"viewing simulation" documentation</a>. Additionally, the <a target="_blank" href="data/script.ngl">.ngl script file</a> which is used to generate the example can be downloaded and is explained <a target="_blank" href="scripting.html">here</a>.</p>
 
 <br>
 <h3><a id="example_2" class="anchor" href="#example_2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MDsrv used on other websites</h3>
-<p align=justify><strong>GPCRmd:</strong> The <a target="_blank" href="http://www.gpcrmd.org/">GPCRmd</a> is a consortium with the goal to establish a web platform including a database to allow storage of MD data, basic analysis of deposited MD trajectories (e.g. RMSD, ligand-receptor interaction, receptor dynamics) with the special focus on G-protein coupled receptors. It uses the MDsrv for online visualization and handling.</p>
+<p align=justify><strong>GPCRmd:</strong> The <a target="_blank" href="http://www.gpcrmd.org/">GPCRmd</a> is a consortium with the goal to establish a web platform including a database to allow storage of MD data, basic analysis of deposited MD trajectories (e.g. RMSD, ligand-receptor interaction, receptor dynamics) with the special focus on G-protein coupled receptors. It uses the MDsrv for on-line visualization and handling.</p>
       </div>
     </div>
     <div id="scroll">

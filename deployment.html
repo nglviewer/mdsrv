@@ -3,7 +3,7 @@
 
 <head>
   <title>MDsrv</title>
-  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick online access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
+  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick on-line access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
   <meta name="keywords" content="MDsrv, MD simulation, visualization, web server, NGL" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -28,22 +28,27 @@
       <div class="content">
 
 <h1>Installation & Deployment</h1>
-<p align=justify>MDsrv is working under Linux and Mac OS systems. Support for Windows is currently under development.</p>
+<p align=justify>MDsrv is working under Linux, Mac OS and Windows systems. Here, we explain how to deploy it (Debian-based Linux system as template system). Deployment support for Windows is explained <a href="windows.html">elsewhere</a>.</p>
 <h3>1. Install the MDsrv</h3>
-<p align=justify>The latest stable release of MDsrv can be easily installed via PyPI.</p>
+<p align=justify>The latest stable release of MDsrv can be easily installed via PyPI or conda.</p>
 
-<pre><code>pip install mdsrv
-</code></pre>
+<pre><code>pip install mdsrv</code></pre>
 <br>
-<p align=justify>Conda support is currently under development.<br>
-To install the development version, download it from the
+<pre><code>conda config --add channels conda-forge</code></pre>
+<pre><code>conda install mdsrv</code></pre>
+<br>
+<p align=justify>To install the development version, download it from the
 <a target="_blank" href="https://github.com/arose/mdsrv/releases">MDsrv GitHub page</a> and install it manually (via executing <em>setup.py</em> within the repository). <br>
 Pip needs to be installed in advance to add underlying tools otherwise an installation error (e.g. "import setuptools not found") might rise.
 <br>
 For further information, consult the <em>setuptools</em> <a target="_blank" href="http://setuptools.readthedocs.io/en/latest/setuptools.html#development-mode">documentation</a>.</p>
 
+<p align=justify><strong>Dependencies:</strong> As MDsrv depends on MDTraj, some packages need to be installed in advance to garantee, that MDTraj is working.</p>
+<pre><code>mdtraj:cython, numpy, scipy</code></pre>
+<pre><code>mdsrv: setuptools, flask</code></pre>
+<br>
 <h3>Deployment even on your local machine - why?</h3>
-<p align=justify>With step 1, you can already use the MDsrv locally within your network. In order to add the MDsrv into your daily research, deploy and configure it to your system and your settings. The advantage is that you can add project folders permanently, including their security settings. By setting up an apache server (locally on your machine or global on a webserver), you are able to share your sessions and files with colleagues within the same network, collaborators or reviewers. Additionally, you can add a link to your cluster and inspect your unprocessed simulations remotely.</p>
+<p align=justify>With step 1, you can already use the MDsrv locally within your network. In order to add the MDsrv into your daily research, deploy and configure it to your system and your settings. The advantage is that you can add project folders permanently, including their security settings. By setting up an apache server (locally on your machine or global on a web server), you are able to share your sessions and files with colleagues within the same network, collaborators or reviewers. Additionally, you can add a link to your cluster and inspect your unprocessed simulations remotely.</p>
 
 <h3>2. Install Apache2 and WSGI</h3>
 
@@ -56,7 +61,7 @@ For further information, consult the <em>setuptools</em> <a target="_blank" href
 <h3>3. Add MDsrv-wsgi settings to apache.config</h3>
  <p align=justify>Add the content of <a target="_blank" href="data/apache.config">apache.config</a> into <em>/etc/apache2/sites-available/000-default.conf</em> or replace this file.</p>
  <img src="data/config.png" width=100% alt="apache configuration file">
-  <p align=justify><strong>Important:</strong> Adjust the <em>user</em> and <em>group</em> according to your environment settings (e.g. local installation on a pc (nickname@pc) with <em>user=nickname</em> and <em>group=nickname</em>) so that the wsgi process can run with the specified <em>user</em> & <em>group</em>. Make also sure that the files and directories you want to serve are accessible with that user & group combination.
+  <p align=justify><strong>Important:</strong> Adjust the <em>user</em> and <em>group</em> according to your environment settings (e.g. local installation on a pc (nickname@pc) with <em>user=nickname</em> and <em>group=nickname</em>) so that the wsgi process can run with the specified <em>user</em> & <em>group</em>. Make also sure that the files and directories you want to serve are accessible with that user & group combination. Please also adjust the <em>python-path</em>, e.g. to your environment or conda directory or remove this variable to keep the default.
  For further information on <em>apache.config</em>, please consult the <a target="_blank" href="https://httpd.apache.org/docs/2.4/en/">documentation</a>.</p>
 
 <h3>4. Add html for MDsrv gui</h3>
@@ -75,7 +80,7 @@ For further information, consult the <em>setuptools</em> <a target="_blank" href
 </p>
 
 <h3>8. Access & Visualize your simulations</h3>
-<p align=justify>The MDsrv with the structures and trajectories within the defined folder can be reached at <em>http://localhost/mdsrv.html</em> by loading a structure via "File -> Import" and adding afterwards the trajectory within the structure menu by selecting "Remote trajectory - import".</p>
+<p align=justify>The MDsrv with the structures and trajectories within the defined folder can be reached at <em>http://localhost/mdsrv.html</em> by loading a structure via "File -> Import" and adding afterwards the trajectory within the structure menu by selecting "Remote trajectory - import". Find out more about the NGL gui at <a target="_blank" href="viewing.html">viewing</a> or <a target="_blank" href="loading.html">load trajectories</a> chapter.</p>
 
 <h1><a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
 
