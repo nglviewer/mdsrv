@@ -3,7 +3,7 @@
 
 <head>
   <title>MDsrv</title>
-  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick online access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
+  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick on-line access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
   <meta name="keywords" content="MDsrv, MD simulation, visualization, web server, NGL" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -38,7 +38,7 @@ stage.loadFile( sysPath ).then( function( comp ){
     comp.addTrajectory( basePath  + "md_1u19.xtc" );
 } );</code></pre>
 
-<p align=justify>This script example is partly extracted from the sample <a target="_blank" href="data/script.ngl">.ngl file</a>. It loades a structure (<em>structure.gro</em>) file with the <em>cartoon</em> representation and a simulation (<em>sim.xtc</em>) into the NGL Viewer.</p>
+<p align=justify>This script example is partly extracted from the sample <a target="_blank" href="data/script.ngl">.ngl file</a>. It loads a structure (<em>structure.gro</em>) file with the <em>cartoon</em> representation and a simulation (<em>sim.xtc</em>) into the NGL Viewer.</p>
 <br>
 
 <pre><code>var trajSele = {
@@ -49,7 +49,7 @@ stage.loadFile( sysPath ).then( function( comp ){
 comp.addRepresentation( "licorice", { visible: false } );
 comp.addTrajectory( basePath  + "@md_1u19.xtc", trajSele );</code></pre>
 
-<p align=justify>Trajectories can have different configurations. Some default values are displayed above, others are changed accordingly to the simulation. -1 for the initial frame referes to the conformation of the structure file. To load several parts of a continuous simulation (<em>md_1u19.part0001.xtc, md_1u19.part0002, ... </em>), add the <em>@ symbol</em> before the name of the trajectory. This is especially usefull if you inspect unprocessed trajectories.</p>
+<p align=justify>Trajectories can have different configurations. Some default values are displayed above, others are changed accordingly to the simulation. -1 for the initial frame refers to the conformation of the structure file. To load several parts of a continuous simulation (<em>md_1u19.part0001.xtc, md_1u19.part0002, ... </em>), add the <em>@ symbol</em> before the name of the trajectory. This is especially useful if you inspect unprocessed trajectories.</p>
 <br>
 <pre><code>panel.setName( "A simple example" );
 stage.setParameters( { backgroundColor: "white", hoverTimeout: -1 } );</code></pre>

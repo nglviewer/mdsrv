@@ -3,7 +3,7 @@
 
 <head>
   <title>MDsrv</title>
-  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick online access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
+  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick on-line access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
   <meta name="keywords" content="MDsrv, MD simulation, visualization, web server, NGL" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -28,7 +28,7 @@
 			<div id="side-usage"></div>
       <div class="content">
 				<h1>Embedded scripting</h1>
-				
+<p align=justify>An embedded example is examined here. All embedded examples from the <a href="examples.html">example page</a> can also be downloaded <a href="embedded.html#embedded_download">here</a>.</p>				
 
 <p align=justify>The example for an embedded html provided below loads a .gro trajectory with cartoon representation as trajectory into the embedded NGL viewer and generates a button below to play/pause the simulation. The parameters set within the <em>component.trajectory</em> representation are overwritten (or set back to default) by the trajectory player. We now explain some parts of the html file in detail.</p>
 
@@ -89,35 +89,33 @@ document.addEventListener( "DOMContentLoaded", function(){
     &ltmeta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"&gt
 
     &ltlink rel="icon" href="favicon.ico" type="image/x-icon"/&gt
-    &ltlink rel="stylesheet" href="mdsrv/webapp/css/font-awesome.min.css" /&gt
-    &ltlink rel="stylesheet" href="mdsrv/webapp/css/main.css" /&gt
-    &ltlink rel="subresource" href="mdsrv/webapp/css/light.css" /&gt
-    &ltlink rel="subresource" href="mdsrv/webapp/css/dark.css" /&gt
+    &ltlink rel="stylesheet" href="../mdsrv/webapp/css/font-awesome.min.css" /&gt
+    &ltlink rel="stylesheet" href="../mdsrv/webapp/css/main.css" /&gt
+    &ltlink rel="subresource" href="../mdsrv/webapp/css/light.css" /&gt
+    &ltlink rel="subresource" href="../mdsrv/webapp/css/dark.css" /&gt
 &lt/head&gt
 &ltbody&gt
     &lt!-- NGL --&gt
-    &ltscript src="mdsrv/webapp/js/ngl.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/ngl.js"&gt&lt/script&gt
 
     &lt!-- UI --&gt
-    &ltscript src="mdsrv/webapp/js/lib/signals.min.js"&gt&lt/script&gt
-    &ltscript src="mdsrv/webapp/js/lib/tether.min.js"&gt&lt/script&gt
-    &ltscript src="mdsrv/webapp/js/lib/colorpicker.min.js"&gt&lt/script&gt
-    &ltscript src="mdsrv/webapp/js/ui/ui.js"&gt&lt/script&gt
-    &ltscript src="mdsrv/webapp/js/ui/ui.extra.js"&gt&lt/script&gt
-    &ltscript src="mdsrv/webapp/js/ui/ui.ngl.js"&gt&lt/script&gt
-    &ltscript src="mdsrv/webapp/js/ui/ui.helper.js"&gt&lt/script&gt
-    &ltscript src="mdsrv/webapp/js/gui.js"&gt&lt/script&gt
-
-    &lt!-- MDSRV --&gt
-    &ltscript src="mdsrv/webapp/js/mdsrv.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/lib/signals.min.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/lib/tether.min.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/lib/colorpicker.min.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/ui/ui.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/ui/ui.extra.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/ui/ui.ngl.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/ui/ui.helper.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/gui.js"&gt&lt/script&gt
 
     &ltscript&gt
-        NGL.cssDirectory = "mdsrv/webapp/css/";
+        NGL.cssDirectory = "../mdsrv/webapp/css/";
         NGL.documentationUrl = "http://arose.github.io/ngl/api/";
+        NGL.MDsrvdocumentationUrl = "http://arose.github.io/mdsrv";
 
         // Datasources
         NGL.DatasourceRegistry.add(
-            "file", new MdsrvDatasource( window.location.origin + "/mdsrv/" )
+            "file", new NGL.MdsrvDatasource( window.location.origin + "/mdsrv/" )
         );
         NGL.DatasourceRegistry.listing = NGL.DatasourceRegistry.get( "file" );
         NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );
@@ -127,7 +125,7 @@ document.addEventListener( "DOMContentLoaded", function(){
             .then(function( o){
                 o.addRepresentation( "cartoon", { sele: "protein" } );
                 o.addTrajectory();
-                o.centerView();
+                o.autoView();
             } );
             var togglePlayer = document.getElementById( "playerButton" );
             var playing = false;
@@ -151,6 +149,11 @@ document.addEventListener( "DOMContentLoaded", function(){
     &lt/div&gt
 &lt/body&gt
 &lt/html&gt</code></pre>
+
+<h2><a id="embedded_download" class="anchor" href="#embedded_download" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Embedded examples</h2>
+<ul>
+	<li><a target="_blank" href="embedded_1.html">Link #1</a>: Example from home of the MDsrv documentation</li>
+</ul>
 
 
 <h1><a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>

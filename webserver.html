@@ -3,7 +3,7 @@
 
 <head>
   <title>MDsrv</title>
-  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick online access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
+  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick on-line access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
   <meta name="keywords" content="MDsrv, MD simulation, visualization, web server, NGL" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -27,18 +27,18 @@
 			<div id="side-install"></div>
       <div class="content">
 
-<h1><a id="server" class="anchor" href="#server" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Webserver setup</h1>
+<h1><a id="server" class="anchor" href="#server" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Web server setup</h1>
 
-<p align=justify>Setting up a computer as a webserver can be done easily. In the following, we will explain how to do this on a Linux OS and within <em>amazon web services</em>.</p>
+<p align=justify>Setting up a computer as a web server can be done easily. In the following, we will explain how to do this on a Linux OS. A semi-automated setup-script within <em>amazon web services</em> is currently under development.</p>
 
 <h2><a id="LinuxServer" class="anchor" href="#LinuxServer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Linux web-service setup</h2>
 
 <h4><a id="server_requirements" class="anchor" href="#server_requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h4>
 <ul><li>
-	<p align=justify><strong>Domain:</strong> In order to make your webside accessible via the world wide web, you need to own a domain name. Paid and non-paid web hosting services are available with different limits on usage. Your domain hosting service will connect your domain name with your local webserver by redirecting the domain name to your web page.</p>
+	<p align=justify><strong>Domain:</strong> In order to make your website accessible via the world wide web, you need to own a domain name. Paid and non-paid web hosting services are available with different limits on usage. Your domain hosting service will connect your domain name with your local web server by redirecting the domain name to your web page.</p>
 </li>
 <li>
-	<p align=justify><strong>Webserver system requirements: </strong>To run MDsrv, you do not need a high-end computer, standard hardware works. Note that the computer will run continuosly, so you might consider to get a hard drive for server usage. Your hard drive space should be huge enough for your simulations.</p>
+	<p align=justify><strong>Webserver system requirements: </strong>To run MDsrv, you do not need a high-end computer, standard hardware works. Note that the computer will run continuously, so you might consider to get a hard drive for server usage. Your hard drive space should be huge enough for your simulations.</p>
 </li></ul>
 
 <h4><a id="server_linux" class="anchor" href="#server_linux" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Linux web-service setup</h4>
@@ -47,14 +47,14 @@
 	<p align=justify><strong>Install a Linux OS on your machine</strong></p>
 </li><li>
 	<p align=justify><strong>Install Apache</strong></p>
-	<pre><code>sudo apt-get update</code><code>sudo apt-get install apache2</code></pre>
+	<pre><code>sudo apt-get update</code><br><code>sudo apt-get install apache2</code></pre>
 </li><li>
-	<p align=justify><strong>MDsrv setup: </strong> Deploy the MDsrv as described above.</p>
+	<p align=justify><strong>MDsrv setup: </strong> Deploy the MDsrv as described <a href="deployment.html">here</a>.</p>
 </li><li>
 	<p align=justify><strong>Get your IP address</strong></p>
 	<pre><code>hostname -I</code></pre>
 </li><li>
-	<p align=justify><strong>Set up your local hosts file:</strong> Edit your local host file located at <em>/etc/hosts</em> by adding the following lines, where the first part is your IP address (e.g. <em>144.42.XXX.44</em>) and the second your host adress (e.g. <em>example-page.com</em>):</p>
+	<p align=justify><strong>Set up your local hosts file:</strong> Edit your local host file located at <em>/etc/hosts</em> by adding the following lines, where the first part is your IP address (e.g. <em>144.42.XXX.44</em>) and the second your host address (e.g. <em>example-page.com</em>):</p>
 	<pre><code>144.42.XXX.44   example-page.com</code></pre>
 </li><li>
 	<p align=justify><strong>Restart the Apache Server</strong></p>

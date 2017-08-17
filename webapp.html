@@ -3,7 +3,7 @@
 
 <head>
   <title>MDsrv</title>
-  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick online access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
+  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick on-line access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
   <meta name="keywords" content="MDsrv, MD simulation, visualization, web server, NGL" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -31,12 +31,10 @@
 
 <h2><a id="js" class="anchor" href="#jas" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>JavaScript inclusion</h2>
 <pre><code>&lt!-- NGL --&gt
-    &ltscript src="mdsrv/webapp/js/ngl.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/ngl.js"&gt&lt/script&gt
 &lt!-- UI --&gt
-    &ltscript src="mdsrv/webapp/js/lib/signals.min.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/lib/signals.min.js"&gt&lt/script&gt
     ...
-&lt!-- MDSRV --&gt
-    &ltscript src="mdsrv/webapp/js/mdsrv.js"&gt&lt/script&gt
 </code></pre>
 <p align=justify>The NGL and MDsrv scripts have to be made available by including them within the &ltscript&gt&lt/script&gt tag. The source of the files depends on the deployment directory, which corresponds to the folder, where the <em>mdsrv.wsgi</em> is located, normally in <em>/var/www/mdsrv</em>.</p>
 
@@ -44,12 +42,12 @@
 <h2><a id="ngldefiniton" class="anchor" href="#ngldefinition" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MDsrv/ngl definitions</h2>
 <pre><code>// Datasources
 NGL.DatasourceRegistry.add(
-	"file", new MdsrvDatasource( window.location.origin + "/mdsrv/" )
+	"file", new NGL.MdsrvDatasource( window.location.origin + "/mdsrv/" )
 );
 NGL.DatasourceRegistry.listing = NGL.DatasourceRegistry.get( "file" );
 NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );</code></pre>
 
-<p align=justify><em>DatasourceRegistry</em> defines the source of the data files (structures and trajectories), which is defined within the <em>app.cfg</em>. The source of the configuration file is defined within the <em>/var/www/mdsrv/mdsrv.wsgi</em>. The naming (here 'file') is used furthermore within the .js/.ngl scripts and the url for loading files (e.g http://localhost:8000/index.html?load=<strong>file</strong>://MDsrv/script.ngl) </p>
+<p align=justify><em>DatasourceRegistry</em> defines the source of the data files (structures and trajectories), which is defined within the <em>app.cfg</em>. The source of the configuration file is defined within the <em>/var/www/mdsrv/mdsrv.wsgi</em>. The naming (here 'file') is used furthermore within the .js/.ngl scripts and the URL for loading files (e.g http://localhost:8000/index.html?load=<strong>file</strong>://MDsrv/script.ngl). </p>
 
 <br>
 <pre><code>var load = NGL.getQuery( "load" );
@@ -62,7 +60,7 @@ if( struc ){
 		if( traj ) o.addTrajectory( traj );
 	} );
 }</code></pre>
-<p align=justify>Additionally, other flags as loading, structure and trajectory with a similar usage as for 'file' can be defined and renamed (e.g http://localhost:8000/webapp/?<strong>struc</strong>=file://cwd/md.gro&<strong>traj</strong>=file://cwd/md.gro).</p>
+<p align=justify>Additionally, other flags as loading, structure and trajectory with a similar usage as for 'file' can be defined and renamed (e.g http://localhost:8000/webapp/?<strong>struc</strong>=file://cwd/md.gro&<strong>traj</strong>=file://cwd/md.gro). Please do not change the naming <strong>struc</strong> and <strong>traj</strong>, as this is needed for the MDsrv command line usage.</p>
 
 
 
@@ -76,35 +74,33 @@ if( struc ){
     &ltmeta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"&gt
 
     &ltlink rel="icon" href="favicon.ico" type="image/x-icon"/&gt
-    &ltlink rel="stylesheet" href="mdsrv/webapp/css/font-awesome.min.css" /&gt
-    &ltlink rel="stylesheet" href="mdsrv/webapp/css/main.css" /&gt
-    &ltlink rel="subresource" href="mdsrv/webapp/css/light.css" /&gt
-    &ltlink rel="subresource" href="mdsrv/webapp/css/dark.css" /&gt
+    &ltlink rel="stylesheet" href="../mdsrv/webapp/css/font-awesome.min.css" /&gt
+    &ltlink rel="stylesheet" href="../mdsrv/webapp/css/main.css" /&gt
+    &ltlink rel="subresource" href="../mdsrv/webapp/css/light.css" /&gt
+    &ltlink rel="subresource" href="../mdsrv/webapp/css/dark.css" /&gt
 &lt/head&gt
 &ltbody&gt
     &lt!-- NGL --&gt
-    &ltscript src="mdsrv/webapp/js/ngl.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/ngl.js"&gt&lt/script&gt
 
     &lt!-- UI --&gt
-    &ltscript src="mdsrv/webapp/js/lib/signals.min.js"&gt&lt/script&gt
-    &ltscript src="mdsrv/webapp/js/lib/tether.min.js"&gt&lt/script&gt
-    &ltscript src="mdsrv/webapp/js/lib/colorpicker.min.js"&gt&lt/script&gt
-    &ltscript src="mdsrv/webapp/js/ui/ui.js"&gt&lt/script&gt
-    &ltscript src="mdsrv/webapp/js/ui/ui.extra.js"&gt&lt/script&gt
-    &ltscript src="mdsrv/webapp/js/ui/ui.ngl.js"&gt&lt/script&gt
-    &ltscript src="mdsrv/webapp/js/ui/ui.helper.js"&gt&lt/script&gt
-    &ltscript src="mdsrv/webapp/js/gui.js"&gt&lt/script&gt
-
-    &lt!-- MDSRV --&gt
-    &ltscript src="mdsrv/webapp/js/mdsrv.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/lib/signals.min.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/lib/tether.min.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/lib/colorpicker.min.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/ui/ui.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/ui/ui.extra.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/ui/ui.ngl.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/ui/ui.helper.js"&gt&lt/script&gt
+    &ltscript src="../mdsrv/webapp/js/gui.js"&gt&lt/script&gt
 
     &ltscript&gt
-        NGL.cssDirectory = "mdsrv/webapp/css/";
+        NGL.cssDirectory = "../mdsrv/webapp/css/";
         NGL.documentationUrl = "http://arose.github.io/ngl/api/";
+        NGL.MDsrvdocumentationUrl = "http://arose.github.io/mdsrv"; 
 
         // Datasources
         NGL.DatasourceRegistry.add(
-            "file", new MdsrvDatasource( window.location.origin + "/mdsrv/" )
+            "file", new NGL.MdsrvDatasource( window.location.origin + "/mdsrv/" )
         );
         NGL.DatasourceRegistry.listing = NGL.DatasourceRegistry.get( "file" );
         NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );

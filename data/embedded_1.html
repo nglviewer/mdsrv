@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+    <script src="data/ngl.js"></script>
+    <script>
+        document.addEventListener( "DOMContentLoaded", function() {
+			function getModelURL( model ){
+		        var href = window.location.href;
+		        return href.substr( 0, href.lastIndexOf( "/" ) + 1 ) + model;
+			}
+            var stage = new NGL.Stage( "viewport" );
+            stage.setParameters( { backgroundColor: "white" } );
+          	stage.loadFile( getModelURL("data/md.gro"), { asTrajectory: true }  ).then( function( o ){
+                o.addRepresentation( "cartoon", {color: "#c40000"});
+                o.addRepresentation("label", { color: "black", labelType: "text", labelText: {1: "play with me!"}, scale: 3});
+                o.autoView();
+                var trajComp = o.addTrajectory();
+                var player = new NGL.TrajectoryPlayer(trajComp.trajectory, {start: 1, timeout: 200} );
+                player.play();
+            } );
+        } );
+    </script>
+  <div id="main">
+    <h1>Welcome to the MD trajectory server</h1>
+    <div id="viewport" style="width:800px; height:300px; margin:0 auto;"></div>
+  </div>
+</body>
+</html>

@@ -3,7 +3,7 @@
 
 <head>
   <title>MDsrv</title>
-  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick online access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
+  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick on-line access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
   <meta name="keywords" content="MDsrv, MD simulation, visualization, web server, NGL" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -28,7 +28,7 @@
       <div class="content">
 				<h1>Connecting to clusters with restricted access</h1>
 				
-<p align=justify>MDsrv is meant to be deployed on local supercumputer clusters where MD data will be hosted and streamed. However, sometimes one might require to access MD data hosted at big supercomputers with specific security restrictions (e.g. dual authentication/National Supercomputers). In these particular cases, MD trajectories can be accessed by a classical approach, namely mounting a remote file system. We explain below how to do so.
+<p align=justify>MDsrv is meant to be deployed on local supercomputer clusters where MD data will be hosted and streamed. However, sometimes one might require to access MD data hosted at big supercomputers with specific security restrictions (e.g. dual authentication/National Supercomputers). In these particular cases, MD trajectories can be accessed by a classical approach, namely mounting a remote file system. We explain below how to do so.
 
 <br><br>
 
@@ -68,7 +68,7 @@ mdsrv gs_1.part0010.gro gs_1.part0001.xtc</code></pre>
 
 <h3>Speed it up!</h3>
 
-<p align=justify>To speed up the connection, you need to change the syncronization by using one of those options:</p> 
+<p align=justify>To speed up the connection, you need to change the synchronization by using one of those options:</p> 
 <pre><code>sshfs username@cluster:/work/username/ /dir/to/mounted/system -o Ciphers=arcfour
 
 sshfs username@cluster:/work/username/ /dir/to/mounted/system -oauto_cache,reconnect
@@ -95,7 +95,7 @@ further sshfs_opts="-o auto_cache -o cache_timeout=115200 -o attr_timeout=115200
 
 <h2>Windows: sshfs - FUSE</h2>
 
-<p align=justify>sshfs also offers the possiblity for Windows users to mount remote file systems. We have not tested this but refer to this <a target="_blank" href="https://www.digitalocean.com/community/tutorials/how-to-use-sshfs-to-mount-remote-file-systems-over-ssh">tutorial</a>. </p> 
+<p align=justify>sshfs also offers the possibility for Windows users to mount remote file systems. We have not tested this but refer to this <a target="_blank" href="https://www.digitalocean.com/community/tutorials/how-to-use-sshfs-to-mount-remote-file-systems-over-ssh">tutorial</a>. </p> 
 
 <br>
 

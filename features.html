@@ -3,7 +3,7 @@
 
 <head>
   <title>MDsrv</title>
-  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick online access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
+  <meta name="description" content="MDsrv - a web-based tool developed to provide easy and quick on-line access to molecular dynamics (MD) simulations, channeling MD trajectories through a web server using a powerful web application (NGL viewer) to visualize them." />
   <meta name="keywords" content="MDsrv, MD simulation, visualization, web server, NGL" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -25,20 +25,41 @@
     <div id="site_content">
       <div class="content">
           <h1><a id="news" class="anchor" target="_blank" href="#news" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What's new?</h1>
-
-
-				<p align=justify><a href="https://github.com/j0kaso/mdsrv/releases/tag/v0.3.2">Release v0.3.2</a>:</p>
+							
+				<p align=justify><a href="https://github.com/arose/mdsrv/milestone">What are the next milestones?</a> We are currently working on autodetection of delta- and offset time, automated session generation and speeding up the trajectory and file handling.</p>
+<br>
+				<p align=justify><a href="https://github.com/arose/mdsrv/releases/tag/v0.3.5">Release v0.3.5</a>:</p>
 				<ui>
-					<li>
-						[NGL] movable popup windows
-						[NGL] show simulation length in time units
+					<li>[MDsrv] available at conda-forge channel</li>
+					<li>[MDsrv] WINDOWS support (tested for conda)</li>
+					<li>[MDsrv] trajectory support switched from simpletraj to MDTraj with MDAnalysis as extra requirement</li>
+					<li>[NGL] update to version 0.10.5-18 including bugfixes related to superpositioning, updated remove trajectory formats, IE11 workaround</li>
+				</ui>
+<br>					
+				<p align=justify><a href="https://github.com/arose/mdsrv/releases/tag/v0.3.4">Release v0.3.4</a>:</p>
+				<ui>
+					<li>[MDsrv] conda support via ngl channel</li>
+					<li>[MDsrv] delta time and time offset as CMD variables</li>
+				</ui>
+<br>
+				<p align=justify><a href="https://github.com/arose/mdsrv/releases/tag/v0.3.3">Release v0.3.3</a>:</p>
+				<ui>
+					<li>[NGL] update to version 0.10.5-15 incl. bugfixes related to interpolation, change superpositioning on initial frame, add bounce direction for trajectory player, animations</li>
+					<li>[MDsrv] script examples according to new NGL version</li>
+					<li>[MDsrv] conda support</li>
+					<li>[MDsrv] netcdf, gro, lammpstrj, hdf5, dtr, arc tng trajectory support from mdtraj</li>
+				</ui>
+<br>
+				<p align=justify><a href="https://github.com/arose/mdsrv/releases/tag/v0.3.2">Release v0.3.2</a>:</p>
+				<ui>
+					<li>[NGL] movable popup windows</li>
+					<li>[NGL] show simulation length in time units</li>
 					</li>
 				</ui>
+<br>
+				<p align=justify><a href="https://github.com/arose/mdsrv/releases/tag/v0.3.1">Release v0.3.1</a> is out including psf, nc, dcd, gro, trr and xtc support for client side loading.</p>
 
-				<p align=justify><a href="https://github.com/j0kaso/mdsrv/releases/tag/v0.3.1">Release v0.3.1</a> is out including psf, nc, dcd, gro, trr and xtc support for client side loading.</p>
-		
-				<p align=justify><a href="https://github.com/j0kaso/mdsrv/commit">What are the next milestones?</a> We are currently working on WINDOWS deployment support, automated session generation and speeding up the trajectory and file handling.</p>
-
+<br>
 				<p align=justify>If you have any wishes, ideas or would like to contribute, get in touch with us!</p>
 
           <h1><a id="Features" class="anchor" target="_blank" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features, supported formats and operating systems</h1>
@@ -52,25 +73,20 @@
 	<li><strong>trajectory formats</strong>:
 	<ul>
 		<li><strong>client-side loading</strong>: DCD, NCTRAJ, TRR, XTC</li>
-		<li><strong>server-side loading</strong>: DCD, NCTRAJ/NetCDF, TRR, XTC, LAMMPSTRJ, HDF5, DTR, ARC, TNG, GRO</li>
+		<li><strong>server-side loading</strong>: DCD, NCTRAJ/NetCDF, TRR, XTC, LAMMPSTRJ, XYZ, BINPOS, HDF5, DTR, ARC, TNG, GRO (+ MDCRD/CRD, DMS, TRJ, ENT, NCDF if MDAnalysis is installed)</li>
 	</ul></li>
 	<li><strong>volume formats</strong>: MRC/MAP/CCP4, DX/DXBIN, CUBE, BRIX/DSN6, XPLOR/CNS</li>
 	<li><strong>scripting language</strong>: JavaScript</li>
 	<li><strong>basic analysis tools</strong>: distance measurements, info about picked atom</li>
 	<li><strong>on-the-fly trajectory processing</strong>: interpolation (linear, spline), centering, approx. PBC removal</li>
 	<li><strong>environments</strong>: web browser (desktop, mobile), no further installation required</li>
-	<li><strong>operating systems</strong>: Linux, MacOS, Windows, Android</li>
+	<li><strong>operating systems</strong>:
+	<ul>
+		<li><strong>viewing: </strong>Linux, MacOS, Windows, Android</li>
+		<li><strong>sharing: </strong>Linux, MacOS, Windows</li>
+	</ul>
+	</li>
 </ul>
-
-<!--				<p align=justify>
-					<ul>
-						<li><details><summary>Trajectory files:</summary>
-						<ul>
-							<li><strong>* </strong> everythin/all.</li>
-							<li><strong>not _h </strong> no hydrogens</li>
-						</ul></details></li>
-					</ul>
-				</p>-->
 
       </div>
     </div>
