@@ -34,7 +34,7 @@
 
 
 
-<p align=justify>To deploy the MDsrv, just follow these 8 steps.</p>
+<p align=justify>To deploy the MDsrv, just follow these 8 steps (for debian-based Linux systems).</p>
 <ol><li>Install MDsrv
 	<ul><li>via PyPi:
 	<pre><code>pip install mdsrv
@@ -48,13 +48,13 @@
 	<pre><code>sudo apt-get install apache2 libapache2-mod-wsgi</code></pre>
 </li><li>
  <p align=justify>Add the content of <a target="_blank" href="data/apache.config">apache.config</a> into <em>/etc/apache2/sites-available/000-default.conf</em> or replace this file.<br>
- <strong>Important:</strong> Adjust the <em>user</em> and <em>group</em> according to your environment settings and set the <em>python-path</em> or remove it.</p>
+ <strong>Important:</strong> Adjust the <em>user</em> and <em>group</em> according to your environment settings and set the <em>python-path</em> or remove it. An example for <em>user</em> and <em>group</em> would be your system name, found on Linux with <em>whoami</em>. For more information, please check the more detailed <a target="_blank" href="deployment.html">documentation</a>.</p>
 </li><li>
-<p>Copy <a target="_blank" href="data/mdsrv.html">mdsrv.html</a> into the folder <em>/var/www/html/</em>.</p>
+<p>Copy <a target="_blank" download="mdsrv.html" href="data/mdsrv.html">mdsrv.html</a> into the folder <em>/var/www/html/</em>.</p>
 </li><li>
-<p align=justify>Save and adjust the configuration file <a target="_blank" href="data/app.cfg">app.cfg</a>. The content and setting is explained <a href="configuration.html">elsewhere</a>.</p>
+<p align=justify>Save and adjust the configuration file <a target="_blank" download="app.cfg" href="data/app.cfg">app.cfg</a>. The content and setting is explained <a href="configuration.html">here</a>.</p>
 </li><li>
-<p align=justify>Place <a target="_blank" href="data/mdsrv.wsgi">mdsrv.wsgi</a> into <em>/var/www/mdsrv/mdsrv.wsgi</em>. Add the path of the configuration file (<a target="_blank" href="data/app.cfg">app.cfg</a>) into the <a target="_blank" href="data/mdsrv.wsgi">mdsrv.wsgi</a> file including the name of the file (<em>APP_CFG = '/home/nickname/important/app.cfg'</em>).</p>
+<p align=justify>Place <a target="_blank" download="mdsrv.wsgi" href="data/mdsrv.wsgi">mdsrv.wsgi</a> into <em>/var/www/mdsrv/mdsrv.wsgi</em>. Add the path of the configuration file (<a target="_blank" download="app.cfg" href="data/app.cfg">app.cfg</a>) into the <a target="_blank" download="mdsrv.wsgi" href="data/mdsrv.wsgi">mdsrv.wsgi</a> file including the name of the file (<em>APP_CFG = '/home/username/important/app.cfg'</em>).</p>
 </li><li>
 	<p align=justify>Restart the apache server (additional to whenever the <em>app.cfg</em> file is changed):</p>
 <pre><code>sudo service apache2 restart</code></pre>
