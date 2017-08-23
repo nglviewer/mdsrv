@@ -29,13 +29,17 @@
 			}
             var stage = new NGL.Stage( "viewport1" );
                 stage.setParameters( { backgroundColor: "white" } );
+						var trajComp;
+						var player;
           	stage.loadFile( getModelURL("data/md.gro"), { asTrajectory: true }  ).then( function( o ){
                 o.addRepresentation( "cartoon", {color: "#c40000"});
                 o.autoView();
-	      		var trajComp = o.addTrajectory();
-	      		var player = new NGL.TrajectoryPlayer(trajComp.trajectory, {start: 1, timeout: 200} );
-	      		player.play();
+	      		trajComp = o.addTrajectory();
+	      		player = new NGL.TrajectoryPlayer(trajComp.trajectory, {start: 1, timeout: 200} );
             } );
+						setTimeout(function(){
+							player.play();
+						}, 2000);
         } );
     </script>
     <script>
