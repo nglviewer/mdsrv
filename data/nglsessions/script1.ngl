@@ -1,0 +1,56 @@
+panel.setName( "Controls" );
+stage.setParameters( { backgroundColor: "white", theme: "light" } );
+
+var h = scriptHelperFunctions(stage, panel);
+
+h.uiText("200ns simulation of G-protein alpha5 subunit peptide of transducin bound to active Opsin (3PQR).");
+
+h.uiButton(
+    "show/hide all",
+    function(){
+        var hidden;
+        var compX = stage.getComponentsByName("3PQR").list[0];
+        if ( compX.visible === false ){
+            hidden = true
+        }else{
+            hidden = false
+        }
+        stage.eachComponent( function( comp ){
+            if (hidden === true){
+                comp.setVisibility( true );
+            }else{
+                comp.setVisibility( false );
+            }
+        } );
+    }
+);
+
+
+h.uiButton(
+    "sidechains on/off",
+    function(){
+        stage.getRepresentationsByName( "licorice" ).list.forEach( function( repre ){
+            repre.setVisibility( !repre.visible );
+        } );
+    }
+);
+
+
+var basePath = "MDsrv/";
+var name2 = "3PQR";
+var sysPath2 = "file://" + basePath + name2 + "/GaCT/md02/md02.gro";
+stage.loadFile( sysPath2 ).then( function( comp ){
+
+    comp.setName( name2 );
+    comp.setSelection( "protein" );//0 and protein and not _h" );
+    comp.addRepresentation( "cartoon", { sele: "protein and not _h" } );
+    comp.addRepresentation( "spacefill", { visible: true, sele: "LRD and not _h" } );
+    comp.addRepresentation( "licorice", { visible: false, sele: "protein and not _h" } );
+    comp.addTrajectory( basePath + name2 + "/GaCT/md02/md02.xtc", { name: "simulation.xtc", sele: "protein and not _h", initialFrame: 8686, deltaTime: 20, superpose:true, centerPbc: true, removePbc: true, defaultInterpolateType: "spline"} );
+    stage.viewerControls.orient([-75.04,10.22,101.96,0,-102.43,-3.88,-75,0,-2.92,-126.54,10.53,0,-2.11,-41.92,-52.97,1]);
+    comp.addRepresentation( "hyperball", { visible: true, sele: "(:B 135) and not _h" } );
+
+} );
+
+
+

@@ -1,0 +1,19 @@
+panel.setName( "Controls" );
+stage.setParameters( { backgroundColor: "white" } );
+var h = scriptHelperFunctions(stage, panel);
+h.uiText("Steer CG-MD simulation of GPCR dimer dissociation.");
+
+
+var basePath = "MDsrv/ex5/";
+var sysPath2 = "file://" + basePath;
+stage.loadFile( sysPath2 + "steer.gro" ).then( function( comp ){
+    comp.addTrajectory( basePath + "steer.xtc", { sele: ".BB .SC1 .SC2 DSPC", initialFrame: 0, defaultStep: 5, defaultTimeout: 1, defaultInterpolateStep: 5, defaultInterpolateType: "linear" ,centerPbc: true});
+    comp.setName( "GPCR dimer" );
+    comp.autoView();
+    comp.autoView();
+    comp.addRepresentation( "spacefill", { color: "#ff9900", sele: ".BB .SC1 .SC2", clipRadius: "bfactor", scale: 1.980, roughness: 0.5, metalness: 0.3});
+    comp.addRepresentation( "spacefill", { color: "#dbdada", sele: "DSPC", clipRadius: "bfactor", scale: 1.980, roughness: 1, metalness: 0});
+} );
+
+
+

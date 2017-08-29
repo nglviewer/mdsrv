@@ -45,12 +45,12 @@ additional options: [--script SCRIPT] [--configure CONFIGURE]
 </code></pre>
 <p align=justify>A structure file is mandatory for loading a trajectory. Trajectories and structures within the current working directory can still be loaded afterwards via the GUI.</p> 
 <p align=justify>
-MDsrv uses <a target="_blank" href="data/script.ngl">.ngl/.js</a> script files to load structures and trajectories with specific settings (e.g representations, colors, selections or background scheme), orientations or self-coded functions. The file is further explained below and example code can be found in the <a href="scripting.html">scripting section</a>.
+MDsrv uses <a target="_blank" href="data/script.ngl">.ngl/.js</a> script files to load structures and trajectories with specific settings (e.g representations, colors, selections or background scheme), orientations or self-coded functions. The file is further explained below and example code can be found in the <a href="scripting.html">scripting section</a> and downloaded <a target="_blank" href="download.html">here</a>.
 </p>
 <pre><code>mdsrv --script session.ngl
 mdsrv --script session.js
 </code></pre>
-<p align=justify>The .ngl file is written in JavaScript and contains commands to execute predefined settings and functions. A sample <a target="_blank" href="data/script.ngl">.ngl file</a> shows additional options like functions and basic loading commands. This is recommended if simulation sessions should be shared. The location of this file should be within an accessible directory and can then be loaded via the URL (e.g. <em>http://localhost/mdsrv.html?load=file://MDsrv/example.ngl</em>, where MDsrv is the directory defined within the <a target="_blank" href="data/app.cfg">.cfg file</a>). Further information and example code can be found in the <a href="scripting.html">scripting</a> section.</p>
+<p align=justify>The .ngl file is written in JavaScript and contains commands to execute predefined settings and functions. A sample <a target="_blank" href="data/script.ngl">.ngl file</a> shows additional options like functions and basic loading commands. This is recommended if simulation sessions should be shared. The location of this file should be within an accessible directory and can then be loaded via the URL (e.g. <em>http://localhost/mdsrv.html?load=file://MDsrv/example.ngl</em>, where MDsrv is the directory defined within the <a target="_blank" href="data/app.cfg">.cfg file</a>). Further information and example code can be found in the <a href="scripting.html">scripting</a> section and all used examples within this documentation can be found <a target="_blank" href="download.html">here</a>.</p>
 
 
 <p align=justify>

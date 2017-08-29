@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MDsrv/NGL - embedded</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+<body>
+    <!-- NGL -->
+    <script src="../tool-mdsrv/webapp/js/ngl.js"></script>
+
+    <!-- UI -->
+    <script src="../tool-mdsrv/webapp/js/lib/signals.min.js"></script>
+    <script src="../tool-mdsrv/webapp/js/lib/tether.min.js"></script>
+    <script src="../tool-mdsrv/webapp/js/lib/colorpicker.min.js"></script>
+    <script src="../tool-mdsrv/webapp/js/ui/ui.js"></script>
+    <script src="../tool-mdsrv/webapp/js/ui/ui.extra.js"></script>
+    <script src="../tool-mdsrv/webapp/js/ui/ui.ngl.js"></script>
+    <script src="../tool-mdsrv/webapp/js/ui/ui.helper.js"></script>
+    <script src="../tool-mdsrv/webapp/js/gui.js"></script>
+
+    <script>
+        NGL.cssDirectory = "../tool-mdsrv/webapp/css/";
+        NGL.documentationUrl = "http://arose.github.io/ngl/api/";
+
+        NGL.MDsrvdocumentationUrl = "http://arose.github.io/mdsrv";
+
+        // Datasources
+        NGL.DatasourceRegistry.add(
+            "file", new NGL.MdsrvDatasource( window.location.origin + "/tool-mdsrv/" )
+        );
+        NGL.DatasourceRegistry.listing = NGL.DatasourceRegistry.get( "file" );
+        NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );
+        document.addEventListener( "DOMContentLoaded", function(){
+            stage = new NGL.Stage( "viewport" );
+            stage.loadFile( "/tool-mdsrv/file/MDsrv/A2A+chol/A2A_C.pdb", { defaultRepresentation: false } ).then( function( comp ){
+                comp.setName( "A2A_C6a" );
+                comp.setSelection( "" );
+                comp.addRepresentation( "tube", { sele: "", opacity: 1, side: "front" } );
+                comp.addRepresentation( "hyperball", { visible: true, sele: "CHL1 and 59 and not hydrogen", colorValue: "#ff3900", colorScheme: "element", opacity: 0.9 } );
+                comp.addTrajectory( "MDsrv/A2A+chol/entrance_wrapped.dcd", {centerPdb: true, removePbc: true, superpose: true, initialFrame: 0} );
+                stage.viewerControls.orient([-33.95,-25.7,-92.21,0,-94.18,-8.53,37.05,0,-17.12,97.89,-20.98,0,0.6,0.6,-1.59,1])
+                stage.setParameters( { backgroundColor: "white" } );
+            } );
+            var togglepocket = document.getElementById( "togglepocket" );
+            var outfocus = true;
+            togglepocket.addEventListener( "click", function(){
+                stage.getRepresentationsByName( "hyperball" ).list.forEach( function( repre ){
+                    if(outfocus){
+                        stage.animationControls.orient([-30.89,-64.07,0.93,0,-63.64,30.79,7.87,0,-7.49,2.59,-70.69,0,0.54,-0.19,-2.78,1], 3000);
+                        outfocus = false;
+                    }else{
+                        stage.animationControls.orient([-33.95,-25.7,-92.21,0,-94.18,-8.53,37.05,0,-17.12,97.89,-20.98,0,0.6,0.6,-1.59,1], 3000)
+                        outfocus = true;
+                    };
+                } );
+            } );
+            function numberWithCommas(x) {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+            var toggleRunMDs = document.getElementById( "play" );
+            var isRunning = false;
+            toggleRunMDs.addEventListener( "click", function(){
+                var trajComp = stage.getComponentsByName("A2A_C6a").list[0].trajList[0];
+                var player = new NGL.TrajectoryPlayer(trajComp.trajectory, {timeout: 10, mode: "once", interpolateType: "spline",step: 1, interpolateStep: 5});
+                if( !isRunning ){
+                    player.play();
+                    isRunning = true;
+                    var clipNear = 0;
+                    trajComp.signals.frameChanged.add(function(){
+                        var fnum=trajComp.trajectory.currentFrame;                   
+                        clipRange.value = fnum;
+                        clipRange_val.innerHTML = numberWithCommas(parseInt(clipRange.value*20));
+                    });
+                }else{
+                    player.play();
+                    player.pause();
+                    isRunning = false;
+                }
+            } );
+            var clipRange = document.getElementById( "clipRange" );
+            var clipRange_val = document.getElementById( "clipRange_val" );
+            clipRange.oninput = function( e ){
+                var trajComp = stage.getComponentsByName("A2A_C6a").list[0].trajList[0];
+                trajComp.setFrame(e.target.value)
+                clipRange_val.innerHTML = numberWithCommas(parseInt(e.target.value*20));
+            };
+        } );
+    </script>
+
+    <h2>Selected Publications:</h2>
+    <p align=justify style="width:600px;">Guixà-González R, Albasanz JL, Rodriguez-Espigares I, Pastor M, Sanz F, Martí-Solano M, Manna M, Martinez-Seara H, Hildebrand PW, Martín M, Selent J<br>
+    <a href=>Membrane cholesterol access into a G-protein-coupled receptor.</a><br>
+    <em>Nat Commun 2017; 8(14505):doi: 10.1038/ncomms14505.</em></p>
+    <div style="display:inline;text-align: left;float: left; width: 305px;">
+
+        <div id="viewport" style="width:300px; height:300px;"></div>
+        <div style="width:500px;">
+            <input id="clipRange" type="range" value=0 min=0 max=88 step=1 ></input><span id="clipRange_val">0</span>ns
+            <button id="play">&#9658; / &#9613;&#9613;</button>
+            <button id="togglepocket">(un)focus binding pocket</button>
+        </div>
+    </div>
+    <div  style="float: left; width: 300px">
+        <p align=justify><ul>
+            <li>Cholesterol spontaneously enters a GPCR-binding pocket from the membrane milieu</li>
+            <li>Cholesterol uses the same portal gate previously suggested for opsin ligands</li>
+            <li>Presence inside the receptor confirmed in a biotinylation assay</li>
+            <li>Cholesterol's impact on GPCR-binding affinity goes beyond pure allosteric modulation </li>
+            <li>New interaction mode between cholesterol and a GPCR shown</li>
+        <ul></p>
+    </div>
+    <div style="clear:both"></div>
+</body>
+</html>

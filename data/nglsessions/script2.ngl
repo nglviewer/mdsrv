@@ -1,0 +1,26 @@
+panel.setName( "Controls" );
+stage.setParameters( { backgroundColor: "white" } );
+var h = scriptHelperFunctions(stage, panel);
+
+h.uiText("Spontaneous binding of cholesterol into A2A receptor ligand binding pocket (Guixà-González et al. Nat Commun 2017).");
+
+var trajSele = "backbone and not #h";
+var frame = 0;
+
+var basePath = "MDsrv/A2A+chol/";
+var name2 = "A2A+chol";
+var sysPath2 = "file://" + basePath + "A2A_C.pdb";
+
+
+stage.loadFile( sysPath2 ).then( function( comp ){
+    comp.setName( name2 );
+    comp.setSelection( "protein or (CHL1 and 59)" );
+    comp.addRepresentation( "tube", { sele: "", opacity: 1, side: "front" } );
+    comp.addTrajectory( basePath + "entrance_wrapped.dcd", {name: "entrance.dcd",defaultInterpolateType:"spline", initialFrame: 0, removePbc: false, centerPbc: false, superpose: false} );
+    stage.viewerControls.orient([-24.99,-18.94,-95.18,0,-97.03,6.72,24.14,0,1.82,98.17,-20.02,0,0.54,-0.19,-2.78,1]); 
+    comp.addRepresentation( "hyperball", { visible: true, sele: "CHL1 and 59 and not _h", colorValue: "#ff3900", colorScheme: "element", opacity: 0.9 } );
+} );
+
+
+
+

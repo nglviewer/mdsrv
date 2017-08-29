@@ -1,0 +1,20 @@
+panel.setName( "Controls" );
+stage.setParameters( { backgroundColor: "white" } );
+var h = scriptHelperFunctions(stage, panel);
+h.uiText("PUFA-mediated GPCR oligomerization (Guixà-González et al. Sci. Rep. 2016 6:19839.)");
+
+
+var basePath = "MDsrv/ex6/";
+var sysPath2 = "file://" + basePath;
+stage.loadFile( sysPath2 + "pufa.gro" ).then( function( comp ){
+    comp.addTrajectory( basePath + "pufa.xtc", { sele: ".BB .SC1 .SC2 DPPC DSPC SM18 DOPC SDPC CHOL", defaultStep: 2, defaultTimeout: 1, defaultInterpolateStep: 6, defaultInterpolateType: "linear"});
+    comp.setName( "GPCR oligomers" );
+    comp.autoView();
+    comp.addRepresentation( "spacefill", { color: "#9f9aff", sele: ".BB .SC1 .SC2", clipRadius: "bfactor", scale: 1.500, roughness: 1, metalness: 0.2});
+    comp.addRepresentation( "point", { color: "#525252", sele: "DPPC DSPC SM18 DOPC CHOL", pointSize: 17, useTexture: true, alphaTest: 1, depthWrite: false, opacity: 0.8});
+    comp.addRepresentation( "spacefill", { color: "#fff800", sele: "SDPC", clipRadius: "bfactor", scale: 1.500, roughness: 1, metalness: 0});
+    stage.viewerControls.orient([510.43,-13.2,5.09,0,3.77,303.84,410.37,0,-13.63,-410.18,303.82,0,-156.27,-151.04,-58.67,1]);
+} );
+
+
+

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MDsrv/NGL - embedded</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+<body>
+
+    <script src="../tool-mdsrv/webapp/js/ngl.js"></script>
+
+    <!-- UI -->
+    <script src="../tool-mdsrv/webapp/js/lib/signals.min.js"></script>
+    <script src="../tool-mdsrv/webapp/js/lib/tether.min.js"></script>
+    <script src="../tool-mdsrv/webapp/js/lib/colorpicker.min.js"></script>
+    <script src="../tool-mdsrv/webapp/js/ui/ui.js"></script>
+    <script src="../tool-mdsrv/webapp/js/ui/ui.extra.js"></script>
+    <script src="../tool-mdsrv/webapp/js/ui/ui.ngl.js"></script>
+    <script src="../tool-mdsrv/webapp/js/ui/ui.helper.js"></script>
+    <script src="../tool-mdsrv/webapp/js/gui.js"></script>
+
+    <script>
+        NGL.cssDirectory = "../tool-mdsrv/webapp/css/";
+        NGL.documentationUrl = "http://arose.github.io/ngl/api/";
+
+        NGL.MDsrvdocumentationUrl = "http://arose.github.io/mdsrv";
+
+        // Datasources
+        NGL.DatasourceRegistry.add(
+            "file", new NGL.MdsrvDatasource( window.location.origin + "/tool-mdsrv/" )
+        );
+        NGL.DatasourceRegistry.listing = NGL.DatasourceRegistry.get( "file" );
+        NGL.DatasourceRegistry.trajectory = NGL.DatasourceRegistry.get( "file" );
+        document.addEventListener( "DOMContentLoaded", function(){
+            stage1 = new NGL.Stage( "viewport1" );
+            stage1.loadFile( "/tool-mdsrv/file/MDsrv/embedded+2/1_0.psf", { defaultRepresentation: false } ).then( function( comp1 ){
+                comp1.setName( "A2A_C6a" );
+                comp1.addRepresentation( "tube", { sele: "", opacity: 1, side: "front" } );
+                comp1.addRepresentation( "hyperball", { visible: true, sele: "not hydrogen and not (TIP3)", colorValue: "#ff3900", colorScheme: "element", opacity: 0.9 } );
+                comp1.addRepresentation( "hyperball", { visible: true, sele: "not hydrogen and not (TIP3) CHL1", colorValue: "green", colorScheme: "element", opacity: 0.9 } );
+                comp1.addTrajectory( "MDsrv/embedded+2/1_0_20ns.dcd", {initialFrame: 1} );
+                stage1.viewerControls.orient([160, 7, 36, 0, -37, 25, 158, 0, 1, -162, 26, 0, -0, -0, -0, 1])
+                stage1.setParameters( { backgroundColor: "white" } );
+            } );
+            function numberWithCommas(x) {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+            var toggleRunMDs1 = document.getElementById( "play1" );
+            var isRunning1 = false;
+            toggleRunMDs1.addEventListener( "click", function(){
+                var trajComp1 = stage1.getComponentsByName("A2A_C6a").list[0].trajList[0];
+                var player1 = new NGL.TrajectoryPlayer(trajComp1.trajectory, {start: 0, timeout: 10, mode: "once", interpolateType: "spline",step: 1, interpolateStep: 5});
+                if( !isRunning1 ){
+                    player1.play();
+                    isRunning1 = true;
+                    trajComp1.signals.frameChanged.add(function(){
+                        var fnum=trajComp1.trajectory.currentFrame;                   
+                        clipRange1.value = fnum;
+                        clipRange_val1.innerHTML = (clipRange1.value*0.1).toFixed(2);
+                    });
+                }else{
+                    player1.play();
+                    player1.pause();
+                    isRunning1 = false;
+                }
+            } );
+            var clipRange1 = document.getElementById( "clipRange1" );
+            var clipRange_val1 = document.getElementById( "clipRange_val1" );
+            clipRange1.oninput = function( e ){
+                var trajComp1 = stage1.getComponentsByName("A2A_C6a").list[0].trajList[0];
+                trajComp1.setFrame(e.target.value)
+                clipRange_val1.innerHTML = (e.target.value*0.1).toFixed(2);
+            };
+
+            stage2 = new NGL.Stage( "viewport2" );
+            stage2.loadFile( "/tool-mdsrv/file/MDsrv/embedded+2/1_1.psf", { defaultRepresentation: false } ).then( function( comp2 ){
+                comp2.setName( "A2A_C6b" );
+                comp2.addRepresentation( "tube", { sele: "", opacity: 1, side: "front" } );
+                comp2.addRepresentation( "hyperball", { visible: true, sele: "not hydrogen and not (TIP3)", colorValue: "#ff3900", colorScheme: "element", opacity: 0.9 } );
+                comp2.addRepresentation( "hyperball", { visible: true, sele: "not hydrogen and not (TIP3) CHL1", colorValue: "green", colorScheme: "element", opacity: 0.9 } );
+                comp2.addTrajectory( "MDsrv/embedded+2/1_1_20ns.dcd", {initialFrame: 1} );
+                stage2.viewerControls.orient([160, 7, 36, 0, -37, 25, 158, 0, 1, -162, 26, 0, -0, -0, -0, 1])
+                stage2.setParameters( { backgroundColor: "white" } );
+            } );
+            var toggleRunMDs2 = document.getElementById( "play2" );
+            var isRunning2 = false;
+            toggleRunMDs2.addEventListener( "click", function(){
+                var trajComp2 = stage2.getComponentsByName("A2A_C6b").list[0].trajList[0];
+                var player2 = new NGL.TrajectoryPlayer(trajComp2.trajectory, {start: 0, timeout: 10, mode: "once", interpolateType: "spline",step: 1, interpolateStep: 5});
+                if( !isRunning2 ){
+                    player2.play();
+                    isRunning2 = true;
+                    trajComp2.signals.frameChanged.add(function(){
+                        var fnum=trajComp2.trajectory.currentFrame;                   
+                        clipRange2.value = fnum;
+                        clipRange_val2.innerHTML = (clipRange2.value*0.1).toFixed(2);
+                    });
+                }else{
+                    player2.play();
+                    player2.pause();
+                    isRunning2 = false;
+                }
+            } );
+            var clipRange2 = document.getElementById( "clipRange2" );
+            var clipRange_val2 = document.getElementById( "clipRange_val2" );
+            clipRange2.oninput = function( e ){
+                var trajComp2 = stage2.getComponentsByName("A2A_C6b").list[0].trajList[0];
+                trajComp2.setFrame(e.target.value)
+                clipRange_val2.innerHTML = (e.target.value*0.1).toFixed(2);
+            };
+
+            stage3 = new NGL.Stage( "viewport3" );
+            stage3.loadFile( "/tool-mdsrv/file/MDsrv/embedded+2/2_1.psf", { defaultRepresentation: false } ).then( function( comp3 ){
+                comp3.setName( "A2A_C6c" );
+                comp3.addRepresentation( "tube", { sele: "", opacity: 1, side: "front" } );
+                comp3.addRepresentation( "hyperball", { visible: true, sele: "not hydrogen and not (TIP3)", colorValue: "#ff3900", colorScheme: "element", opacity: 0.9 } );
+                comp3.addRepresentation( "hyperball", { visible: true, sele: "not hydrogen and not (TIP3) CHL1", colorValue: "green", colorScheme: "element", opacity: 0.9 } );
+                comp3.addTrajectory( "MDsrv/embedded+2/2_1_20ns.dcd", {initialFrame: 1} );
+                stage3.viewerControls.orient([160, 7, 36, 0, -37, 25, 158, 0, 1, -162, 26, 0, -0, -0, -0, 1])
+                stage3.setParameters( { backgroundColor: "white" } );
+            } );
+            var toggleRunMDs3 = document.getElementById( "play3" );
+            var isRunning3 = false;
+            toggleRunMDs3.addEventListener( "click", function(){
+                var trajComp3 = stage3.getComponentsByName("A2A_C6c").list[0].trajList[0];
+                var player3 = new NGL.TrajectoryPlayer(trajComp3.trajectory, {start: 0, timeout: 10, mode: "once", interpolateType: "spline",step: 1, interpolateStep: 5});
+                if( !isRunning3 ){
+                    player3.play();
+                    isRunning3 = true;
+                    trajComp3.signals.frameChanged.add(function(){
+                        var fnum=trajComp3.trajectory.currentFrame;                   
+                        clipRange3.value = fnum;
+                        clipRange_val3.innerHTML = (clipRange3.value*0.1).toFixed(2);
+                    });
+                }else{
+                    player3.play();
+                    player3.pause();
+                    isRunning3 = false;
+                }
+            } );
+            var clipRange3 = document.getElementById( "clipRange3" );
+            var clipRange_val3 = document.getElementById( "clipRange_val3" );
+            clipRange3.oninput = function( e ){
+                var trajComp3 = stage3.getComponentsByName("A2A_C6c").list[0].trajList[0];
+                trajComp3.setFrame(e.target.value)
+                clipRange_val3.innerHTML = (e.target.value*0.1).toFixed(2);
+            };
+
+            stage4 = new NGL.Stage( "viewport4" );
+            stage4.loadFile( "/tool-mdsrv/file/MDsrv/embedded+2/5_1.psf", { defaultRepresentation: false } ).then( function( comp4 ){
+                comp4.setName( "A2A_C6d" );
+                comp4.addRepresentation( "tube", { sele: "", opacity: 1, side: "front" } );
+                comp4.addRepresentation( "hyperball", { visible: true, sele: "not hydrogen and not (TIP3)", colorValue: "#ff3900", colorScheme: "element", opacity: 0.9 } );
+                comp4.addTrajectory( "MDsrv/embedded+2/5_1_20ns.dcd", {initialFrame: 1} );
+                comp4.addRepresentation( "hyperball", { visible: true, sele: "not hydrogen and not (TIP3) CHL1", colorValue: "green", colorScheme: "element", opacity: 0.9 } );
+                stage4.viewerControls.orient([160, 7, 36, 0, -37, 25, 158, 0, 1, -162, 26, 0, -0, -0, -0, 1])
+                stage4.setParameters( { backgroundColor: "white" } );
+            } );
+            var toggleRunMDs4 = document.getElementById( "play4" );
+            var isRunning4 = false;
+            toggleRunMDs4.addEventListener( "click", function(){
+                var trajComp4 = stage4.getComponentsByName("A2A_C6d").list[0].trajList[0];
+                var player4 = new NGL.TrajectoryPlayer(trajComp4.trajectory, {start: 0, timeout: 10, mode: "once", interpolateType: "spline",step: 1, interpolateStep: 5});
+                if( !isRunning4 ){
+                    player4.play();
+                    isRunning4 = true;
+                    trajComp4.signals.frameChanged.add(function(){
+                        var fnum=trajComp4.trajectory.currentFrame;                   
+                        clipRange4.value = fnum;
+                        clipRange_val4.innerHTML = (clipRange4.value*0.1).toFixed(2);
+                    });
+                }else{
+                    player4.play();
+                    player4.pause();
+                    isRunning4 = false;
+                }
+            } );
+            var clipRange4 = document.getElementById( "clipRange4" );
+            var clipRange_val4 = document.getElementById( "clipRange_val4" );
+            clipRange4.oninput = function( e ){
+                var trajComp4 = stage4.getComponentsByName("A2A_C6d").list[0].trajList[0];
+                trajComp4.setFrame(e.target.value)
+                clipRange_val4.innerHTML = (e.target.value*0.1).toFixed(2);
+            };
+        } );
+    </script>
+
+
+
+<h2><span class="mw-headline" id="Examples">Examples</span></h2>
+<table>
+  <tr>
+     <th>
+
+<h2>POPC:CHL1 - 1:0 </h2>
+<div id="viewport1" style="width:300px; height:300px;"></div>
+        <div style="width:500px;">
+            <input id="clipRange1" type="range" value=0 min=0 max=200 step=1 ></input><span id="clipRange_val1">0</span>ns
+            <button id="play1">&#9658; / &#9613;&#9613;</button>
+        </div>
+</th>
+<th>
+<h2>POPC:CHL1 - 1:1 </h2>
+<div id="viewport2" style="width:300px; height:300px;"></div>
+        <div style="width:500px;">
+            <input id="clipRange2" type="range" value=0 min=0 max=200 step=1 ></input><span id="clipRange_val2">0</span>ns
+            <button id="play2">&#9658; / &#9613;&#9613;</button>
+        </div>
+</th>
+
+ </tr>
+  <tr>
+<th>
+<h2>POPC:CHL1 - 2:1</h2>
+<div id="viewport3" style="width:300px; height:300px;"></div>
+        <div style="width:500px;">
+            <input id="clipRange3" type="range" value=0 min=0 max=200 step=1 ></input><span id="clipRange_val3">0</span>ns
+            <button id="play3">&#9658; / &#9613;&#9613;</button>
+        </div>
+</th>
+<th>
+<h2>POPC:CHL1 - 5:1 </h2>
+<div id="viewport4" style="width:300px; height:300px;"></div>
+        <div style="width:500px;">
+            <input id="clipRange4" type="range" value=0 min=0 max=200 step=1 ></input><span id="clipRange_val4">0</span>ns
+            <button id="play4">&#9658; / &#9613;&#9613;</button>
+        </div>
+</th></tr></table>
+
+
+
+
+
+    </body>
+</html>

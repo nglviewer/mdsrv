@@ -1,0 +1,19 @@
+panel.setName( "Controls" );
+stage.setParameters( { backgroundColor: "white" } );
+
+
+var h = scriptHelperFunctions(stage, panel);
+h.uiText("Simulation of b2AR in complex with the Gs holo protein without GDP/GTP (3SN6).");
+
+var basePath = "MDsrv/b2AR+Gs-empty/";
+var name2 = "b2AR";
+var sysPath2 = "file://" + basePath + "md01_protein.gro";
+stage.loadFile( sysPath2 ).then( function( comp ){
+
+    comp.setName( "b2AR+Gs-empty" );
+    comp.setSelection("protein" );
+    comp.addRepresentation( "cartoon" );
+    comp.addTrajectory( basePath + "md01_mc_fit_protein.xtc", {deltaTime: 20} );
+    stage.viewerControls.orient([280.76,-5.02,40.53,0,-40.55,-0.39,280.8,0,-4.91,-283.67,-1.1,0,-92.17,-87.93,-71.1,1]);
+} );
+
