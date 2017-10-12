@@ -229,9 +229,7 @@ NGL.StageWidget = function (stage) {
 
   //
 
-  document.body.addEventListener(
-    'touchmove', function (e) { e.preventDefault() }, { passive: false }
-  )
+  document.body.style.touchAction = 'none'
 
   //
 
@@ -1481,7 +1479,7 @@ NGL.StructureComponentWidget = function (component, stage) {
     function onListingClick (info) {
       var ext = info.path.split('.').pop().toLowerCase()
       if (remoteTrajExt.indexOf(ext) !== -1) {
-        component.addTrajectory(info.path)
+        component.addTrajectory(info.path + '?struc=' + component.structure.path )
         dirWidget.dispose()
       } else {
         NGL.log('unknown trajectory type: ' + ext)
@@ -2311,6 +2309,13 @@ NGL.TrajectoryComponentWidget = function (component, stage) {
       })
     })
 
+  var setRemovePeriodicity = new UI.Checkbox(traj.removePeriodicity)
+    .onChange(function () {
+      component.setParameters({
+        'removePeriodicity': setRemovePeriodicity.getValue()
+      })
+    })
+
   var setRemovePbc = new UI.Checkbox(traj.removePbc)
     .onChange(function () {
       component.setParameters({
@@ -2345,6 +2350,7 @@ NGL.TrajectoryComponentWidget = function (component, stage) {
 
   signals.parametersChanged.add(function (params) {
     setCenterPbc.setValue(traj.centerPbc)
+    setRemovePeriodicity.setValue(traj.removePeriodicity)
     setRemovePbc.setValue(traj.removePbc)
     setSuperpose.setValue(traj.superpose)
     setDeltaTime.setValue(traj.deltaTime)
@@ -2379,6 +2385,7 @@ NGL.TrajectoryComponentWidget = function (component, stage) {
     .setEntryLabelWidth('130px')
     .addEntry('Path', repr)
     .addEntry('Center', setCenterPbc)
+    .addEntry('Remove Periodicity', setRemovePeriodicity)
     .addEntry('Remove PBC', setRemovePbc)
     .addEntry('Superpose', setSuperpose)
     .addEntry('Step size', step)

@@ -105,6 +105,12 @@ def get_directory( root ):
         return ""
 
 
+def get_struc_directoy( struc ):
+    structurefile = struc.split('file/')[1]
+    path = structurefile.split('/')[0]
+    name = '/'.join(structurefile.split('/')[1:])
+    return [path, name]
+
 def crossdomain(
     origin=None, methods=None, headers=None,
     max_age=21600, attach_to_all=True, automatic_options=True
@@ -155,10 +161,11 @@ def crossdomain(
 @crossdomain( origin='*' )
 def webapp( filename="index.html" ):
     if request.args.get('struc'):
-        structurefile = request.args.get('struc').split('file://')[1]
+        struc = request.args.get('struc')
+        global struct
+        structurefile = struc.split('file://')[1]
         path = structurefile.split('/')[0]
         name = '/'.join(structurefile.split('/')[1:])
-        global struct
         struct = [path, name]
     directory = os.path.join( MODULE_DIR, "webapp" )
     return send_from_directory( directory, filename )
@@ -172,6 +179,10 @@ def webapp( filename="index.html" ):
 @requires_auth
 @crossdomain( origin='*' )
 def file( root, filename ):
+    global struct
+    if request.args.get('struc') and struct==[]:
+        struc = request.args.get('struc')
+        struct = get_struc_directoy(struc)
     directory = get_directory( root )
     if directory:
         return send_from_directory( directory, filename )
@@ -265,12 +276,15 @@ TRAJ_CACHE = TrajectoryCache()
 @requires_auth
 @crossdomain( origin='*' )
 def traj_frame( frame, root, filename ):
+    global struct
+    if request.args.get('struc') and struct==[]:
+        struc = request.args.get('struc')
+        struct = get_struc_directoy(struc)
     directory = get_directory( root )
     if directory:
         path = os.path.join( directory, filename )
     else:
         return
-    global struct
     try:
         directory_struc = get_directory( struct[0] )
         struc_path = os.path.join( directory_struc, struct[1] )
@@ -291,12 +305,15 @@ def traj_frame( frame, root, filename ):
 @requires_auth
 @crossdomain( origin='*' )
 def traj_numframes( root, filename ):
+    global struct
+    if request.args.get('struc') and struct==[]:
+        struc = request.args.get('struc')
+        struct=get_struc_directoy(struc)
     directory = get_directory( root )
     if directory:
         path = os.path.join( directory, filename )
     else:
         return
-    global struct
     try:
         directory_struc = get_directory( struct[0] )
         struc_path = os.path.join( directory_struc, struct[1] )
@@ -308,13 +325,16 @@ def traj_numframes( root, filename ):
 @app.route( '/traj/path/<int:index>/<root>/<path:filename>', methods=['POST'] )
 @requires_auth
 @crossdomain( origin='*' )
-def traj_path( index, root, filename ):
+def traj_path( index, root, filename, structure ):
+    global struct
+    if request.args.get('struc') and struct==[]:
+        struc = request.args.get('struc')
+        struct=get_struc_directoy(struc)
     directory = get_directory( root )
     if directory:
         path = os.path.join( directory, filename )
     else:
         return
-    global struct
     try:
         directory_struc = get_directory( struct[0] )
         struc_path = os.path.join( directory_struc, struct[1] )
