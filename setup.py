@@ -47,18 +47,18 @@ setup_args = {
     'entry_points': {'console_scripts':
           ['mdsrv = mdsrv:entry_point',]
     },
-    'setup_requires': {
-        "cython": ["cython"],
-        "numpy": ["numpy"],
-        "scipy": ["scipy"],
-        "setuptools": ["setuptools"],
+    'setup_requires': [
+        "cython",
+        "numpy",
+        "scipy",
+        "setuptools",
         
-    },
-    'install_requires': {
-        "flask": ["flask"],
-        "mdtraj": ["mdtraj"],
+    ],
+    'install_requires': [
+        "flask",
+        "mdtraj",
 
-    },
+    ],
     'extra_requires': {
         "mdanalysis;platform_system!='Windows' and python_version<'3.4'": ["mdanalysis"],
     },
