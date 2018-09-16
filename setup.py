@@ -52,9 +52,10 @@ setup_args = {
         "numpy": ["numpy"],
         "scipy": ["scipy"],
         "setuptools": ["setuptools"],
-        "flask": ["flask"],
+        
     },
     'install_requires': {
+        "flask": ["flask"],
         "mdtraj": ["mdtraj"],
 
     },
