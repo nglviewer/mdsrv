@@ -2,6 +2,6 @@ var basePath = "cwd/data/";
 var name = "md_1u19";
 var sysPath = "file://" + basePath + name + ".gro";
 stage.loadFile( sysPath ).then( function( comp ){
-   comp.addRepresentation( "cartoon", { color: "#55eb86", sele: "*" } );
+   comp.addRepresentation( "cartoon");
    comp.addTrajectory( basePath  + name + ".xtc" );
 } );
