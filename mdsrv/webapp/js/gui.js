@@ -756,7 +756,7 @@ NGL.MenubarHelpWidget = function (stage, preferences) {
   var menuConfig = [
     createOption('Overview', onOverviewOptionClick),
     createOption('NGL Documentation', onDocOptionClick),
-    createOption('MDsrv documentation', onMDsrvDocOptionClick),
+    createOption('MDsrv Documentation', onMDsrvDocOptionClick),
     createDivider(),
     createOption('Debug on', onDebugOnClick),
     createOption('Debug off', onDebugOffClick),
