@@ -43,9 +43,21 @@ Pip needs to be installed in advance to add underlying tools otherwise an instal
 <br>
 For further information, consult the <em>setuptools</em> <a target="_blank" href="http://setuptools.readthedocs.io/en/latest/setuptools.html#development-mode">documentation</a>.</p>
 
-<p align=justify><strong>Dependencies:</strong> As MDsrv depends on MDTraj, some packages need to be installed in advance to garantee, that MDTraj is working.</p>
+<p align=justify><strong>Dependencies:</strong> As MDsrv depends on MDTraj, some packages need to be installed in advance to garantee, that MDTraj is working. MDsrv should install those packages but it can happend that some dependencie problems rise due to this. If you have problems running the simulations, please check if mdtraj is working: </p>
 <pre><code>mdtraj:cython, numpy, scipy</code></pre>
 <pre><code>mdsrv: setuptools, flask</code></pre>
+
+<p align=justify><strong>Additional dependencies:</strong> You can speed up your trajectories by installing MDAnalysis (Please be aware that this package is large). MDsrv will automaticially detect when MDAnalysis is present and will use it prior to mdtraj.</p>
+
+<p align=justify>There are three ways of installing, as root (sudo), as 'normal' user or within an enviroment. Note that the installations paths will differ. When installing as 'normal' user the path will be (under Linux) '/home/USER/.local/lib/python3.8/site-packages ' while as root the installation will be under e.g. '/usr/lib/python3.8/'. Thus you have to adjust app.cfg according to the version of python you use and under which user you installed mdsrv.</p>
+
+
+<br>
+<h3>Test your installation:</h3>
+<p align=justify>To test your installation, execute <pre><code>mdsrv</code></pre> on your terminal. A new window will be opened. It occasionally, this window can not be found, please just reload the website.</p>
+<p align=justify>please make sure your executables can be found by sourcing the path to your installation if needed (check if the path applies to you by either looking it up or by using <pre><code>which mdsrv</code></pre> ): <pre><code>export PATH=$PATH:~/.local/bin</code></pre>  </p>
+
+
 <br>
 <h3>Deployment even on your local machine - why?</h3>
 <p align=justify>With step 1, you can already use the MDsrv locally within your network. In order to add the MDsrv into your daily research, deploy and configure it to your system and your settings. The advantage is that you can add project folders permanently, including their security settings. By setting up an apache server (locally on your machine or global on a web server), you are able to share your sessions and files with colleagues within the same network, collaborators or reviewers. Additionally, you can add a link to your cluster and inspect your unprocessed simulations remotely.</p>
@@ -57,9 +69,10 @@ For further information, consult the <em>setuptools</em> <a target="_blank" href
 <pre><code>sudo apt-get install apache2 libapache2-mod-wsgi
 </code></pre>
 
-<pre>If you are using python3, please install <code>sudo apt-get install apache2 libapache2-mod-wsgi-py3
+If you are using python3, please install 
+<pre><code>sudo apt-get install apache2 libapache2-mod-wsgi-py3
 </code></pre>
-<pre>Then activate wsgi with <code>a2enmod wsgi</code></pre>
+Then activate wsgi with <pre><code>a2enmod wsgi</code></pre>
 </p>
 
 <h3>3. Add MDsrv-wsgi settings to apache.config</h3>
