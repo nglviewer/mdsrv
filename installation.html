@@ -39,12 +39,21 @@
 	<ul><li>via PyPi:
 	<pre><code>pip install mdsrv
 </code></pre>
-</li><li>via conda:
+</li>
+<li>please source path to your installation (check if the path applies to you by either looking it up or by using <code>which mdsrv</code>): <code>export PATH=$PATH:~/.local/bin</code> 
+</li>
+<li>via conda:
 	<pre><code>conda config --add channels conda-forge</code></pre>
-	<pre><code>conda install mdsrv</code></pre>
-</li><li>dependencies: <em>mdtraj (incl. cython, numpy, scipy), setuptools, flask</em>
+	<pre><code>conda install -c ngl mdsrv</code></pre>
+</li><li>dependencies (included in the installation): <em>mdtraj (incl. cython, numpy, scipy), setuptools, flask</em>
 </li></ul>
-</li><li><p align=justify>Install Apache2 and mod-wsgi:</p> 
+</li>
+<li><p align=justify>Test your installation:</p> 
+  <pre><code>sudo apt-get install apache2 libapache2-mod-wsgi</code></pre>
+  <pre>If you're using python3, please install <code>sudo apt-get install apache2 libapache2-mod-wsgi-py3</code></pre>
+   <pre>Then activate wsgi with <code>a2enmod wsgi</code></pre>
+</li>
+<li><p align=justify>Install Apache2 and mod-wsgi:</p> 
 	<pre><code>sudo apt-get install apache2 libapache2-mod-wsgi</code></pre>
 </li><li>
  <p align=justify>Add the content of <a target="_blank" href="data/apache.config">apache.config</a> into <em>/etc/apache2/sites-available/000-default.conf</em> or replace this file.<br>
