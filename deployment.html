@@ -35,7 +35,7 @@
 <pre><code>pip install mdsrv</code></pre>
 <br>
 <pre><code>conda config --add channels conda-forge</code></pre>
-<pre><code>conda install mdsrv</code></pre>
+<pre><code>conda install -c ngl mdsrv</code></pre>
 <br>
 <p align=justify>To install the development version, download it from the
 <a target="_blank" href="https://github.com/arose/mdsrv/releases">MDsrv GitHub page</a> and install it manually (via executing <em>setup.py</em> within the repository). <br>
@@ -56,6 +56,10 @@ For further information, consult the <em>setuptools</em> <a target="_blank" href
 
 <pre><code>sudo apt-get install apache2 libapache2-mod-wsgi
 </code></pre>
+
+<pre>If you are using python3, please install <code>sudo apt-get install apache2 libapache2-mod-wsgi-py3
+</code></pre>
+<pre>Then activate wsgi with <code>a2enmod wsgi</code></pre>
 </p>
 
 <h3>3. Add MDsrv-wsgi settings to apache.config</h3>
