@@ -47,11 +47,9 @@
 </li></ul>
 </li>
 <li><p align=justify>Test your installation:</p> 
-  <p align=justify>To test your installation, execute <em>mdsrv</em> on your terminal. A new browser window will opened. If nothing is shown, please just reload the website.</p>
+  <p align=justify>To test your installation, execute <em>mdsrv path/to/structure-file path/to/trajectory</em> in your terminal. A new browser window will open. If nothing is shown, please just reload the website. Don't forget to play your trajectory.</p>
 
-<p align=justify>Please make sure your executables can be found by sourcing the path to your installation if needed (check if the path applies to you by either looking it up or by using <em>which mdsrv</em>): 
-<br>
-<pre><code>export PATH=$PATH:~/.local/bin</code></pre></p>
+<p align=justify>If the executable 'mdsrv' cannot be found, you probably have to adjust your PATH variable, e.g.: <code>export PATH=$PATH:~/.local/bin</code></p>
 <br>
   <p align=justify>There are three ways of installing, as root (sudo), as 'normal' user or within an virtual environment. Note that the installations paths will differ. When installing as 'normal' user the path will be (under Linux) '/home/USER/.local/lib/python3.8/site-packages ' while as root the installation will be under e.g. '/usr/lib/python3.8/'. You have to adjust the variable 'python-path' in the apache2 config (/etc/apache2/sites-available/000-default.conf) accordingly.
 </p>
@@ -65,9 +63,9 @@
   Then activate wsgi with <code>a2enmod wsgi</code>
 </li><li>
  <p align=justify>Add the content of <a target="_blank" href="data/apache.config">apache.config</a> into <em>/etc/apache2/sites-available/000-default.conf</em> or replace this file.<br>
- <strong>Important:</strong> Adjust the <em>user</em> and <em>group</em> according to your environment settings and set the <em>python-path</em> or remove it. An example for <em>user</em> and <em>group</em> would be your system name, found on Linux with <em>whoami</em>. For more information, please check the more detailed <a target="_blank" href="deployment.html">documentation</a>.</p>
+ <strong>Important:</strong> Adjust the <em>user</em> and <em>group</em> according to your environment settings and set the <em>python-path</em> or remove it. An example for <em>user</em> and <em>group</em> would be your system name, found on Linux with <em>whoami</em>. Make sure to use absolut paths. For more information, please check the more detailed <a target="_blank" href="deployment.html">documentation</a>.</p>
 </li><li>
-<p>Copy <a target="_blank" download="mdsrv.html" href="data/mdsrv.html">mdsrv.html</a> into the folder <em>/var/www/html/</em>.</p>
+<p>Copy <a target="_blank" download="mdsrv.html" href="data/mdsrv.html">mdsrv.html</a> into the folder <em>/var/www/html/</em>. Make sure the right rights are set (<code>chmod +r /var/www/html/mdsrv.html</code>).</p>
 </li><li>
 <p align=justify>Save and adjust the configuration file <a target="_blank" download="app.cfg" href="data/app.cfg">app.cfg</a>. The content and setting is explained <a href="configuration.html">here</a>.</p>
 </li><li>
@@ -81,17 +79,37 @@
 </li>
 </ol>
 
-<p align=justify><strong>Additional dependencies:</strong> You can speed up your trajectories by installing MDAnalysis (Please be aware that this package is large). MDsrv will automaticially detect when MDAnalysis is present and will use it prior to mdtraj.</p>
+<p align=justify><strong>Additional dependencies:</strong> You can speed up your trajectories by installing MDAnalysis (Please be aware that this package is large). MDsrv will automaticially detect when MDAnalysis is present and will use it prior to mdtraj. For installation instructions please see the MDAnalysis <a target="_blank" href="https://www.mdanalysis.org/MDAnalysisTutorial/installation.html">website</a>. </p>
 
 <h2><a id="operatingsys" class="anchor" target="_blank" href="#operatingsys" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Operating systems</h2>
 <p align=justify>The MDsrv has been tested and can be installed on Linux,  Mac OS and Windows. Deployment is excessively tested for Debian-based Linux systems.</p>
 <p align=justify>The deployed NGL sessions can be viewed on every operating system and browser which supports WebGL.</p>
 
 
+<h2><a id="toy" class="anchor" target="_blank" href="#toy" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Toy example to test your installation & deployment</h2>
+<p align=justify>Find here a quick guide to setup your first mdsrv session:</p>
+
+<ol><li>Go to <a target="_blank" href="https://github.com/nglviewer/mdsrv/tree/master/data">https://github.com/nglviewer/mdsrv/tree/master/data</a></li>
+
+<li>Download <em>script.ngl</em>, <em>md_1u19.gro</em>, <em>md_1u19.xtc</em> into e.g. <em>~/example/</em></li>
+<br>
+<li>In app.cfg, add the path where <em>script.ngl</em> is located, e.g.:
+<br>
+<pre><code>DATA_DIRS={
+"mytest" : os.path.abspath( "/home/USER/example/"),
+}</code></pre></li>
+<br>
+<li>In script.ngl you have to change the basePath variable, e.g.:
+<pre><code>var basePath = "mytest/"</code></pre></li>
+<br>
+<li>Restart apache2: <code>service apache2 restart</code></li>
+<br>
+<li>In your browser call URL:
+<a target="_blank" href="http://localhost/mdsrv.html?load=file://mytest/script.ngl">http://localhost/mdsrv.html?load=file://mytest/script.ngl</a></li>
+</p>
 
 
-
-<p align=justify>To get information how to do this, inspect the <a href="deployment.html">deployment guide</a>.</p>
+<p align=justify>Troubles? Get information how to do this, inspect the <a href="deployment.html">deployment guide</a>.</p>
 
 <h1><a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
 
