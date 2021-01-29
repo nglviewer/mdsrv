@@ -40,8 +40,6 @@
 	<pre><code>pip install mdsrv
 </code></pre>
 </li>
-<li>please source path to your installation (check if the path applies to you by either looking it up or by using <code>which mdsrv</code>): <code>export PATH=$PATH:~/.local/bin</code> 
-</li>
 <li>via conda:
 	<pre><code>conda config --add channels conda-forge</code></pre>
 	<pre><code>conda install -c ngl mdsrv</code></pre>
@@ -49,12 +47,15 @@
 </li></ul>
 </li>
 <li><p align=justify>Test your installation:</p> 
-  <pre><code>sudo apt-get install apache2 libapache2-mod-wsgi</code></pre>
-  <pre>If you're using python3, please install <code>sudo apt-get install apache2 libapache2-mod-wsgi-py3</code></pre>
-   <pre>Then activate wsgi with <code>a2enmod wsgi</code></pre>
+  To test your installation, execute <pre><code>mdsrv</code></pre> on your terminal. A new window will be opened. It occasionally, this window can not be found, please just reload the website.
+<li>please make sure your executables can be found by sourcing the path to your installation if needed (check if the path applies to you by either looking it up or by using <pre><code>which mdsrv</code></pre>): <pre><code>export PATH=$PATH:~/.local/bin</code></pre> 
+  <p align=justify>There are three ways of installing, as root (sudo), as 'normal' user or within an enviroment. Note that the installations paths will differ. When installing as 'normal' user the path will be (under Linux) '/home/USER/.local/lib/python3.8/site-packages ' while as root the installation will be under e.g. '/usr/lib/python3.8/'. Thus you have to adjust app.cfg according to the version of python you use and under which user you installed mdsrv.</p>
+</li>
 </li>
 <li><p align=justify>Install Apache2 and mod-wsgi:</p> 
 	<pre><code>sudo apt-get install apache2 libapache2-mod-wsgi</code></pre>
+  If you're using python3, please install <pre><code>sudo apt-get install apache2 libapache2-mod-wsgi-py3</code></pre>
+  Then activate wsgi with <pre><code>a2enmod wsgi</code></pre>
 </li><li>
  <p align=justify>Add the content of <a target="_blank" href="data/apache.config">apache.config</a> into <em>/etc/apache2/sites-available/000-default.conf</em> or replace this file.<br>
  <strong>Important:</strong> Adjust the <em>user</em> and <em>group</em> according to your environment settings and set the <em>python-path</em> or remove it. An example for <em>user</em> and <em>group</em> would be your system name, found on Linux with <em>whoami</em>. For more information, please check the more detailed <a target="_blank" href="deployment.html">documentation</a>.</p>
@@ -73,7 +74,7 @@
 </li>
 </ol>
 
-
+<p align=justify><strong>Additional dependencies:</strong> You can speed up your trajectories by installing MDAnalysis (Please be aware that this package is large). MDsrv will automaticially detect when MDAnalysis is present and will use it prior to mdtraj.</p>
 
 <h2><a id="operatingsys" class="anchor" target="_blank" href="#operatingsys" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Operating systems</h2>
 <p align=justify>The MDsrv has been tested and can be installed on Linux,  Mac OS and Windows. Deployment is excessively tested for Debian-based Linux systems.</p>
