@@ -76,7 +76,7 @@ stage.loadFile( sysPath ).then( function( comp ){
     comp.addRepresentation( "licorice", { colorScheme: "element", colorValue: "#55eb86", visible: false, sele: "protein" } );
     comp.addRepresentation("licorice", { name: "R135", colorScheme: "element", colorValue: "#55eb86", visible: false, sele: "135" } );
     comp.addTrajectory( basePath  + name + ".xtc" );
-    comp.addTrajectory( basePath  + "/@md_1u19.xtc", { sele: trajSele, deltaTime: 200, centerPbc: true, removePbc: true, superpose: true } );
+  //  comp.addTrajectory( basePath  + "/@md_1u19.xtc", { sele: trajSele, deltaTime: 200, centerPbc: true, removePbc: true, superpose: true } );
     comp.autoView();
 } );
 
