@@ -47,15 +47,19 @@
 </li></ul>
 </li>
 <li><p align=justify>Test your installation:</p> 
-  To test your installation, execute <pre><code>mdsrv</code></pre> on your terminal. A new window will be opened. It occasionally, this window can not be found, please just reload the website.
-<li>please make sure your executables can be found by sourcing the path to your installation if needed (check if the path applies to you by either looking it up or by using <pre><code>which mdsrv</code></pre>): <pre><code>export PATH=$PATH:~/.local/bin</code></pre> 
-  <p align=justify>There are three ways of installing, as root (sudo), as 'normal' user or within an enviroment. Note that the installations paths will differ. When installing as 'normal' user the path will be (under Linux) '/home/USER/.local/lib/python3.8/site-packages ' while as root the installation will be under e.g. '/usr/lib/python3.8/'. Thus you have to adjust app.cfg according to the version of python you use and under which user you installed mdsrv.</p>
+  <p align=justify>To test your installation, execute <em>mdsrv</em> on your terminal. A new window will be opened. It occasionally, this window can not be found, please just reload the website.
+please make sure your executables can be found by sourcing the path to your installation if needed (check if the path applies to you by either looking it up or by using <em>which mdsrv</em>): <code>export PATH=$PATH:~/.local/bin</code></p>
+<br>
+  <p align=justify>There are three ways of installing, as root (sudo), as 'normal' user or within an virtual environment. Note that the installations paths will differ. When installing as 'normal' user the path will be (under Linux) '/home/USER/.local/lib/python3.8/site-packages ' while as root the installation will be under e.g. '/usr/lib/python3.8/'. You have to adjust the variable 'python-path' in the apache2 config (/etc/apache2/sites-available/000-default.conf) accordingly.
+</p>
 </li>
 </li>
 <li><p align=justify>Install Apache2 and mod-wsgi:</p> 
-	<pre><code>sudo apt-get install apache2 libapache2-mod-wsgi</code></pre>
-  If you're using python3, please install <pre><code>sudo apt-get install apache2 libapache2-mod-wsgi-py3</code></pre>
-  Then activate wsgi with <pre><code>a2enmod wsgi</code></pre>
+	<code>sudo apt-get install apache2 libapache2-mod-wsgi</code>
+<br>
+  <p align=justify>If you're using python3, please install <code>sudo apt-get install apache2 libapache2-mod-wsgi-py3</code></p>
+<br>
+  Then activate wsgi with <code>a2enmod wsgi</code>
 </li><li>
  <p align=justify>Add the content of <a target="_blank" href="data/apache.config">apache.config</a> into <em>/etc/apache2/sites-available/000-default.conf</em> or replace this file.<br>
  <strong>Important:</strong> Adjust the <em>user</em> and <em>group</em> according to your environment settings and set the <em>python-path</em> or remove it. An example for <em>user</em> and <em>group</em> would be your system name, found on Linux with <em>whoami</em>. For more information, please check the more detailed <a target="_blank" href="deployment.html">documentation</a>.</p>
