@@ -93,23 +93,24 @@
 
 <li>Download <em>script.ngl</em>, <em>md_1u19.gro</em>, <em>md_1u19.xtc</em> into e.g. <em>~/example/</em></li>
 <br>
-<li>In app.cfg, add the path where <em>script.ngl</em> is located, e.g.:
+<li>In <em>app.cfg</em>, add the path where <em>script.ngl</em> is located, e.g.:</li>
 <br>
 <pre><code>DATA_DIRS={
 "mytest" : os.path.abspath( "/home/USER/example/"),
-}</code></pre></li>
+}</code></pre>
 <br>
-<li>In script.ngl you have to change the basePath variable, e.g.:
-<pre><code>var basePath = "mytest/"</code></pre></li>
+<li>In script.ngl you have to change the basePath variable, e.g.:</li>
+<pre><code>var basePath = "mytest/"</code></pre>
 <br>
 <li>Restart apache2: <code>service apache2 restart</code></li>
 <br>
 <li>In your browser call URL:
 <a target="_blank" href="http://localhost/mdsrv.html?load=file://mytest/script.ngl">http://localhost/mdsrv.html?load=file://mytest/script.ngl</a></li>
+</ol>
 </p>
 
 
-<p align=justify>Troubles? Get information how to do this, inspect the <a href="deployment.html">deployment guide</a>.</p>
+<h2><p align=justify>Troubles? Get information how to do this, inspect the <a href="deployment.html">deployment guide</a>.</p></h2>
 
 <h1><a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
 
