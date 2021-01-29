@@ -56,8 +56,8 @@ For further information, consult the <em>setuptools</em> <a target="_blank" href
 
 <br>
 <h3>Test your installation:</h3>
-  <p align=justify>To test your installation, execute <em>mdsrv</em> on your terminal. A new browser window will opened. If nothing is shown, please just reload the website.</p>
-<p align=justify>please make sure your executables can be found by sourcing the path to your installation if needed (check if the path applies to you by either looking it up or by using <code>which mdsrv</code> ): <code>export PATH=$PATH:~/.local/bin</code> </p>
+  <p align=justify>To test your installation, execute <em>mdsrv path/to/structure-file path/to/trajectory</em> in your terminal. A new browser window will open. If nothing is shown, please just reload the website. Don't forget to play your trajectory.</p>
+<p align=justify>If the executable 'mdsrv' cannot be found, you probably have to adjust your PATH variable, e.g.: <code>export PATH=$PATH:~/.local/bin</code></p>
 
 
 <br>
@@ -82,11 +82,11 @@ Then activate wsgi with <code>a2enmod wsgi</code>
 <h3>3. Add MDsrv-wsgi settings to apache.config</h3>
  <p align=justify>Add the content of <a target="_blank" download="apache.config" href="data/apache.config">apache.config</a> into <em>/etc/apache2/sites-available/000-default.conf</em> or replace this file.</p>
  <img src="data/config.png" width=100% alt="apache configuration file">
-  <p align=justify><strong>Important:</strong> Adjust the <em>user</em> and <em>group</em> according to your environment settings (e.g. local installation on a pc (nickname@pc) with <em>user=nickname</em> and <em>group=nickname</em>) so that the wsgi process can run with the specified <em>user</em> & <em>group</em>. Make also sure that the files and directories you want to serve are accessible with that user & group combination. Please also adjust the <em>python-path</em>, e.g. to your environment or conda directory or remove this variable to keep the default.
+  <p align=justify><strong>Important:</strong> Adjust the <em>user</em> and <em>group</em> according to your environment settings (e.g. local installation on a pc (nickname@pc) with <em>user=nickname</em> and <em>group=nickname</em>) so that the wsgi process can run with the specified <em>user</em> & <em>group</em>. Make also sure that the files and directories you want to serve are accessible with that user & group combination. Please also adjust the <em>python-path</em>, e.g. to your environment or conda directory or remove this variable to keep the default. Make sure to use absolut paths here.
  For further information on <em>apache.config</em>, please consult the <a target="_blank" href="https://httpd.apache.org/docs/2.4/en/">documentation</a>.</p>
 
 <h3>4. Add html for MDsrv gui</h3>
-<p>Copy <a target="_blank" download="mdsrv.html" href="data/mdsrv.html">mdsrv.html</a> into the folder <em>/var/www/html/</em>.</p>
+<p>Copy <a target="_blank" download="mdsrv.html" href="data/mdsrv.html">mdsrv.html</a> into the folder <em>/var/www/html/</em>. Make sure the right rights are set (<code>chmod +r /var/www/html/mdsrv.html</code>).</p>
 
 <h3>5. Add & adjust the MDsrv configuration file</h3>
 <p align=justify>Download the configuration file <a target="_blank" download="app.cfg" href="data/app.cfg">app.cfg</a> and save it within a secure directory (e.g. not within <em>/var/www/hmtl/</em>). Here, you can change the host and port, the list of directories where you store your structure and trajectory files (<em>DATA_DIRS</em>) and the security settings. The content and setting is explained <a href="configuration.html">elsewhere</a>.</p>
@@ -102,6 +102,33 @@ Then activate wsgi with <code>a2enmod wsgi</code>
 
 <h3>8. Access & Visualize your simulations</h3>
 <p align=justify>The MDsrv with the structures and trajectories within the defined folder can be reached at <em>http://localhost/mdsrv.html</em> by loading a structure via "File -> Import" and adding afterwards the trajectory within the structure menu by selecting "Remote trajectory - import". Find out more about the NGL gui at <a target="_blank" href="viewing.html">viewing</a> or <a target="_blank" href="loading.html">load trajectories</a> chapter.</p>
+
+
+
+<h2><a id="toy" class="anchor" target="_blank" href="#toy" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Toy example to test your installation & deployment</h2>
+<p align=justify>Find here a quick guide to setup your first mdsrv session:</p>
+
+<ol><li>Go to <a target="_blank" href="https://github.com/nglviewer/mdsrv/tree/master/data">https://github.com/nglviewer/mdsrv/tree/master/data</a></li>
+
+<li>Download <em>script.ngl</em>, <em>md_1u19.gro</em>, <em>md_1u19.xtc</em> into e.g. <em>~/example/</em></li>
+<br>
+<li>In app.cfg, add the path where <em>script.ngl</em> is located, e.g.:
+<br>
+<pre><code>DATA_DIRS={
+"mytest" : os.path.abspath( "/home/USER/example/"),
+}</code></pre></li>
+<br>
+<li>In script.ngl you have to change the basePath variable, e.g.:
+<pre><code>var basePath = "mytest/"</code></pre></li>
+<br>
+<li>Restart apache2: <code>service apache2 restart</code></li>
+<br>
+<li>In your browser call URL:
+<a target="_blank" href="http://localhost/mdsrv.html?load=file://mytest/script.ngl">http://localhost/mdsrv.html?load=file://mytest/script.ngl</a></li>
+</p>
+
+
+
 
 <h1><a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h1>
 
