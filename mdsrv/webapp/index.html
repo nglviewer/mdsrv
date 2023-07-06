@@ -1,65 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <title>NGL/MDsrv</title>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-
-    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
-    <link rel="stylesheet" href="css/font-awesome.min.css" />
-    <link rel="stylesheet" href="css/main.css" />
-    <link rel="subresource" href="css/light.css" />
-    <link rel="subresource" href="css/dark.css" />
+    <meta charset="UTF-8" />
+    <title>Trajectory streaming example</title>
+    <script src="js/ngl.js"></script>
 </head>
 <body>
-    <!-- NGL -->
-    <script src="js/ngl.js"></script>
-
-    <!-- UI -->
-    <script src="js/lib/signals.min.js"></script>
-    <script src="js/lib/tether.min.js"></script>
-    <script src="js/lib/colorpicker.min.js"></script>
-    <script src="js/ui/ui.js"></script>
-    <script src="js/ui/ui.extra.js"></script>
-    <script src="js/ui/ui.ngl.js"></script>
-    <script src="js/ui/ui.helper.js"></script>
-    <script src="js/gui.js"></script>
-
+    <div id="viewport" style="width: 400px; height: 400px;"></div>
+    <button id="prev"> &lt; Prev.</button><button id="toggle">Play/Pause</button><button id="next"> Next &gt; </button>
     <script>
-        NGL.cssDirectory = "css/";
-        NGL.documentationUrl = "http://nglviewer.org/ngl/api/";
-        
-        NGL.MDsrvdocumentationUrl = "http://nglviewer.org/mdsrv";
+        const topology = 'file://data/traj.mol2';   // the `file` protocol part is supposed to be an arbitrary proptocol name.
+        const trajectory = 'file://data/traj.nc';
+        const mdsrvDatasource = new NGL.MdsrvDatasource("http://localhost:8080/");
+        NGL.DatasourceRegistry.add("file", mdsrvDatasource);
+        NGL.setTrajectoryDatasource(mdsrvDatasource);
 
-        // Datasources
-        NGL.DatasourceRegistry.add(
-            "file", new NGL.MdsrvDatasource( window.location.origin + "/" )
-        );
-        NGL.ListingDatasource = NGL.DatasourceRegistry.get( "file" );
-        NGL.TrajectoryDatasource = NGL.DatasourceRegistry.get( "file" );
-        document.addEventListener( "DOMContentLoaded", function(){
-            stage = new NGL.Stage();
-            NGL.StageWidget( stage );
+        const stage = new NGL.Stage('viewport');
+        stage.signals.clicked.add((picking) => {
+            const atom = picking?.atom ?? picking?.closestBondAtom;
+            if (!atom) return;
+            console.log(atom.index);
+        })
 
-            var load = NGL.getQuery( "load" );
-            if( load ) stage.loadFile( load, { defaultRepresentation: true } );
+        // Structure component: holds topology and trajectory
+        let comp;
+        // Trajectory player that will be attached to the trajectory
+        let player;
 
-            var struc = NGL.getQuery( "struc" );
-            var traj = NGL.getQuery( "traj" );
-            var deltaTime = NGL.getQuery( "dt" );
-            var timeOffset = NGL.getQuery( "to" );
-            if( deltaTime === undefined ) deltaTime = "0.00";
-            if( timeOffset === undefined ) timeOffset = "0.00";
-            if( struc ){
-                var params = { defaultRepresentation: true };
-                stage.loadFile( struc, params ).then( function( o ){
-                    if( traj ){
-                        o.addTrajectory( traj, { "deltaTime": parseFloat(deltaTime), "timeOffset": parseFloat(timeOffset) } );
-                    }
-                } );
-            }
-        } );
+        /*
+            Due to concurrency issues, a trajectory must have finished its loading
+            for the scene to be properly centered and represented.
+            I.E., usualy when NGL loads a structure file, using stage.load(), it is
+            possible to create some representations from the component.
+            Here, with some topology files, the structure can't be represented as all
+            the atoms have their coordinates set to 0.
+            Hence, the trajectory must be loaded first.
+            But, it seems that the `trajectoryAdded` signal is dispatched before the
+            coordinates for the first frame have been set. So the autoview fails if it is
+            called at that stage.
+            The player initialization fails also (call stack exceeded) if it is called
+            too early in the process.
+        */
+        function initTrajectoryComponent(trajComp) {
+            trajComp.signals.frameChanged.addOnce(() => {
+                comp.autoView('protein');
+                initPlayer(trajComp);
+            });
+            trajComp.setFrame(1)
+        }
+
+        function initPlayer(trajComp) {
+            const traj = trajComp.trajectory;
+            player = new NGL.TrajectoryPlayer(traj, {
+                start: 0,
+                end: traj.frameCount -1,
+                step: 5,
+                timeout: 70
+            });
+            attachListeners();
+            player.play();
+        }
+
+        function attachListeners() {
+            document.getElementById('next').addEventListener('click', ()=> {
+                if (player.isRunning) player.pause();
+                let frame = player.traj._currentFrame;    // player._currentFrame remains to 0
+                frame = (frame + player.parameters.step) % player.parameters.end;
+                player.traj.setFrame(frame); 
+            });
+
+            document.getElementById('prev').addEventListener('click', ()=> {
+                if (player.isRunning) player.pause();
+                let frame = player.traj._currentFrame;
+                frame -= player.parameters.step;
+                if (frame < 0) frame += player.parameters.end;
+                player.traj.setFrame(frame); 
+            });
+
+            document.getElementById('toggle').addEventListener('click', ()=> {
+                player.toggle();
+            });
+        }
+
+        stage.loadFile(topology, {defaultRepresentation: true})
+        .then(o => {
+            comp = o;
+            o.setName('comp');
+            comp.signals.trajectoryAdded.add(initTrajectoryComponent)
+            o.addTrajectory(trajectory, {centerPbc: true, removePbc:true, deltatTime: 0, timeOffset: 0});
+            o.distanceRepresentation.signals.parametersChanged.add((params) => {
+                console.log('frame', player.traj._currentFrame)
+                const data = []
+                params.atomPair.forEach(([atom1, atom2], i) => data.push({
+                    atom1,
+                    atom2,
+                    distance: o.distanceRepresentation.repr.textBuffer.text[i]
+                }))
+                console.table(data)
+            })
+            o.angleRepresentation.signals.parametersChanged.add((params) => {
+                console.log('frame', player.traj._currentFrame)
+                const data = []
+                params.atomTriple.forEach(([atom1, atom2, atom3], i) => data.push({
+                    atom1,
+                    atom2,
+                    atom3,
+                    angle: o.angleRepresentation.repr.textBuffer.text[i]
+                }))
+                console.table(data)
+            })
+            o.dihedralRepresentation.signals.parametersChanged.add((params) => {
+                console.log('frame', player.traj._currentFrame)
+                const data = []
+                params.atomQuad.forEach(([atom1, atom2, atom3, atom4], i) => data.push({
+                    atom1,
+                    atom2,
+                    atom3,
+                    atom4,
+                    dihedral: o.dihedralRepresentation.repr.textBuffer.text[i]
+                }))
+                console.table(data)
+            })
+        })
+
     </script>
 </body>
 </html>

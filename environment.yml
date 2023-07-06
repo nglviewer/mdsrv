@@ -1,0 +1,9 @@
+name: mdsrv-dev
+
+dependencies:
+  - python=3.8
+  - zlib
+  - pip
+  - pip:
+    - Flask
+    - MDAnalysis

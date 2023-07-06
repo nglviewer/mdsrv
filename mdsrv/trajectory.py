@@ -9,6 +9,7 @@ import array
 import collections
 import numpy as np
 import warnings
+import math
 
 importarray = [ False, False, False ]#, False ]
 
@@ -187,6 +188,93 @@ class Trajectory( object ):
     def get_path_string( self, atom_index, frame_indices=None ):
         path = self.get_path( atom_index, frame_indices=frame_indices )
         return array.array( "f", path.flatten() ).tostring()
+
+    def get_distance( self, atom_index0, atom_index1, frame_indices=None ):
+        if( frame_indices ):
+            frame_indices.sort()
+            size = len( frame_indices )
+            frames = map( int, frame_indices )
+        else:
+            size = self.numframes
+            frames = range( size )
+        dist = np.zeros(size, dtype=np.float32)
+        counter = 0
+        for i in frames:
+            box, coords, time = self._get_frame( i )
+            for j in range(3):
+                dist[counter] += (coords[ atom_index0 ][ j ] - coords[ atom_index1 ][ j ])**2
+            dist[counter] = math.sqrt(dist[counter])
+            counter += 1
+        return dist
+
+    def get_distance_string( self, atom_index0, atom_index1, frame_indices=None ):
+        dist = self.get_distance( atom_index0, atom_index1, frame_indices=frame_indices )
+        return array.array( "f", dist.flatten() ).tostring()
+
+    def get_angle( self, atom_index0, atom_index1, atom_index2, frame_indices=None ):
+        if( frame_indices ):
+            frame_indices.sort()
+            size = len( frame_indices )
+            frames = map( int, frame_indices )
+        else:
+            size = self.numframes
+            frames = range( size )
+        ang_calc = np.zeros(size, dtype=np.float32 )
+        counter = 0
+        for i in frames:
+            box, coords, time = self._get_frame( i )
+            vector0 = np.array(coords[atom_index0]) - np.array(coords[atom_index1])
+            vector2 = np.array(coords[atom_index2]) - np.array(coords[atom_index1])
+            dot_product = vector0[0] * vector2[0] + vector0[1] * vector2[1] + vector0[2] * vector2[2]
+            magnitude0 = math.sqrt(vector0[0]**2 + vector0[1]**2 + vector0[2]**2)
+            magnitude1 = math.sqrt(vector2[0]**2 + vector2[1]**2 + vector2[2]**2)
+
+            cosine_angle = dot_product / (magnitude0 * magnitude1)
+            angle = math.acos(cosine_angle)
+            degrees = math.degrees(angle)
+            ang_calc[counter] = degrees
+            counter += 1
+        return ang_calc
+    
+    def get_angle_string( self, atom_index0, atom_index1, atom_index2, frame_indices=None ):
+        ang = self.get_angle( atom_index0, atom_index1, atom_index2, frame_indices=frame_indices )
+        return array.array( "f", ang.flatten() ).tostring()
+
+    def get_dihedral( self, atom_index0, atom_index1, atom_index2, atom_index3, frame_indices=None ):
+        if( frame_indices ):
+            frame_indices.sort()
+            size = len( frame_indices )
+            frames = map( int, frame_indices )
+        else:
+            size = self.numframes
+            frames = range( size )
+        dihed_calc = np.zeros(size, dtype=np.float32 )
+        counter = 0
+        for i in frames:
+            box, coords, time = self._get_frame( i )
+            vector0 = np.array(coords[atom_index1]) - np.array(coords[atom_index0])
+            vector1 = np.array(coords[atom_index2]) - np.array(coords[atom_index1])
+            vector2 = np.array(coords[atom_index3]) - np.array(coords[atom_index2])
+            normal0 = np.cross(vector0, vector1)
+            normal1 = np.cross(vector1, vector2)
+            
+            # Normalize the normal vectors
+            normal0 = normal0 / np.linalg.norm(normal0)
+            normal1 = normal1 / np.linalg.norm(normal1)
+            
+            dot_product = np.dot(normal0, normal1)
+            angle = np.arccos(dot_product)
+            triple_product = np.dot(np.cross(normal0, normal1), vector1)
+            if triple_product < 0:
+                angle = -angle
+            degrees = np.degrees(angle)
+            dihed_calc[counter] = degrees
+            counter += 1
+        return dihed_calc
+
+    def get_dihed_string( self, atom_index0, atom_index1, atom_index2, atom_index3, frame_indices=None ):
+        dihed = self.get_angle( atom_index0, atom_index1, atom_index2, atom_index3, frame_indices=frame_indices )
+        return array.array( "f", dihed.flatten() ).tostring()
 
     def __del__( self ):
         pass

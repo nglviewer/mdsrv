@@ -1,3 +1,6 @@
+#MacOS Specific
+.DS_Store
+
 
 *.sublime-project
 *.sublime-workspace

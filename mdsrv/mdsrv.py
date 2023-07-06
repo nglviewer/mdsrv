@@ -105,7 +105,7 @@ def get_directory( root ):
         return ""
 
 
-def get_struc_directoy( struc ):
+def get_struc_directory( struc ):
     structurefile = struc.split('file/')[1]
     path = structurefile.split('/')[0]
     name = '/'.join(structurefile.split('/')[1:])
@@ -182,7 +182,7 @@ def file( root, filename ):
     global struct
     if request.args.get('struc') and struct==[]:
         struc = request.args.get('struc')
-        struct = get_struc_directoy(struc)
+        struct = get_struc_directory(struc)
     directory = get_directory( root )
     if directory:
         return send_from_directory( directory, filename )
@@ -279,7 +279,7 @@ def traj_frame( frame, root, filename ):
     global struct
     if request.args.get('struc') and struct==[]:
         struc = request.args.get('struc')
-        struct = get_struc_directoy(struc)
+        struct = get_struc_directory(struc)
     directory = get_directory( root )
     if directory:
         path = os.path.join( directory, filename )
@@ -308,7 +308,7 @@ def traj_numframes( root, filename ):
     global struct
     if request.args.get('struc') and struct==[]:
         struc = request.args.get('struc')
-        struct=get_struc_directoy(struc)
+        struct=get_struc_directory(struc)
     directory = get_directory( root )
     if directory:
         path = os.path.join( directory, filename )
@@ -329,7 +329,7 @@ def traj_path( index, root, filename, structure ):
     global struct
     if request.args.get('struc') and struct==[]:
         struc = request.args.get('struc')
-        struct=get_struc_directoy(struc)
+        struct=get_struc_directory(struc)
     directory = get_directory( root )
     if directory:
         path = os.path.join( directory, filename )
